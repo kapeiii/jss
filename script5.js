@@ -22,11 +22,11 @@ const func = () => {
 
     let gwa = total.toPrecision(5);
 
-    if(gwa<=1.45 && g1<2.5 && g2<2.5 && g3<2.5 && g4<2.5 && g5<2.5 && u1>0 && u2>0 && u3>0 && u4>0 && u5>0){
+    if(gwa<=1.45 && g1<=2.4 && g2<=2.4 && g3<=2.4 && g4<=2.4 && g5<=2.4 && u1>0 && u2>0 && u3>0 && u4>0 && u5>0){
         document.getElementById('showData-1').innerHTML = ""+ gwa;
-        document.getElementById('showData-2').innerHTML = `<h3 style="color:white; font-size:15px">You're a <strong style="color:orange;">PRESIDENT'S LISTER.</strong> Congratulations!</h3>`
+        document.getElementById('showData-2').innerHTML = `<h3 style="color:white; font-size:15px">You're a <strong style="color:yellow;">PRESIDENT'S LISTER.</strong> Congratulations!</h3>`
     }
-    else if(gwa<=1.75 && g1<2.5 && g2<2.5 && g3<2.5 && g4<2.5 && g5<2.5 && u1>0 && u2>0 && u3>0 && u4>0 && u5>0){
+    else if(gwa<=1.75 && g1<=2.4 && g2<=2.4 && g3<=2.4 && g4<=2.4 && g5<=2.4 && u1>0 && u2>0 && u3>0 && u4>0 && u5>0){
         document.getElementById('showData-1').innerHTML = ""+ gwa;
         document.getElementById('showData-2').innerHTML = `<h3 style="color:white; font-size:15px">You're a <strong style="color:orange;">DEAN'S LISTER.</strong> Congratulations!</h3>`
     } else if (gwa<=5 && g1>0 && g1<=5 && g2>0 && g2<=5 && g3>0 && g3<=5 && g4>0 && g4<=5 && g5>0 && g5<=5 && u1>0 && u2>0 && u3>0 && u4>0 && u5>0){
