@@ -43,7 +43,7 @@ const func = () => {
         document.getElementById('showData-2').innerHTML = `<h3 style="color:white; font-size:15px">You're a <strong style="color:orange;">DEAN'S LISTER.</strong> Congratulations!</h3>`
     } else if (gwa<=5 && g1>0 && g1<=5 && g2>0 && g2<=5 && g3>0 && g3<=5 && g4>0 && g4<=5 && g5>0 && g5<=5 && g6>0 && g6<=5 && g7>0 && g7<=5 && g8>0 && g8<=5 && g9>0 && g9<=5 && u1>0 && u2>0 && u3>0 && u4>0 && u5>0 && u6>0 && u7>0 && u8>0 && u9>0){
         document.getElementById('showData-1').innerHTML = ""+ gwa;
-        document.getElementById('showData-2').innerHTML = `<h3 style="color:white; font-size:15px">Ginawa ko naman lahat, hindi pa rin sapat</h3>`
+        document.getElementById('showData-2').innerHTML = `<h3 style="color:white; font-size:15px">Just work hard and achieve, don’t settle for anything less.</h3>`
     } else {
         document.getElementById('showData-1').innerHTML = `<h1 style="color:red; font-size:18px">ERROR</h1>`
         document.getElementById('showData-2').innerHTML = `Wala ka na ginawang tama`
