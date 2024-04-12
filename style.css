@@ -28,7 +28,7 @@ nav{
     width: 150px;
     cursor: pointer;
 }
-.nav .logo a{
+nav .logo a{
     font-size: 1.5rem;
     font-weight: bold;
 }
