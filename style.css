@@ -28,6 +28,10 @@ nav{
     width: 150px;
     cursor: pointer;
 }
+.nav .logo a{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
 nav ul{
     flex: 1;
     text-align: right;
