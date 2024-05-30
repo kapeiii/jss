@@ -1,0 +1,114 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    font-family: 'Josefin Sans', sans-serif;
+}
+:root{
+    --bg-color: #c1d8f0;
+    --second-bg-color: #505050;
+    --text-color: #fff;
+    --main-color: rgb(0, 168, 235);
+}
+
+html{
+    font-size: 62.5%;
+    overflow: hidden;
+}
+body{
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem 9%;
+    background: var(--bg-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+.logo{
+    font-size: 2.5rem;
+    color: var(--second-text-color);
+    font-weight: 600;
+    cursor: default;
+}
+.navbar a{
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-left: 4rem;
+    transition: .3s;
+}
+.navbar a:hover,
+.navbar a.active{
+    color: #4663ac;
+}
+#menu-icon{
+    font-size: 3.6rem;
+    color: var(--text-color);
+    display: none;
+}
+.btn{
+    display: inline-block;
+    padding: 1rem 2.8rem;
+    background: #fff;
+    border-radius: 4rem;
+    box-shadow: 0 0 1rem #fff;
+    font-size: 1.6rem;
+    color: #4663ac;
+    letter-spacing: .1rem;
+    font-weight: 600;
+    transition: .5s ease;
+  }
+  .btn:hover{
+    box-shadow: 0 0 7rem #fff;
+  }
+
+.heading{
+    margin-top: 90px;
+  text-align: center;
+  font-size: 4.5rem;
+  color: #4663ac;
+}
+.services h2{
+    margin-bottom: 5rem;
+}
+.services-container{
+    margin-right: 150px;
+    margin-left: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+.services-container .services-box{
+    flex: 1 1 30rem;
+    background: rgb(255, 186, 58);
+    padding: 3rem 2rem 4rem;
+    border-radius: 2rem;
+    text-align: center;
+    border: .2rem solid var(--bg-color);
+}
+
+.services-box i{
+    font-size: 7rem;
+    color: #4663ac;
+}
+.services-box h3{
+    font-size: 2.6rem;
+}
+.services-box p{
+    font-size: 1.4rem;
+    margin: 1rem 0 3rem;
+}
