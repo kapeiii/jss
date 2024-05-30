@@ -24,11 +24,14 @@ nav{
     padding: 5px 0;
 }
 .logo{
-    mix-blend-mode: multiply;
-    width: 150px;
-    cursor: pointer;
+    margin-top: 20px;
+  font-size: 2rem;
+  color: #fff;
+  font-weight: 600;
+  cursor: default;
 }
 nav ul{
+    margin-top: 20px;
     flex: 1;
     text-align: right;
     padding-right: 30px;
