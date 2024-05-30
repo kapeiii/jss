@@ -150,7 +150,8 @@ nav ul li a:hover::after{
 }
 @media(max-width: 700px){
     .logo{
-        width: 100px;
+        margin-top: 1px;
+      font-size: 1.3rem;
     }
     nav ul{
         padding-right: 0;
