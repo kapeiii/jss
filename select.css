@@ -112,3 +112,55 @@ body{
     font-size: 1.4rem;
     margin: 1rem 0 3rem;
 }
+@media(max-width: 700px){
+    .scroll-container {
+        width: 500px;
+        height: 100vh;
+        border: 1px solid #ffffff;
+        overflow: auto;
+        padding: 10px;
+    }
+    .navbar{
+        margin-top: 10px;
+    }
+    .logo{
+        font-size: 2rem;
+        margin: 10px 15px 0;
+    }
+    .scroll-container::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 10px;
+        border: 2px solid #fff;
+    }
+    
+    .scroll-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+    .header{
+        padding: 2rem  3%;
+    }
+    .heading{
+        margin-top: 5px;
+      font-size: 3.5rem;
+    }
+    section{
+        padding: 10rem 3% 2rem;
+    }
+    .services{
+        padding-bottom: 7rem;
+    }
+    .services-container{
+        margin-right:50px;
+        margin-left: 50px;
+        align-items: center;
+    }
+    .services-container .services-box{
+        flex: 1 1 3rem;
+    }
+}
