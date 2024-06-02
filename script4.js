@@ -31,6 +31,6 @@ const func = () => {
         document.getElementById('showData-2').innerHTML = `<h3 style="color:white; font-size:15px">Just work hard and achieve, don’t settle for anything less.</h3>`
     } else {
         document.getElementById('showData-1').innerHTML = `<h1 style="color:red; font-size:18px">ERROR</h1>`
-        document.getElementById('showData-2').innerHTML = `Error: Invalid input.`
+        document.getElementById('showData-2').innerHTML = `Hmm, that didn't work. Try again?`
     }
 }
