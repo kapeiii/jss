@@ -21,7 +21,7 @@ const func = () => {
 
     if(gwa<=1.45 && g1<=2.4 && g2<=2.4 && g3<=2.4 && g4<=2.4 && u1>0 && u2>0 && u3>0 && u4>0){
         document.getElementById('showData-1').innerHTML = ""+ gwa;
-        document.getElementById('showData-2').innerHTML = `<h3 style="color:white; font-size:15px">You're a <strong style="color:yellow;">PRESIDENT'S LISTER.</strong> Congratulations!</h3>`
+        document.getElementById('showData-2').innerHTML = `<h3 style="color:white; font-size:15px">You're a <strong style="color:yellow; font-size:20px">PRESIDENT'S LISTER.</strong> Congratulations!</h3>`
     }
     else if(gwa<=1.75 && g1<=2.4 && g2<=2.4 && g3<=2.4 && g4<=2.4 && u1>0 && u2>0 && u3>0 && u4>0){
         document.getElementById('showData-1').innerHTML = ""+ gwa;
@@ -31,6 +31,6 @@ const func = () => {
         document.getElementById('showData-2').innerHTML = `<h3 style="color:white; font-size:15px">Just work hard and achieve, don’t settle for anything less.</h3>`
     } else {
         document.getElementById('showData-1').innerHTML = `<h1 style="color:red; font-size:18px">ERROR</h1>`
-        document.getElementById('showData-2').innerHTML = `Wala ka na ginawang tama.`
+        document.getElementById('showData-2').innerHTML = `Error: Invalid input.`
     }
 }
