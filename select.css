@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 *{
     margin: 0;
     padding: 0;
@@ -7,7 +7,7 @@
     border: none;
     outline: none;
     scroll-behavior: smooth;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 :root{
     --bg-color: #c1d8f0;
