@@ -177,6 +177,9 @@ footer {
     margin: 0px 5px;
 }
 @media(max-width: 700px){
+    body{
+        background-position: -90px;
+    }
     .container{
         flex: 0 1 400px;
     }
