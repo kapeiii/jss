@@ -27,7 +27,8 @@ body{
 }
 .text-box h2{
     font-size: 40px;
-    color: orange;
+    color: gold;
+    text-shadow: 0px 2px 2px rgb(255, 238, 0);
 }
 .text-box p{
     font-size: 15px;
