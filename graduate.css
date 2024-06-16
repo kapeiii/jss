@@ -104,6 +104,9 @@ body{
     color: #333;
 }
 @media(max-width: 700px){
+    body{
+        background-position: -90px;
+    }
     .text-box h2{
         font-size: 27px;
     }
