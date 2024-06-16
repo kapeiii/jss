@@ -50,7 +50,7 @@ const func = () => {
         document.getElementById('showData-2').innerHTML = name;
         document.getElementById('showData-3').innerHTML = gwa;
     }
-    else if(gwa<=1.45 && fail==0 && g1<=5.0 && g2<=5.0 && g3<=5.0 && g4<=5.0 && g5<=5.0 && g6<=5.0 && g7<=5.0 && g8<=5.0 && g9<=5.0 && g10<=5.0 && u1>0 && u2>0 && u3>0 && u4>0 && u5>0 && u6>0 && u7>0 && u8>0 && u9>0 && u10>0 && u11>0 && u12>0){
+    else if(gwa<=1.45 && fail==0 && g1<=5.0 && g2<=5.0 && g3<=5.0 && g4<=5.0 && g5<=5.0 && g6<=5.0 && g7<=5.0 && g8<=5.0 && g9<=5.0 && g10<=5.0 && g11<=5.0 && g12<=5.0 && u1>0 && u2>0 && u3>0 && u4>0 && u5>0 && u6>0 && u7>0 && u8>0 && u9>0 && u10>0 && u11>0 && u12>0){
         document.getElementById('showData-1').innerHTML = '<strong style="color:gold;text-shadow: 0px 8px 8px rgba(0, 0, 0, 0.3);">MAGNA CUM LAUDE</strong>'
         document.getElementById('showData-2').innerHTML = name;
         document.getElementById('showData-3').innerHTML = gwa;
