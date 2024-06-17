@@ -140,6 +140,7 @@ body::-webkit-scrollbar{
     text-align: center;
     justify-content: center;
     font-size: 1.5rem;
+    text-shadow: 0px 2px 8px rgb(255, 251, 0);
 }
 .showdata-2{
     display: block;
