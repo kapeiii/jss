@@ -61,8 +61,8 @@ const func = () => {
         document.getElementById('showData-3').innerHTML = gwa;
     }
      else if (gwa<=5 && g1>0 && g1<=5 && g2>0 && g2<=5 && g3>0 && g3<=5 && g4>0 && g4<=5 && g5>0 && g5<=5 && g6>0 && g6<=5 && g7>0 && g7<=5 && g8>0 && g8<=5 && g9>0 && g9<=5 && g10>0 && g10<=5 && g11>0 && g11<=5 && g11>0 && g11<=5 && u1>0 && u2>0 && u3>0 && u4>0 && u5>0 && u6>0 && u7>0 && u8>0 && u9>0 && u10>0 && u11>0 && u12>0 && fail==0 || fail>=1 && gwa<=5 && g1>0 && g1<=5 && g2>0 && g2<=5 && g3>0 && g3<=5 && g4>0 && g4<=5 && g5>0 && g5<=5 && g6>0 && g6<=5 && g7>0 && g7<=5 && g8>0 && g8<=5 && g9>0 && g9<=5 && g10>0 && g10<=5 && g11>0 && g11<=5 && g11>0 && g11<=5 && u1>0 && u2>0 && u3>0 && u4>0 && u5>0 && u6>0 && u7>0 && u8>0 && u9>0 && u10>0 && u11>0 && u12>0){
-        document.getElementById('showData-1').innerHTML = "";
-        document.getElementById('showData-2').innerHTML = 'Congratulations on reaching this milestone!'
+        document.getElementById('showData-1').innerHTML = 'Congratulations on reaching this milestone!'
+        document.getElementById('showData-2').innerHTML = name;
         document.getElementById('showData-3').innerHTML = gwa;
     } else {
         document.getElementById('showData-1').innerHTML = `<h1 style="color:red; font-size:18px">ERROR</h1>`
