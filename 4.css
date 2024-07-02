@@ -134,6 +134,9 @@ body, button, input{
     font-size: 1.5rem;
     text-shadow: 0px 2px 8px rgb(255, 251, 0);
 }
+#showData-9, #showData-6{
+    font-size: .7rem;
+}
 .showdata-2{
     display: block;
     text-align: center;
