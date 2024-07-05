@@ -74,7 +74,7 @@ nav ul li a:hover::after{
     font-size: 80px;
     line-height: 100px;
     margin-left: -10px;
-    color: orange;
+    color: gold;
 }
 @keyframes back{
     100%{
