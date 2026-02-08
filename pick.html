@@ -1,58 +1,252 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8292516083611949"
-     crossorigin="anonymous"></script>
-        <meta name="viewport" content="width=device-width", initial-scale="1.0">
-        <title>BU GWA Calculator</title>
-        <link rel="stylesheet" type="text/css" href="pick.css">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <link rel="icon" type="image/png" href="logo.png">
-    </head>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BU GWA Calculator</title>
 
-    <body>
-        <div class="text-box">
-            <h2>Academic Distinctions</h2>
-            <p>Complete grades with no INC/DRP<br>A regular student<br>Don't include NSTP subject</p>
-        </div>
-        <div class="select-menu">
-            <div class="select-btn" id="select-btn">
-                <span id="text">Number of Subject</span>
-                <ion-icon name="chevron-down-outline" class="icon-arrow"></ion-icon>
-            </div>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-            <ul class="list">
-                <a href="4.html"><li class="option" style="--i:8;">
-                    <span class="option-text">Four</span>
-                </li></a>
-                <a href="5.html"><li class="option" style="--i:7;">
-                    <span class="option-text">Five</span>
-                </li></a>
-                <a href="6.html"><li class="option" style="--i:6;">
-                    <span class="option-text">Six</span>
-                </li></a>
-                <a href="7.html"><li class="option" style="--i:5;">
-                    <span class="option-text">Seven</span>
-                </li></a>
-                <a href="8.html"><li class="option" style="--i:4;">
-                    <span class="option-text">Eight</span>
-                </li></a>
-                <a href="9.html"><li class="option" style="--i:3;">
-                    <span class="option-text">Nine</span>
-                </li></a>
-                <a href="10.html"><li class="option" style="--i:2;">
-                    <span class="option-text">Ten</span>
-                </li></a>
-                <a href="11.html"><li class="option" style="--i:1;">
-                    <span class="option-text">Eleven</span>
-                </li></a>
-            </ul>
-        </div>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Inter', sans-serif; }
+body { background:#eaf6ff; color:#1f2937; }
 
-        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-        <script src="pick.js"></script>
-    </body>
+/* NAVBAR */
+.navbar { background: #fff; border-bottom: 1px solid #e5e7eb; }
+.nav-container { max-width:1100px; margin:auto; padding:1rem 1.5rem; display:flex; justify-content:space-between; align-items:center; }
+.logo { font-weight:700; color:#4bb3f4; }
+nav a { margin-left:1.5rem; text-decoration:none; color:#4b5563; font-weight:500; }
+nav a.active { color:#4bb3f4; }
+
+.container { display:flex; justify-content:center; align-items:center; height:calc(100vh - 72px); padding:1rem; }
+.card { background:#fff; padding:2rem; border-radius:12px; box-shadow:0 10px 30px rgba(255,215,0,0.6); width:100%; max-width:400px; text-align:center; }
+.card h2 { margin:0; font-size:1.6rem; font-weight:600; color:#1b2a6f; }
+.card p { margin-top:0.4rem; font-size:0.95rem; color:#444; }
+.input-group { margin-top:1rem; display:flex; gap:0.5rem; }
+.input-group input { flex:1; padding:0.8rem; font-size:1rem; border-radius:8px; border:1px solid #ccc; }
+.input-group button { padding:0.8rem 1.2rem; font-size:1rem; font-weight:600; border-radius:8px; border:none; background:#4f6ef7; color:#fff; cursor:pointer; transition: transform 0.15s ease, background 0.2s ease; }
+.input-group button:hover { transform:translateY(-2px); background:#3e5bbf; }
+.footnote { margin-top:1rem; font-size:0.85rem; color:#666; }
+#errorMsg { margin-top:0.8rem; font-size:0.9rem; color:#e02424; }
+
+/* Modal Overlay */
+.modal-overlay, .gwa-overlay {
+  position:fixed; top:0; left:0; right:0; bottom:0;
+  background:rgba(0,0,0,0.35);
+  display:flex; justify-content:center; align-items:center;
+  z-index:10; display:none;
+}
+.modal, .gwa-modal {
+  background: linear-gradient(145deg, #f0f9ff, #ffffff);
+  padding:2rem; border-radius:20px;
+  width:90%; max-width:500px;
+  box-shadow:0 10px 30px rgba(255,215,0,0.6);
+  text-align:center; position:relative; overflow:hidden;
+  border: 2px solid #4bb3f4;
+}
+table { width:100%; border-collapse:collapse; margin-top:1rem; }
+table th, table td { border:1px solid #ccc; padding:0.5rem; text-align:center; font-size:0.95rem; }
+table th { background:#4f6ef7; color:#fff; }
+table input { width:80%; padding:0.3rem; border-radius:6px; border:1px solid #ccc; text-align:center; }
+.btn { margin-top:1rem; padding:0.8rem 1.5rem; font-size:1rem; font-weight:600; border-radius:8px; border:none; background:#4f6ef7; color:#fff; cursor:pointer; transition: transform 0.15s ease, background 0.2s ease; }
+.btn:hover { transform:translateY(-2px); background:#3e5bbf; }
+
+/* GWA modal styling */
+.gwa-modal h2 { font-size:1.8rem; margin:0.3rem 0; font-weight:600; color:#1b2a6f; }
+.gwa-modal h1 { font-size:1.4rem; font-weight:700; margin:0.2rem 0; color:#1b2a6f; }
+
+/* Ribbon and Badge */
+.ribbon-container {
+  position: relative;
+  width: 100%;
+  height: 3rem;
+  margin-bottom: 0.5rem;
+}
+.gwa-ribbon {
+  position: absolute;
+  top:0; left:0; right:0; bottom:0;
+  border-radius: 8px;
+  z-index:1;
+  background: linear-gradient(90deg,#FFD700,#FFEA00,#FFD700);
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  animation: shimmer 3s linear infinite;
+}
+.gwa-badge {
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  z-index:2;
+  padding:0.3rem 1.2rem;
+  border-radius:12px;
+  font-weight:800;
+  color:#fff;
+  text-shadow: 2px 2px 4px #333;
+  display:inline-block;
+  font-size:2rem;
+  white-space: nowrap; 
+}
+.gwa-dean { font-size:2.2rem; text-shadow:2px 2px 8px #000; }
+.gwa-president { font-size:2.5rem; text-shadow:2px 2px 8px #000; }
+.gwa-encourage { font-size:1.2rem; background:#6c757d; box-shadow: 2px 2px 8px #000; border-radius:12px; padding:0.3rem 0.8rem; text-shadow:1px 1px 4px #000; display:inline-block; white-space: normal; max-width:90%; line-height:1.2em; }
+
+/* Confetti */
+.confetti-piece { position:absolute; width:8px; height:8px; top:0; opacity:0.8; z-index:3; pointer-events:none; border-radius:50%; animation: fall 2.5s linear infinite; }
+@keyframes fall { 0% { transform:translateY(0) rotate(0deg); opacity:1; } 100% { transform:translateY(300px) rotate(360deg); opacity:0; } }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-container">
+    <span class="logo">BU GWA Calculator</span>
+    <nav>
+      <a href="index.html">Home</a>
+      <a class="active">Services</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h2>Enter Details</h2>
+    <p>Complete grades, no INC/DRP & exclude NSTP.</p>
+
+    <div class="input-group">
+      <input type="text" id="studentName" placeholder="Your Name">
+    </div>
+    <div class="input-group">
+      <input type="number" id="subjectCount" placeholder="Number of Subjects" min="1" max="12">
+      <button onclick="proceed()">Proceed</button>
+    </div>
+
+    <div id="errorMsg"></div>
+    <div class="footnote">Enter your name and number of subjects for this term.</div>
+  </div>
+</div>
+
+<!-- Subjects Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h2>Enter Grades & Units</h2>
+    <table id="subjectTable">
+      <thead>
+        <tr>
+          <th>Subject #</th>
+          <th>Units</th>
+          <th>Grade</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button class="btn" onclick="calculateGWA()">Calculate GWA</button>
+  </div>
+</div>
+
+<!-- GWA Result Modal -->
+<div class="gwa-overlay" id="gwaOverlay">
+  <div class="gwa-modal">
+    <div class="ribbon-container">
+      <div id="gwaRibbon" class="gwa-ribbon"></div>
+      <div id="gwaBadge" class="gwa-badge"></div>
+    </div>
+    <h2 id="gwaName"></h2>
+    <h1 id="gwaValue">0.0000</h1>
+  </div>
+</div>
+
+<script>
+const modalOverlay = document.getElementById('modalOverlay');
+const gwaOverlay = document.getElementById('gwaOverlay');
+
+function proceed() {
+  const count = document.getElementById('subjectCount').value;
+  const name = document.getElementById('studentName').value.trim();
+  const errorMsg = document.getElementById('errorMsg');
+
+  if (!name) { errorMsg.innerText = "Please enter your name."; return; }
+  if (!count || count <= 0) { errorMsg.innerText = "Please enter a valid number of subjects."; return; }
+
+  errorMsg.innerText = "";
+
+  const tbody = document.querySelector('#subjectTable tbody');
+  tbody.innerHTML = "";
+  for (let i = 1; i <= count; i++) {
+    const row = document.createElement('tr');
+    row.innerHTML = `<td>${i}</td><td><input type="number" min="0" placeholder="Units"></td><td><input type="number" step="0.01" min="1.0" max="5.0" placeholder="Grade"></td>`;
+    tbody.appendChild(row);
+  }
+  modalOverlay.style.display = 'flex';
+}
+
+document.getElementById('subjectCount').addEventListener('keypress', function(e){ if(e.key==='Enter') proceed(); });
+document.getElementById('studentName').addEventListener('keypress', function(e){ if(e.key==='Enter') proceed(); });
+
+function calculateGWA() {
+  const rows = document.querySelectorAll('#subjectTable tbody tr');
+  let totalUnits = 0, totalPoints = 0;
+  let hasFailingGrade = false;
+
+  for (let row of rows) {
+    const units = parseFloat(row.cells[1].querySelector('input').value);
+    const grade = parseFloat(row.cells[2].querySelector('input').value);
+    if(isNaN(units)||isNaN(grade)){ alert("Please fill all fields correctly."); return; }
+    if(grade >= 2.5){ hasFailingGrade = true; }
+    totalUnits += units;
+    totalPoints += units*grade;
+  }
+
+  const gwa = (totalPoints/totalUnits).toFixed(4);
+  modalOverlay.style.display = 'none';
+
+  const name = document.getElementById('studentName').value.trim();
+  document.getElementById('gwaName').innerText = name;
+
+  const gwaValue = document.getElementById('gwaValue');
+  const badge = document.getElementById('gwaBadge');
+  const ribbon = document.getElementById('gwaRibbon');
+
+  gwaValue.innerText = gwa;
+  badge.innerText = "";
+  badge.className = "gwa-badge";
+  ribbon.style.display = 'block';
+
+  if(!hasFailingGrade && gwa >= 1.00 && gwa <= 1.4500){
+    badge.innerText = "PRESIDENT'S LISTER";
+    badge.classList.add('gwa-president');
+    ribbon.style.background = "linear-gradient(90deg,#FFD700,#FFEA00,#FFD700)";
+  }
+  else if(!hasFailingGrade && gwa > 1.4500 && gwa <= 1.7500){
+    badge.innerText = "DEAN'S LISTER";
+    badge.classList.add('gwa-dean');
+    ribbon.style.background = "linear-gradient(90deg,#28a745,#00ff7f,#28a745)";
+  } else {
+    badge.innerText = "Your Hard Work Shows – Keep Improving!";
+    badge.classList.add('gwa-encourage');
+    ribbon.style.display = 'none';
+  }
+
+  gwaOverlay.style.display = 'flex';
+  createConfetti(document.querySelector('.gwa-modal'));
+}
+
+gwaOverlay.addEventListener('click',(e)=>{if(e.target===gwaOverlay) gwaOverlay.style.display='none';});
+modalOverlay.addEventListener('click',(e)=>{if(e.target===modalOverlay) modalOverlay.style.display='none';});
+
+function createConfetti(container){
+  for(let i=0;i<50;i++){
+    const confetti=document.createElement('div');
+    confetti.className='confetti-piece';
+    confetti.style.background=['#FFD700','#FFEA00','#FF8C00','#FF4500','#00BFFF'][Math.floor(Math.random()*5)];
+    confetti.style.left=Math.random()*100+'%';
+    confetti.style.animationDuration=(Math.random()*1+1.5)+'s';
+    confetti.style.width=confetti.style.height=(Math.random()*6+4)+'px';
+    container.appendChild(confetti);
+    setTimeout(()=>{confetti.remove();},2500);
+  }
+}
+</script>
+</body>
 </html>
