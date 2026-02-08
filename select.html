@@ -1,59 +1,85 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8292516083611949"
-     crossorigin="anonymous"></script>
-        <meta name="viewport" content="width=device-width", initial-scale="1.0">
-        <title>BU GWA Calculator</title>
-        <link rel="stylesheet" type="text/css" href="select.css">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <link rel="icon" type="image/png" href="logo.png">
-    </head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BU GWA Calculator | Select Module</title>
 
-    <body>
-        <header class="header">
-            <a href="#" class="logo">GWA Calculator</a>
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-            <i class='bx bx-menu' id="menu-icon"></i>
+  <!-- CSS -->
+  <link rel="stylesheet" href="select.css">
+  <link rel="icon" type="image/png" href="logo.png">
+</head>
 
-            <nav class="navbar">
-                <a href="index.html">Home</a>
-                <a href="#services" class="active">Services</a>
-            </nav>
-        </header>
+<body>
 
-        <div class="scroll-container">
-        <section class="services" id="services">
-            <h2 class="heading">Select <span>Module</span></h2>
-            
-            <div class="services-container">
-                <div class="services-box">
-                    <i class='bx bxs-award'></i>
-                    <h3>Academic Distinction</h3>
-                    <p>Given to non-graduating students of Bicol University who do not have a grade lower than 2.4 with corresponding general ratings.</p>
-                    <a href="pick.html" class="btn">Proceed</a>
-                </div>
-
-                <div class="services-box">
-                    <i class='bx bxs-medal' ></i>
-                    <h3>Graduation with Honors</h3>
-                    <p>Candidate for graduation who has completed his/her course with a high weighted average rating</p>
-                    <a href="gradute.html" class="btn">Proceed</a>
-                </div>
-
-                <div class="services-box">
-                    <i class='bx bxs-school' ></i>
-                    <h3>Goal Setter</h3>
-                    <p>Aim high and reach for the stars! Input your current GWA or Grades to discover the target you need to achieve.</p>
-                    <a href="goal.html" class="btn">Proceed</a>
-                </div>
-
-            </div>
-        </section>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-container">
+      <span class="logo">BU GWA Calculator</span>
+      <nav>
+        <a href="index.html">Home</a>
+        <a class="active">Services</a>
+      </nav>
     </div>
-    </body>
-    </head>
+  </header>
+
+  <!-- MAIN -->
+  <main class="container">
+    <h1>Select <span>Module</span></h1>
+    <p class="subtitle">Choose the calculator that fits your academic goal.</p>
+
+    <div class="card-grid">
+
+      <!-- CARD 1 -->
+      <div class="card">
+        <div class="icon blue">
+          <i class='bx bxs-award'></i>
+        </div>
+        <h3>Academic Distinction</h3>
+        <p>
+          For non-graduating students with no grade lower than <strong>2.4</strong>
+          and qualified general ratings.
+        </p>
+        <a href="pick.html" class="btn">Proceed</a>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="card highlight">
+        <div class="icon orange">
+          <i class='bx bxs-medal'></i>
+        </div>
+        <h3>Graduation with Honors</h3>
+        <p>
+          Determine eligibility for graduating with academic honors
+          based on your weighted average.
+        </p>
+        <a href="gradute.html" class="btn btn-orange">Proceed</a>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="card">
+        <div class="icon blue">
+          <i class='bx bxs-school'></i>
+        </div>
+        <h3>Goal Setter</h3>
+        <p>
+          Input your current GWA and find out the target grades
+          needed to reach your academic goal.
+        </p>
+        <a href="goal.html" class="btn">Proceed</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Built for Bicol University students</p>
+  </footer>
+
+</body>
 </html>
