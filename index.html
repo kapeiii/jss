@@ -1,61 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BU GWA Calculator</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BU GWA Calculator</title>
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css">
+<!-- CSS -->
+<link rel="stylesheet" href="style.css">
 
-  <link rel="icon" type="image/png" href="logo.png">
+<link rel="icon" type="image/png" href="logo.png">
+
+<style>
+/* Modal overlay */
+.modal-overlay {
+  position: fixed; top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.35);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 100; display: none;
+}
+
+/* Modal card */
+.modal {
+  background:#fff;
+  border-radius:15px;
+  padding:2rem;
+  max-width:400px;
+  width:90%;
+  box-shadow:0 10px 30px rgba(255,215,0,0.6);
+  text-align:center;
+  position: relative;
+}
+
+/* Ribbon behind title */
+.modal-ribbon {
+  position: relative;
+  display:inline-block;
+  margin-bottom:1rem;
+}
+.modal-ribbon::before {
+  content:'';
+  position:absolute;
+  top:50%;
+  left:-10px;
+  width:calc(100% + 20px);
+  height:100%;
+  background: linear-gradient(90deg, #FFD700,#FFEA00,#FFD700);
+  transform:translateY(-50%) skewX(-20deg);
+  z-index:-1;
+  border-radius:8px;
+}
+
+/* Modal text */
+.modal h2 { font-size:1.5rem; color:#1b2a6f; margin-bottom:1rem; }
+.modal ul { text-align:left; margin:0 0 1.5rem 1.2rem; font-size:1rem; }
+.modal ul li { margin-bottom:0.6rem; }
+
+/* Button */
+.modal button {
+  padding:0.6rem 1.2rem;
+  font-size:1rem;
+  font-weight:600;
+  border:none;
+  border-radius:8px;
+  background:#4f6ef7;
+  color:#fff;
+  cursor:pointer;
+  transition: 0.2s ease;
+}
+.modal button:hover { background:#3e5bbf; }
+
+/* Mobile adjustments */
+@media screen and (max-width:400px){
+  .modal h2 { font-size:1.3rem; }
+  .modal ul { font-size:0.9rem; }
+  .modal button { font-size:0.9rem; padding:0.5rem 1rem; }
+}
+</style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <span class="logo">BU GWA Calculator</span>
-      <ul class="nav-links">
-        <li><a href="about.html">About</a></li>
-        <li><a href="helpus.html">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <span class="logo">BU GWA Calculator</span>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="helpus.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-card">
-      <h1>Calculate your GWA,<br><span>the smart way</span></h1>
-      <p>
-        A simple and accurate GWA calculator designed for
-        <strong>Bicol University students</strong>.
-      </p>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-card">
+    <h1>Calculate your GWA,<br><span>the smart way</span></h1>
+    <p>A simple and accurate GWA calculator designed for <strong>Bicol University students</strong>.</p>
 
-      <a href="select.html" class="cta-btn">
-        Get Started <i class="fa-solid fa-arrow-right"></i>
-      </a>
+    <a href="select.html" class="cta-btn">
+      Get Started <i class="fa-solid fa-arrow-right"></i>
+    </a>
 
-      <small>
-        Make sure you have all grades and corresponding units ready.
-      </small>
-    </div>
-  </section>
+    <small>Make sure you have all grades and corresponding units ready.</small>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="socials">
-      <a href="https://www.facebook.com/BicolUniversity"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://instagram.com/bicol.university"><i class="fab fa-instagram"></i></a>
-    </div>
-    <p>Built by a BU Computer Engineering student</p>
-  </footer>
+<!-- Update Modal -->
+<div class="modal-overlay" id="updateModal">
+  <div class="modal">
+    <div class="modal-ribbon"><h2>Latest Update!</h2></div>
+    <ul>
+      <li><strong>New in this update:</strong> Improved UI/UX – smoother design, mobile-ready, better readability.</li>
+      <li><strong>Coming Soon:</strong> Upload a screenshot of your grades to automatically fill subjects and units.</li>
+    </ul>
+    <button onclick="closeModal()">Got it!</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="socials">
+    <a href="https://www.facebook.com/BicolUniversity"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://instagram.com/bicol.university"><i class="fab fa-instagram"></i></a>
+  </div>
+  <p>Built by a BU Computer Engineering student</p>
+</footer>
+
+<script>
+  // Show modal on page load
+  window.onload = function() {
+    document.getElementById('updateModal').style.display = 'flex';
+  }
+
+  // Close modal
+  function closeModal() {
+    document.getElementById('updateModal').style.display = 'none';
+  }
+</script>
 
 </body>
 </html>
