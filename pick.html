@@ -23,7 +23,7 @@ nav a.active { color:#4bb3f4; }
 .card { background:#fff; padding:2rem; border-radius:12px; box-shadow:0 10px 30px rgba(255,215,0,0.6); width:100%; max-width:400px; text-align:center; }
 .card h2 { margin:0; font-size:1.6rem; font-weight:600; color:#1b2a6f; }
 .card p { margin-top:0.4rem; font-size:0.95rem; color:#444; }
-.input-group { margin-top:1rem; display:flex; gap:0.5rem; }
+.input-group { margin-top:1rem; display:flex; gap:0.5rem; flex-wrap:wrap; }
 .input-group input { flex:1; padding:0.8rem; font-size:1rem; border-radius:8px; border:1px solid #ccc; }
 .input-group button { padding:0.8rem 1.2rem; font-size:1rem; font-weight:600; border-radius:8px; border:none; background:#4f6ef7; color:#fff; cursor:pointer; transition: transform 0.15s ease, background 0.2s ease; }
 .input-group button:hover { transform:translateY(-2px); background:#3e5bbf; }
@@ -37,64 +37,104 @@ nav a.active { color:#4bb3f4; }
   display:flex; justify-content:center; align-items:center;
   z-index:10; display:none;
 }
-.modal, .gwa-modal {
+
+/* Scrollable modal */
+.modal {
   background: linear-gradient(145deg, #f0f9ff, #ffffff);
-  padding:2rem; border-radius:20px;
-  width:90%; max-width:500px;
-  box-shadow:0 10px 30px rgba(255,215,0,0.6);
-  text-align:center; position:relative; overflow:hidden;
+  padding: 2rem;
+  border-radius: 20px;
+  width: 90%; 
+  max-width: 500px;
+  max-height: 80vh;
+  box-shadow: 0 10px 30px rgba(255,215,0,0.6);
+  text-align: center; 
+  position: relative; 
+  display: flex;
+  flex-direction: column;
   border: 2px solid #4bb3f4;
 }
-table { width:100%; border-collapse:collapse; margin-top:1rem; }
+
+.table-container {
+  overflow-y: auto;
+  flex: 1;
+  margin-top: 1rem;
+}
+
+table { width:100%; border-collapse:collapse; }
 table th, table td { border:1px solid #ccc; padding:0.5rem; text-align:center; font-size:0.95rem; }
 table th { background:#4f6ef7; color:#fff; }
 table input { width:80%; padding:0.3rem; border-radius:6px; border:1px solid #ccc; text-align:center; }
+
 .btn { margin-top:1rem; padding:0.8rem 1.5rem; font-size:1rem; font-weight:600; border-radius:8px; border:none; background:#4f6ef7; color:#fff; cursor:pointer; transition: transform 0.15s ease, background 0.2s ease; }
 .btn:hover { transform:translateY(-2px); background:#3e5bbf; }
 
-/* GWA modal styling */
-.gwa-modal h2 { font-size:1.8rem; margin:0.3rem 0; font-weight:600; color:#1b2a6f; }
-.gwa-modal h1 { font-size:1.4rem; font-weight:700; margin:0.2rem 0; color:#1b2a6f; }
-
-/* Ribbon and Badge */
-.ribbon-container {
+/* GWA Modal */
+.gwa-modal {
   position: relative;
-  width: 100%;
-  height: 3rem;
-  margin-bottom: 0.5rem;
+  background: linear-gradient(145deg,#f0f9ff,#ffffff);
+  padding:2rem;
+  border-radius:20px;
+  width:90%;
+  max-width:400px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(255,215,0,0.6);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  overflow:hidden;
+  z-index:20;
 }
+
+.gwa-modal h2 {
+    font-size: clamp(1rem, 4vw, 1.6rem);
+    margin:0.2rem 0;
+    font-weight:600;
+    color:#1b2a6f;
+}
+.gwa-modal h1 {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    margin:0.2rem 0;
+    font-weight:700;
+    color:#1b2a6f;
+}
+
+/* Ribbon & Badge */
+.ribbon-container { position: relative; width: 100%; height: 3rem; margin-bottom: 0.5rem; display:flex; justify-content:center; align-items:center; }
 .gwa-ribbon {
   position: absolute;
   top:0; left:0; right:0; bottom:0;
   border-radius: 8px;
   z-index:1;
   background: linear-gradient(90deg,#FFD700,#FFEA00,#FFD700);
-  box-shadow: 0 0 15px rgba(0,0,0,0.4);
-  animation: shimmer 3s linear infinite;
+  box-shadow: 0 0 8px rgba(0,0,0,0.4);
 }
 .gwa-badge {
-  position: absolute;
-  top:50%;
-  left:50%;
-  transform: translate(-50%, -50%);
+  position: relative;
   z-index:2;
-  padding:0.3rem 1.2rem;
+  padding:0.3rem 1rem;
   border-radius:12px;
   font-weight:800;
   color:#fff;
-  text-shadow: 2px 2px 4px #333;
+  text-shadow: 1px 1px 3px #333;
   display:inline-block;
-  font-size:2rem;
+  font-size: clamp(1rem, 5vw, 1.8rem);
   white-space: nowrap; 
 }
-.gwa-dean { font-size:2.2rem; text-shadow:2px 2px 8px #000; }
-.gwa-president { font-size:2.5rem; text-shadow:2px 2px 8px #000; }
-.gwa-encourage { font-size:1.2rem; background:#6c757d; box-shadow: 2px 2px 8px #000; border-radius:12px; padding:0.3rem 0.8rem; text-shadow:1px 1px 4px #000; display:inline-block; white-space: normal; max-width:90%; line-height:1.2em; }
+.gwa-dean { font-size: clamp(1.2rem,5vw,2rem); text-shadow:2px 2px 6px #000; }
+.gwa-president { font-size: clamp(1.3rem,5.5vw,2.2rem); text-shadow:2px 2px 6px #000; }
+.gwa-encourage { font-size: clamp(0.9rem,3.5vw,1rem); background:#6c757d; box-shadow: 1px 1px 6px #000; border-radius:12px; padding:0.3rem 0.8rem; text-shadow:1px 1px 3px #000; display:inline-block; white-space: normal; max-width:90%; line-height:1.2em; }
 
 /* Confetti */
-.confetti-piece { position:absolute; width:8px; height:8px; top:0; opacity:0.8; z-index:3; pointer-events:none; border-radius:50%; animation: fall 2.5s linear infinite; }
-@keyframes fall { 0% { transform:translateY(0) rotate(0deg); opacity:1; } 100% { transform:translateY(300px) rotate(360deg); opacity:0; } }
-@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+.confetti-piece { position:absolute; width:6px; height:6px; top:0; opacity:0.8; z-index:3; pointer-events:none; border-radius:50%; animation: fall 2.5s linear infinite; }
+@keyframes fall { 0% { transform:translateY(0) rotate(0deg); opacity:1; } 100% { transform:translateY(200px) rotate(360deg); opacity:0; } }
+
+/* Media Query for small devices */
+@media screen and (max-width: 400px){
+    .gwa-modal { padding:1rem; }
+    .gwa-modal h1 { font-size:1.5rem; }
+    .gwa-modal h2 { font-size:1rem; }
+    .gwa-badge { font-size:1.2rem; }
+}
 </style>
 </head>
 <body>
@@ -118,7 +158,7 @@ table input { width:80%; padding:0.3rem; border-radius:6px; border:1px solid #cc
       <input type="text" id="studentName" placeholder="Your Name">
     </div>
     <div class="input-group">
-      <input type="number" id="subjectCount" placeholder="Number of Subjects" min="1" max="12">
+      <input type="number" id="subjectCount" placeholder="Number of Subjects" min="1" max="50">
       <button onclick="proceed()">Proceed</button>
     </div>
 
@@ -131,21 +171,23 @@ table input { width:80%; padding:0.3rem; border-radius:6px; border:1px solid #cc
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h2>Enter Grades & Units</h2>
-    <table id="subjectTable">
-      <thead>
-        <tr>
-          <th>Subject #</th>
-          <th>Units</th>
-          <th>Grade</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div class="table-container">
+      <table id="subjectTable">
+        <thead>
+          <tr>
+            <th>Subject #</th>
+            <th>Units</th>
+            <th>Grade</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
     <button class="btn" onclick="calculateGWA()">Calculate GWA</button>
   </div>
 </div>
 
-<!-- GWA Result Modal -->
+<!-- GWA Modal -->
 <div class="gwa-overlay" id="gwaOverlay">
   <div class="gwa-modal">
     <div class="ribbon-container">
@@ -248,5 +290,6 @@ function createConfetti(container){
   }
 }
 </script>
+
 </body>
 </html>
