@@ -1,36 +1,234 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8292516083611949"
-     crossorigin="anonymous"></script>
-        <meta name="viewport" content="width=device-width", initial-scale="1.0">
-        <title>BU GWA Calculator</title>
-        <link rel="stylesheet" href="aboutStyle.css">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <link rel="icon" type="image/png" href="logo.png">
-    </head>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About | BU GWA Calculator</title>
 
-    <body>
-        <section class ="course">
-            <h2>ABOUT US</h2>
-            <p>This website is not affiliated with or officially part of Bicol University or BU ICTO.<br>It is a personal project created by a student from BU-Polangui (BS Computer Engineering)<br>for the convenience of grade computation.</p>
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-            <div class="row">
-                <div class="course-col">
-                    <h3>Mission</h3>
-                    <p>The Bicol University shall give professional and technical training, and provide advanced and specialized instruction in literature, philosophy, the sciences and technological researches(RA 552, Sec. 3.0)</p>
-                </div>
-                <div class="course-col">
-                    <h3>BICOL UNIVERSITY</h3>
-                    <p>The premier state university in Bicol region founded on June 21, 1969 through the passage of RA 5521. As an institution promoting Scholarship, Leadership, Character, and Service as its core values.</p>
-                </div>
-                <div class="course-col">
-                    <h3>Vision</h3>
-                    <p>A University for Humanity characterized by productive scholarship, transformative leadership, collaborative service, and distinctive character for sustainable societies.</p>
-                </div>
-            </div>
-        </section>
-    </body>
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="icon" type="image/png" href="logo.png">
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: #eaf6ff;
+  color: #1f2937;
+}
+
+/* NAVBAR */
+.navbar {
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.nav-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #1e3a8a;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #334155;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: #1e3a8a;
+}
+.nav-links a.active,
+.nav-links a:hover {
+  color: #4bb3f4;
+}
+
+/* HEADER BANNER */
+.header {
+  text-align: center;
+  padding: 3.5rem 1rem 2.5rem;
+  background: linear-gradient(180deg, #ffffff, #eaf6ff);
+}
+
+.header h1 {
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #1b2a6f;
+}
+
+.header p {
+  margin-top: 0.6rem;
+  color: #4b5563;
+  font-size: 1.05rem;
+}
+
+/* CONTENT WRAPPER */
+.wrapper {
+  max-width: 900px;
+  margin: auto;
+  padding: 1rem;
+}
+
+/* INFO CARDS */
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.12),
+    0 0 18px rgba(255,215,0,0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(79,110,247,0.05), transparent);
+  pointer-events: none;
+}
+
+.card h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1b2a6f;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.card h2 i {
+  color: #4bb3f4;
+}
+
+.card p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+/* FOOTER */
+footer {
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  text-align: center;
+  padding: 1.6rem 1rem;
+}
+
+footer .socials {
+  margin-bottom: 0.6rem;
+}
+
+footer .socials a {
+  margin: 0 0.6rem;
+  color: #4b5563;
+  font-size: 1.25rem;
+}
+
+footer p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .header h1 {
+    font-size: 1.9rem;
+  }
+  .card {
+    padding: 1.6rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <span class="logo">BU GWA Calculator</span>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a class="active">About</a></li>
+      <li><a href="helpus.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<section class="header">
+  <h1>About BU GWA Calculator</h1>
+  <p>Why this app exists and who it’s built for</p>
+</section>
+
+<!-- CONTENT -->
+<div class="wrapper">
+
+  <div class="card">
+    <h2><i class="fa-solid fa-circle-info"></i> About This App</h2>
+    <p>
+      This website is <strong>not affiliated</strong> with or officially part of Bicol University or BU-ICTO.
+      It is a personal project created by a <strong>BU-Polangui BS Computer Engineering student</strong> to help
+      students compute their General Weighted Average (GWA) accurately and efficiently.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2><i class="fa-solid fa-bullseye"></i> Mission</h2>
+    <p>
+      The mission of this project is to provide a <strong>simple, accurate, and user-friendly</strong>
+      GWA calculator tailored specifically for Bicol University grading standards—helping students
+      track their academic performance with clarity and confidence.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2><i class="fa-solid fa-school"></i> About Bicol University</h2>
+    <p>
+      Bicol University is the premier state university in the Bicol Region, established on June 21, 1969
+      through Republic Act 5521. It upholds the core values of
+      <strong>Scholarship, Leadership, Character, and Service</strong>.
+    </p>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="socials">
+    <a href="https://www.facebook.com/BicolUniversity" target="_blank"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://instagram.com/bicol.university" target="_blank"><i class="fab fa-instagram"></i></a>
+  </div>
+  <p>Built by a BU Computer Engineering student</p>
+</footer>
+
+</body>
 </html>
