@@ -178,7 +178,7 @@ function calculateGWA(){
   const badge=document.getElementById('honorBadge');
   badge.className='honor';
   badge.innerText='';
-  if(cumGWA<=1.20){ badge.innerText="Summa Cum Laude"; badge.classList.add('honor-summa'); }
+  if(cumGWA<=1.25){ badge.innerText="Summa Cum Laude"; badge.classList.add('honor-summa'); }
   else if(cumGWA<=1.45){ badge.innerText="Magna Cum Laude"; badge.classList.add('honor-magna'); }
   else if(cumGWA<=1.75){ badge.innerText="Cum Laude"; badge.classList.add('honor-cum'); }
   else{ badge.innerText="Keep Improving!"; badge.classList.add('honor-none'); }
@@ -209,3 +209,4 @@ window.onclick=function(e){
 
 </body>
 </html>
+
