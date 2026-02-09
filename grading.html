@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grading & Honors | BU GWA Calculator</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="icon" type="image/png" href="logo.png">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif;}
+body{background:#eaf6ff;color:#1f2937}
+
+/* NAVBAR */
+.navbar{background:#fff;border-bottom:1px solid #e5e7eb}
+.nav-container{max-width:1100px;margin:auto;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:700;color:#4bb3f4;font-size:1.4rem}
+.nav-links{list-style:none;display:flex;gap:1.2rem}
+.nav-links a{text-decoration:none;color:#4b5563;font-weight:500}
+.nav-links a.active,.nav-links a:hover{color:#4bb3f4}
+
+/* HEADER */
+.header{text-align:center;padding:3.2rem 1rem 2.2rem}
+.header h1{font-size:2.2rem;color:#1b2a6f}
+.header p{margin-top:.6rem;color:#4b5563;font-size:1.05rem}
+
+.wrapper{max-width:1000px;margin:auto;padding:1rem}
+
+/* CARD */
+.card{
+  background:#fff;
+  border-radius:16px;
+  padding:2rem;
+  margin-bottom:1.8rem;
+  box-shadow:0 14px 35px rgba(0,0,0,.12),0 0 20px rgba(255,215,0,.3)
+}
+.card h2{
+  font-size:1.5rem;
+  font-weight:600;
+  color:#1b2a6f;
+  margin-bottom:1rem;
+  display:flex;
+  align-items:center;
+  gap:.6rem
+}
+.card h2 i{color:#4bb3f4}
+.card p { font-size: 1rem; line-height: 1.7; color: #333; margin-bottom: -1rem; }
+
+/* TABLE */
+.table-container{overflow-x:auto}
+table{width:100%;border-collapse:collapse;margin-top:.8rem;font-size:.95rem}
+thead{background:#4bb3f4;color:#fff}
+th,td{padding:.7rem;text-align:center;border-bottom:1px solid #e5e7eb}
+tbody tr:hover{background:#f1f7ff}
+
+/* HONORS GRID */
+.honors{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.2rem
+}
+.honor-box{
+  background:linear-gradient(135deg,#fff,#f9fbff);
+  border-radius:14px;
+  padding:1.5rem;
+  box-shadow:0 10px 25px rgba(0,0,0,.1);
+  text-align:center
+}
+.honor-box h3{font-size:1.4rem;margin-bottom:.6rem}
+.honor-box ul{list-style:none;font-size:.95rem;color:#333}
+.honor-box li{margin-bottom:.5rem}
+
+/* Academic Honors */
+.pl{border-top:5px solid gold}
+.dl{border-top:5px solid #22c55e}
+.pl h3{color:#c9a000}
+.dl h3{color:#15803d}
+
+/* Latin Honors */
+.summa{
+  border-top:5px solid gold;
+  box-shadow:0 12px 30px rgba(255,215,0,.45)
+}
+.magna{
+  border-top:5px solid silver;
+  box-shadow:0 12px 30px rgba(192,192,192,.45)
+}
+.cum{
+  border-top:5px solid #cd7f32;
+  box-shadow:0 12px 30px rgba(205,127,50,.45)
+}
+
+.summa h3{color:#bfa100}
+.magna h3{color:#6b7280}
+.cum h3{color:#8b5a2b}
+
+/* FOOTER */
+footer{background:#fff;border-top:1px solid #e5e7eb;text-align:center;padding:1.6rem 1rem}
+footer p{font-size:.9rem;color:#666}
+
+@media(max-width:600px){
+  .header h1{font-size:1.8rem}
+  .card{padding:1.6rem}
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <span class="logo">BU GWA Calculator</span>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a class="active">Grading</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="header">
+  <h1>Grading System & Academic Honors</h1>
+  <p>Official grading reference and qualifications</p>
+</section>
+
+<div class="wrapper">
+
+<!-- GRADING SYSTEM -->
+<div class="card">
+<h2><i class="fa-solid fa-graduation-cap"></i> BU Grading System</h2>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Grade</th>
+<th>Description</th>
+<th>Equivalent (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>1.0</td><td>Outstanding</td><td>99 – 100</td></tr>
+<tr><td>1.1</td><td>Outstanding</td><td>98</td></tr>
+<tr><td>1.2</td><td>Outstanding</td><td>97</td></tr>
+<tr><td>1.3</td><td>Outstanding</td><td>96</td></tr>
+<tr><td>1.4</td><td>Outstanding</td><td>95</td></tr>
+<tr><td>1.5</td><td>Superior</td><td>94</td></tr>
+<tr><td>1.6</td><td>Superior</td><td>93</td></tr>
+<tr><td>1.7</td><td>Superior</td><td>92</td></tr>
+<tr><td>1.8</td><td>Very Satisfactory</td><td>91</td></tr>
+<tr><td>1.9</td><td>Very Satisfactory</td><td>90</td></tr>
+<tr><td>2.0</td><td>Very Satisfactory</td><td>89</td></tr>
+<tr><td>2.1</td><td>Very Satisfactory</td><td>88</td></tr>
+<tr><td>2.2</td><td>Very Satisfactory</td><td>87</td></tr>
+<tr><td>2.3</td><td>Very Satisfactory</td><td>86</td></tr>
+<tr><td>2.4</td><td>Very Satisfactory</td><td>85</td></tr>
+<tr><td>2.5</td><td>Very Satisfactory</td><td>84</td></tr>
+<tr><td>2.6</td><td>Satisfactory</td><td>82 - 83</td></tr>
+<tr><td>2.7</td><td>Satisfactory</td><td>80 - 81</td></tr>
+<tr><td>2.8</td><td>Satisfactory</td><td>78 - 79</td></tr>
+<tr><td>2.9</td><td>Fair / Average</td><td>76 - 77</td></tr>
+<tr><td>3.0</td><td>Fair / Average</td><td>75 (Passing)</td></tr>
+<tr><td>3.1 - 4.0</td><td>Poor</td><td>Below 75 (Conditional)</td></tr>
+<tr><td>5.0</td><td>Failed</td><td>Failure</td></tr>
+<tr><td>INC</td><td>Incomplete</td><td>Incomplete</td></tr>
+<tr><td>DRP</td><td>Dropped</td><td>Dropped</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- ACADEMIC HONORS -->
+<div class="card">
+<h2><i class="fa-solid fa-award"></i> Academic Honors</h2>
+<div class="honors">
+  <div class="honor-box pl">
+    <h3>President’s Lister</h3>
+    <ul>
+      <li>GWA: <strong>1.0000 – 1.4500</strong></li>
+      <li>No grade <strong>2.50 or higher</strong></li>
+      <li>Complete academic load</li>
+    </ul>
+  </div>
+
+  <div class="honor-box dl">
+    <h3>Dean’s Lister</h3>
+    <ul>
+      <li>GWA: <strong>1.4501 – 1.7500</strong></li>
+      <li>No grade <strong>2.50 or higher</strong></li>
+      <li>Complete academic load</li>
+    </ul>
+  </div>
+  
+</div>
+<p style="margin-top:1rem;font-size:0.9rem;color:#555;"> Note: Final qualification is subject to official evaluation by the Registrar and College policies. </p>
+</div>
+
+<!-- LATIN HONORS -->
+<div class="card">
+<h2><i class="fa-solid fa-medal"></i> Latin Honors</h2>
+<div class="honors">
+  <div class="honor-box summa">
+    <h3>Summa Cum Laude</h3>
+    <ul>
+      <li>GWA of <strong>1.2500 and above</strong></li>
+      <li>No failing or conditional grades</li>
+    </ul>
+  </div>
+
+  <div class="honor-box magna">
+    <h3>Magna Cum Laude</h3>
+    <ul>
+      <li>GWA of <strong>1.2501 – 1.4500</strong></li>
+      <li>No failing or conditional grades</li>
+    </ul>
+  </div>
+
+  <div class="honor-box cum">
+    <h3>Cum Laude</h3>
+    <ul>
+      <li>GWA of <strong>1.4501 – 1.7500</strong></li>
+      <li>No failing or conditional grades</li>
+    </ul>
+  </div>
+</div>
+<p style="margin-top:1rem;font-size:0.9rem;color:#555;"> Note: Final qualification is subject to official evaluation by the Registrar and College policies. </p>
+</div>
+
+</div>
+
+<footer>
+<p>Reference: Bicol University Student Handbook</p>
+</footer>
+
+</body>
+</html>
