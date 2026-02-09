@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GWA Goal Planner | BU GWA Calculator</title>
+
+<!-- Font & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif;}
+body{background:#eaf6ff;color:#1f2937;}
+
+/* NAVBAR */
+.navbar{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.05);}
+.nav-container{max-width:1100px;margin:auto;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;}
+.logo{font-weight:700;color:#1e3a8a;}
+.nav-links{list-style:none;display:flex;gap:1.5rem;}
+.nav-links a{text-decoration:none;color:#334155;font-weight:500;}
+.nav-links a.active,.nav-links a:hover{color:#4bb3f4;}
+
+/* HEADER */
+.header{text-align:center;padding:3rem 1rem 2rem;}
+.header h1{font-size:2.2rem;color:#1b2a6f;}
+.header p{margin-top:.6rem;color:#4b5563;}
+
+/* WRAPPER */
+.wrapper{max-width:900px;margin:auto;padding:1rem;display:flex;flex-direction:column;gap:1.5rem;}
+
+/* CARD */
+.card{background:#fff;border-radius:16px;padding:2rem;box-shadow:0 10px 25px rgba(0,0,0,.1);}
+.card h2{font-size:1.6rem;color:#1b2a6f;margin-bottom:1rem;display:flex;gap:.6rem;align-items:center;}
+.card h2 i{color:#4bb3f4;}
+
+.input-group{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:1rem;}
+.input-group input,.input-group select{
+  flex:1;
+  padding:.7rem 1rem;
+  font-size:1rem;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+.primary-btn{
+  width:100%;
+  padding:.9rem;
+  border:none;
+  border-radius:10px;
+  background:#4f6ef7;
+  color:#fff;
+  font-size:1.05rem;
+  font-weight:600;
+  cursor:pointer;
+}
+.primary-btn:hover{background:#3e5bbf}
+
+/* RESULT CARD */
+.result{display:none;text-align:center;}
+.big-gwa{font-size:2.8rem;font-weight:700;margin:.5rem 0;color:#1b2a6f;}
+
+.status{
+  display:inline-block;
+  padding:.4rem 1.2rem;
+  border-radius:999px;
+  font-weight:700;
+  margin-bottom:.6rem;
+}
+.challenging{background:#f59e0b;color:#fff;}
+.very-tight{background:#ef4444;color:#fff;}
+.achievable{background:#22c55e;color:#fff;}
+.impossible{background:#6b7280;color:#fff;}
+
+/* HONOR BADGE */
+.honor-badge{
+  margin-top:.8rem;
+  display:inline-block;
+  padding:.6rem 1.5rem;
+  border-radius:12px;
+  font-size:1.3rem;
+  font-weight:700;
+}
+.summa{background:gold;color:#1b1b1b;box-shadow:0 0 20px rgba(255,215,0,.6);}
+.magna{background:silver;color:#222;box-shadow:0 0 18px rgba(192,192,192,.6);}
+.cum{background:#cd7f32;color:#fff;box-shadow:0 0 18px rgba(205,127,50,.6);}
+.pl{background:#1e40af;color:#fff;}
+.dl{background:#15803d;color:#fff;}
+
+/* INFO */
+.info{font-size:.9rem;color:#555;margin-top:1rem;line-height:1.6;}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .header h1{font-size:1.8rem}
+  .big-gwa{font-size:2.2rem}
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <span class="logo">BU GWA Calculator</span>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a class="active">Goal Planner</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<section class="header">
+  <h1>🎯 GWA Goal Planner</h1>
+  <p>Know what GWA you need to reach your academic goal</p>
+</section>
+
+<div class="wrapper">
+
+  <!-- INPUT CARD -->
+  <div class="card">
+    <h2><i class="fa-solid fa-bullseye"></i> Set Your Goal</h2>
+
+    <div class="input-group">
+      <input type="number" step="0.0001" id="currentGWA" placeholder="Current Cumulative GWA">
+      <input type="number" id="unitsDone" placeholder="Units Completed">
+    </div>
+
+    <div class="input-group">
+      <input type="number" id="unitsLeft" placeholder="Units Remaining">
+      <select id="target">
+        <option value="">Select Target</option>
+        <option value="1.20">Summa Cum Laude</option>
+        <option value="1.45">Magna Cum Laude</option>
+        <option value="1.75">Cum Laude</option>
+        <option value="1.45-pl">President’s Lister</option>
+        <option value="1.75-dl">Dean’s Lister</option>
+      </select>
+    </div>
+
+    <button class="primary-btn" onclick="compute()">Calculate Required GWA</button>
+  </div>
+
+  <!-- RESULT CARD -->
+  <div class="card result" id="resultCard">
+    <h2>📊 Result</h2>
+
+    <div class="status" id="statusBadge"></div>
+    <div class="big-gwa" id="neededGWA">0.0000</div>
+    <div class="honor-badge" id="honorBadge"></div>
+
+    <div class="info">
+      Calculation:<br>
+      (Target × Total Units − Current × Completed Units) ÷ Remaining Units
+      <br><br>
+      ⚠️ <strong>Important Notes:</strong><br>
+      - No President’s/Dean’s Lister if you have any subject grade ≥ 2.50. <br>
+      - No Latin Honors if you have any failing/conditional grade (3.1–5.0). <br>
+      - Make sure your grades comply with above before using this calculator. <br>
+      - Final qualification is subject to Registrar & College policies.
+    </div>
+  </div>
+
+</div>
+
+<script>
+function compute(){
+  const cg = Number(currentGWA.value);
+  const ud = Number(unitsDone.value);
+  const ul = Number(unitsLeft.value);
+  const targetVal = target.value;
+
+  if(!cg || !ud || !ul || !targetVal){ alert("Please fill all fields."); return; }
+
+  let t = targetVal.includes("-") ? Number(targetVal.split("-")[0]) : Number(targetVal);
+  let totalUnits = ud + ul;
+  let req = ((t*totalUnits) - (cg*ud))/ul;
+
+  // Handle PL/DL limit
+  if(targetVal.includes("-") && req >= 2.50) req = 2.4000;
+
+  const res = document.getElementById("resultCard");
+  const status = document.getElementById("statusBadge");
+  const gwa = document.getElementById("neededGWA");
+  const badge = document.getElementById("honorBadge");
+
+  gwa.innerText = req.toFixed(4);
+  badge.className = "honor-badge";
+  badge.innerText = document.querySelector("#target option:checked").text;
+
+  // Status based on required GWA
+  if(req < 1) status.innerText = "❌ IMPOSSIBLE", status.className = "status impossible";
+  else if(req <= 1.45) status.innerText = "⚠️ CHALLENGING", status.className = "status challenging";
+  else if(req <= 1.75) status.innerText = "⚠️ VERY TIGHT", status.className = "status very-tight";
+  else status.innerText = "✅ ACHIEVABLE", status.className = "status achievable";
+
+  // Honor badge colors
+  badge.classList.remove("summa","magna","cum","pl","dl");
+  if(t <= 1.20) badge.classList.add("summa");
+  else if(t <= 1.45 && !targetVal.includes("-")) badge.classList.add("magna");
+  else if(t <= 1.75 && !targetVal.includes("-")) badge.classList.add("cum");
+  else if(targetVal.includes("-pl")) badge.classList.add("pl");
+  else if(targetVal.includes("-dl")) badge.classList.add("dl");
+
+  res.style.display = "block";
+  res.scrollIntoView({behavior:"smooth"});
+}
+</script>
+
+</body>
+</html>
