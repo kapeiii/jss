@@ -13,7 +13,7 @@ body {
 /* NAVBAR */
 .navbar {
   background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 .nav-container {
@@ -27,17 +27,27 @@ body {
 
 .logo {
   font-weight: 700;
-  color: #4bb3f4;
+  font-size: 1.1rem;
+  color: #1e3a8a;
 }
 
-nav a {
-  margin-left: 1.5rem;
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
   text-decoration: none;
-  color: #4b5563;
+  color: #334155;
   font-weight: 500;
 }
 
-nav a.active {
+.nav-links a:hover {
+  color: #1e3a8a;
+}
+.nav-links a.active,
+.nav-links a:hover {
   color: #4bb3f4;
 }
 
@@ -145,3 +155,4 @@ footer {
   text-align: center;
   color: #6b7280;
 }
+
