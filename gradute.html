@@ -1,43 +1,244 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8292516083611949"
-     crossorigin="anonymous"></script>
-        <meta name="viewport" content="width=device-width", initial-scale="1.0">
-        <title>BU GWA Calculator</title>
-        <link rel="stylesheet" type="text/css" href="graduate.css">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <link rel="icon" type="image/png" href="logo.png">
-    </head>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graduation Calculator | BU GWA Calculator</title>
 
-    <body>
-        <div class="text-box">
-            <h2>Latin Honors</h2>
-            <p>Complete grades with no INC/DRP<br>A regular student<br>Don't include NSTP subject</p>
-        </div>
-        <div class="select-menu">
-            <div class="select-btn" id="select-btn">
-                <span id="text">Number of Years</span>
-                <ion-icon name="chevron-down-outline" class="icon-arrow"></ion-icon>
-            </div>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-            <ul class="list">
-                <a href="4year.html"><li class="option" style="--i:3;">
-                    <span class="option-text">4 year course</span>
-                </li></a>
-                <a href="5year.html"><li class="option" style="--i:2;">
-                    <span class="option-text">5 year course</span>
-                </li></a>
-                <a href="6year.html"><li class="option" style="--i:1;">
-                    <span class="option-text">6 year course</span>
-                </li></a>
-            </ul>
-        </div>
+<style>
+* { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; }
+body { background:#eaf6ff; color:#1f2937; }
 
-        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-        <script src="pick.js"></script>
-    </body>
+/* NAVBAR */
+.navbar {
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.nav-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #1e3a8a;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #334155;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: #1e3a8a;
+}
+.nav-links a.active,
+.nav-links a:hover {
+  color: #4bb3f4;
+}
+
+
+/* HEADER */
+.header { text-align:center; padding:3rem 1rem 2rem; }
+.header h1 { font-size:2.2rem; color:#1b2a6f; }
+.header p { margin-top:0.6rem; color:#4b5563; font-size:1rem; }
+
+/* WRAPPER */
+.wrapper { max-width:900px; margin:auto; padding:1rem; display:flex; flex-direction:column; gap:1.5rem; }
+
+/* CARD */
+.card { background:#fff; border-radius:16px; padding:2rem; box-shadow:0 10px 25px rgba(0,0,0,0.1); }
+.card h2 { font-size:1.6rem; font-weight:600; color:#1b2a6f; margin-bottom:1rem; display:flex; align-items:center; gap:0.6rem; }
+.card h2 i { color:#4bb3f4; }
+.input-group { display:flex; gap:0.6rem; margin-bottom:1rem; flex-wrap:wrap; }
+.input-group input { flex:1; padding:0.7rem 1rem; font-size:1rem; border-radius:8px; border:1px solid #ccc; }
+.input-group button { padding:0.7rem 1.2rem; font-size:1rem; font-weight:600; border-radius:8px; border:none; background:#4f6ef7; color:#fff; cursor:pointer; transition: transform 0.15s ease, background 0.2s ease; }
+.input-group button:hover { transform:translateY(-2px); background:#3e5bbf; }
+
+/* MODAL */
+.modal { position:fixed; top:0; left:0; width:100%; height:100%; display:none; background:rgba(0,0,0,0.4); justify-content:center; align-items:center; z-index:100; overflow-y:auto; padding:1rem; }
+.modal-content { background:#fff; padding:2rem; border-radius:16px; max-width:450px; width:100%; text-align:center; box-shadow:0 0 20px rgba(255,215,0,0.5); position:relative; }
+.modal h2 { font-size:2rem; margin-bottom:0.5rem; color:#1b2a6f; }
+.modal .student-name { font-size:1.2rem; margin-bottom:0.5rem; color:#4b5563; }
+.modal .gpa { font-size:2rem; font-weight:700; margin-bottom:0.5rem; }
+.modal .honor { display:inline-block; font-size:1.3rem; font-weight:700; padding:0.4rem 1rem; border-radius:8px; color:#fff; margin-bottom:0.5rem; position:relative; }
+.honor-summa {background:gold; color:#1b1b1b; text-shadow:0 0 6px #000;}
+.honor-magna {background:silver; color:#222; text-shadow:0 0 6px #000;}
+.honor-cum {background:#cd7f32; color:#fff; text-shadow:0 0 6px #000;}
+.honor-none { background:#888; color:#fff; }
+.modal .note { font-size:0.9rem; color:#555; margin-top:0.6rem; }
+
+/* TABLE IN MODAL */
+.table-container { overflow-x:auto; max-height:200px; margin-top:1rem; }
+table { width:100%; border-collapse:collapse; font-size:0.95rem; }
+th, td { padding:0.5rem; border-bottom:1px solid #e5e7eb; text-align:center; }
+thead { background:#4bb3f4; color:#fff; }
+
+/* CONFETTI */
+.confetti-piece { position:absolute; width:8px; height:8px; background:gold; top:-10px; animation: confettiFall 2s linear infinite; }
+@keyframes confettiFall { 0%{transform:translateY(0) rotate(0deg);} 100%{transform:translateY(250px) rotate(360deg);} }
+
+/* RESPONSIVE */
+@media(max-width:600px){ .modal h2{font-size:1.5rem;} .modal .student-name{font-size:1rem;} .modal .gpa{font-size:1.6rem;} .modal .honor{font-size:1.1rem;padding:0.3rem 0.8rem;} }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <span class="logo">BU GWA Calculator</span>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a class="active">Services</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<section class="header">
+  <h1>Graduation Calculator</h1>
+  <p>Compute your cumulative GWA and check Latin Honors eligibility</p>
+</section>
+
+<!-- WRAPPER -->
+<div class="wrapper">
+
+  <div class="card">
+    <h2><i class='bx bx-user'></i> Student Name</h2>
+    <div class="input-group">
+      <input type="text" id="studentName" placeholder="Enter Student Name">
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><i class='bx bx-book'></i> Enter Semesters</h2>
+    <div id="semesters"></div>
+    <div class="input-group">
+      <button onclick="addSemester()">Add Semester</button>
+      <button onclick="calculateGWA()">Calculate</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="resultModal">
+  <div class="modal-content">
+    <h2>Cumulative GWA</h2>
+    <div class="student-name" id="displayName"></div>
+    <div class="gpa" id="cumulativeGWA">0.0000</div>
+    <div class="honor" id="honorBadge"></div>
+    <div class="table-container">
+      <table id="semTable">
+        <thead>
+          <tr><th>GWA per Semester</th><th>Honor</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="note">Note: Qualification is subject to College/Registrar verification.</div>
+  </div>
+</div>
+
+<script>
+let semesterCount = 0;
+
+function addSemester(){
+  semesterCount++;
+  const semDiv = document.createElement('div');
+  semDiv.className='card';
+  semDiv.innerHTML=`
+    <h2><i class='bx bx-calendar'></i> Semester ${semesterCount}</h2>
+    <div class="input-group">
+      <input type="number" step="0.0001" min="1.0" max="5.0" placeholder="Enter GWA for Semester ${semesterCount}" class="gwa">
+      <input type="number" min="1" max="50" placeholder="Total Units" class="units">
+    </div>
+  `;
+  document.getElementById('semesters').appendChild(semDiv);
+}
+
+function calculateGWA(){
+  const name=document.getElementById('studentName').value.trim();
+  const gwas = document.querySelectorAll('.gwa');
+  const units = document.querySelectorAll('.units');
+  let totalPoints=0, totalUnits=0;
+  let tbody=document.querySelector('#semTable tbody');
+  tbody.innerHTML='';
+  let invalid=false;
+
+  gwas.forEach((gwaInput, index)=>{
+    const u=Number(units[index].value);
+    const g=Number(gwaInput.value);
+    if(!g || !u){ invalid=true; return; }
+    totalPoints += g*u;
+    totalUnits += u;
+
+    // Semester PL/DL per GWA
+    let honor='-';
+    if(g<1.45) honor='Presidents Lister';
+    else if(g<=1.75) honor='Deans Lister';
+    
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${g.toFixed(4)}</td><td>${honor}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  if(!name){ alert("Please enter student name!"); return; }
+  if(invalid){ alert("Please fill all GWA and Units correctly!"); return; }
+
+  const cumGWA=totalPoints/totalUnits;
+  document.getElementById('displayName').innerText=name;
+  document.getElementById('cumulativeGWA').innerText=cumGWA.toFixed(4);
+
+  // Determine Latin honor
+  const badge=document.getElementById('honorBadge');
+  badge.className='honor';
+  badge.innerText='';
+  let qualifies=true;
+  gwas.forEach(g=>{if(g.value>=2.5) qualifies=false;});
+  if(qualifies && cumGWA<=1.20){ badge.innerText="Summa Cum Laude"; badge.classList.add('honor-summa'); }
+  else if(qualifies && cumGWA<=1.45){ badge.innerText="Magna Cum Laude"; badge.classList.add('honor-magna'); }
+  else if(qualifies && cumGWA<=1.75){ badge.innerText="Cum Laude"; badge.classList.add('honor-cum'); }
+  else{ badge.innerText="Keep Improving!"; badge.classList.add('honor-none'); }
+
+  // Show modal
+  document.getElementById('resultModal').style.display='flex';
+
+  // Confetti for honors
+  if(badge.innerText.includes("Cum Laude")){
+    for(let i=0;i<50;i++){
+      const conf=document.createElement('div');
+      conf.className='confetti-piece';
+      conf.style.left=Math.random()*100+'%';
+      conf.style.background=['#ffd700','#ffdd33','#ffee55'][Math.floor(Math.random()*3)];
+      conf.style.animationDuration=(1+Math.random()*2)+'s';
+      document.getElementById('resultModal').appendChild(conf);
+      setTimeout(()=>conf.remove(),3000);
+    }
+  }
+}
+
+// Close modal
+window.onclick=function(e){ const modal=document.getElementById('resultModal'); if(e.target==modal) modal.style.display='none'; }
+</script>
+
+</body>
 </html>
