@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BU GWA Feature Poll</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter', sans-serif;
+}
+
+body{
+  background:#eef4ff;
+  min-height:100vh;
+}
+
+.navbar{
+  background:#fff;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+
+.nav-container{
+  max-width:1100px;
+  margin:auto;
+  padding:1rem 1.5rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-weight:700;
+  color:#1e3a8a;
+}
+
+.container{
+  max-width:900px;
+  margin:2rem auto;
+  padding:1rem;
+}
+
+.card{
+  background:#fff;
+  padding:2rem;
+  border-radius:16px;
+  box-shadow:0 15px 40px rgba(79,110,247,0.15);
+  margin-bottom:2rem;
+}
+
+.card h2{
+  color:#1e3a8a;
+  margin-bottom:1rem;
+}
+
+.option{
+  border:2px solid #e2e8f0;
+  padding:1rem;
+  border-radius:12px;
+  margin-bottom:1rem;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.option:hover{
+  border-color:#4f6ef7;
+  background:#f3f6ff;
+}
+
+.option.selected{
+  border-color:#4f6ef7;
+  background:#e8eeff;
+}
+
+button{
+  width:100%;
+  padding:0.9rem;
+  border:none;
+  border-radius:10px;
+  background:#4f6ef7;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+button:hover{
+  background:#3d59c7;
+}
+
+#coffee{
+  text-align:center;
+  font-size:0.95rem;
+  color:#555;
+}
+
+#coffee strong{
+  color:#1e3a8a;
+}
+
+canvas{
+  margin-top:1.5rem;
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">BU GWA Calculator</div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="card">
+    <h2>🚀 What Should We Update First?</h2>
+
+    <div class="option" data-option="Dark Mode">🌙 Dark Mode</div>
+    <div class="option" data-option="Screenshot Scanning">📷 Screenshot Scanning</div>
+    <div class="option" data-option="Save Results">💾 Save Results</div>
+    <div class="option" data-option="Ranking Simulation">🏆 Class/Friends Ranking Simulation</div>
+    <div class="option" data-option="Export Results">📤 Export Results</div>
+
+    <button id="voteBtn">Vote Now</button>
+  </div>
+
+  <div class="card">
+    <h2>📊 Live Results</h2>
+    <canvas id="resultsChart"></canvas>
+  </div>
+
+  <div class="card" id="coffee">
+    ☕ <strong>Support the Developer</strong><br><br>
+    If this tool helped you, you can buy me a coffee to support future updates.<br><br>
+    <strong>GCash: 0970 191 5244</strong>
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue, runTransaction } 
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+/* 🔥 YOUR FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyDPvoGjxiNiP95KpyEJ0V0Psjq53joUEsI",
+  authDomain: "bu-gwa-poll.firebaseapp.com",
+  projectId: "bu-gwa-poll",
+  storageBucket: "bu-gwa-poll.firebasestorage.app",
+  messagingSenderId: "820847066482",
+  appId: "1:820847066482:web:ed7e1db5a4c3c9ccbb31eb"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+/* OPTIONS */
+let selectedOption = null;
+const options = document.querySelectorAll('.option');
+const voteBtn = document.getElementById('voteBtn');
+
+options.forEach(option=>{
+  option.addEventListener('click',()=>{
+    options.forEach(o=>o.classList.remove('selected'));
+    option.classList.add('selected');
+    selectedOption = option.dataset.option;
+  });
+});
+
+/* PREVENT MULTIPLE VOTES */
+if(localStorage.getItem("hasVoted")){
+  voteBtn.disabled = true;
+  voteBtn.innerText = "You already voted";
+}
+
+/* VOTE */
+voteBtn.addEventListener("click", () => {
+
+  if(!selectedOption){
+    alert("Please select an option first.");
+    return;
+  }
+
+  const voteRef = ref(database, "pollVotes/" + selectedOption);
+
+  runTransaction(voteRef, (currentVotes) => {
+    return (currentVotes || 0) + 1;
+  });
+
+  localStorage.setItem("hasVoted", "true");
+  voteBtn.disabled = true;
+  voteBtn.innerText = "Vote Submitted ✓";
+});
+
+/* CHART */
+const ctx = document.getElementById('resultsChart').getContext('2d');
+
+let chart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: [],
+    datasets: [{
+      label: 'Votes',
+      data: [],
+      backgroundColor: '#4f6ef7'
+    }]
+  },
+  options: {
+    responsive:true,
+    scales:{
+      y:{ beginAtZero:true }
+    }
+  }
+});
+
+/* REAL-TIME UPDATE */
+onValue(ref(database, "pollVotes"), (snapshot)=>{
+  const data = snapshot.val() || {};
+
+  chart.data.labels = Object.keys(data);
+  chart.data.datasets[0].data = Object.values(data);
+  chart.update();
+});
+
+</script>
+
+</body>
+</html>
