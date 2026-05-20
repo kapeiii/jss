@@ -338,6 +338,18 @@ function createConfetti(container){
     container.appendChild(confetti);
     setTimeout(()=>{confetti.remove();},2500);
   }
+
+function saveCurrentGWA() {
+  const name = document.getElementById('studentName').value;
+  const gwa = document.getElementById('gwaValue').innerText;
+
+  saveCalculation("GWA Calculator", {
+    name: name,
+    result: gwa
+  });
+
+  alert("Saved successfully!");
+}
 }
 </script>
 <script src="saved.js"></script>
