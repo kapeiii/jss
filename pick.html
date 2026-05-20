@@ -223,14 +223,23 @@ table input { width:80%; padding:0.3rem; border-radius:6px; border:1px solid #cc
 </div>
 
 <!-- GWA Modal -->
+<!-- GWA Modal -->
 <div class="gwa-overlay" id="gwaOverlay">
   <div class="gwa-modal">
+
     <div class="ribbon-container">
       <div id="gwaRibbon" class="gwa-ribbon"></div>
       <div id="gwaBadge" class="gwa-badge"></div>
     </div>
+
     <h2 id="gwaName"></h2>
     <h1 id="gwaValue">0.0000</h1>
+
+    <!-- ✅ ADD THIS BUTTON HERE -->
+    <button class="btn" onclick="saveCurrentGWA()">
+      Save This Result 📌
+    </button>
+
   </div>
 </div>
 
