@@ -303,7 +303,6 @@ function addSemester(){
       <input type="number" class="gwa" placeholder="GWA">
       <input type="number" class="units" placeholder="Units">
 
-      <!-- APPLY SAVED BUTTON -->
       <button type="button" onclick="applySavedToSemester(this)">
         Apply Saved
       </button>
@@ -313,49 +312,12 @@ function addSemester(){
   document.getElementById("semesters").appendChild(div);
 }
 
-/* APPLY SAVED CALCULATION */
-function applySavedToSemester(btn){
-
-  const saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
-
-  const gwaList = saved.filter(x => x.module === "GWA Calculator");
-
-  if(gwaList.length === 0){
-    alert("No saved GWA calculations found.");
-    return;
-  }
-
-  let msg = "Select saved calculation:\n\n";
-
-  gwaList.forEach((x, i) => {
-    msg += `${i+1}. ${x.data.name || "Unnamed"} - ${x.data.result}\n`;
-  });
-
-  const choice = prompt(msg + "\nEnter number:");
-
-  const index = Number(choice) - 1;
-
-  if(index < 0 || index >= gwaList.length){
-    alert("Invalid choice");
-    return;
-  }
-
-  const selected = gwaList[index];
-
-  const card = btn.closest(".semester-card");
-
-  card.querySelector(".gwa").value = selected.data.result;
-
-  // if units exist in saved GWA calculator
-  if(selected.data.totalUnits){
-    card.querySelector(".units").value = selected.data.totalUnits;
-  }
-}
 
 /* REMOVE */
 function removeSemester(btn){
   btn.closest(".semester-card").remove();
 }
+
 
 /* CALCULATE */
 function calculateGWA(){
@@ -394,7 +356,8 @@ function calculateGWA(){
   document.getElementById("resultModal").style.display = "flex";
 }
 
-/* SAVE */
+
+/* SAVE (FIXED - includes correct module + full data) */
 function saveGraduation(){
 
   const name = document.getElementById("studentName").value;
@@ -402,10 +365,12 @@ function saveGraduation(){
   const semesters = [];
 
   document.querySelectorAll(".semester-card").forEach(card => {
+
     semesters.push({
       gwa: card.querySelector(".gwa").value,
       units: card.querySelector(".units").value
     });
+
   });
 
   const saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
@@ -424,7 +389,54 @@ function saveGraduation(){
   alert("Saved successfully!");
 }
 
-/* DEFAULT */
+
+/* APPLY SAVED (FIXED FULL UI VERSION) */
+function applySavedToSemester(btn){
+
+  const saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
+
+  const list = saved.filter(x => x.module === "Graduation Calculator");
+
+  if(list.length === 0){
+    alert("No saved graduation calculations found.");
+    return;
+  }
+
+  // build simple selection UI
+  let options = "Select Saved Record:\n\n";
+
+  list.forEach((item, i) => {
+    options += `${i+1}. ${item.data.name || "Unnamed"}\n`;
+  });
+
+  const pick = prompt(options + "\nEnter number:");
+
+  const index = Number(pick) - 1;
+
+  if(index < 0 || index >= list.length){
+    alert("Invalid selection");
+    return;
+  }
+
+  const selected = list[index];
+
+  const card = btn.closest(".semester-card");
+
+  // find current semester index
+  const allCards = [...document.querySelectorAll(".semester-card")];
+  const currentIndex = allCards.indexOf(card);
+
+  const semesterData = selected.data.semesters[currentIndex];
+
+  if(!semesterData){
+    alert("No matching semester data in saved record.");
+    return;
+  }
+
+  card.querySelector(".gwa").value = semesterData.gwa;
+  card.querySelector(".units").value = semesterData.units;
+}
+
 addSemester();
 addSemester();
 
