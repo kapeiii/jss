@@ -431,7 +431,9 @@ thead {
     <div class="note">
       Note: Qualification is subject to College/Registrar verification.
     </div>
-
+    <button class="input-group button" onclick="saveGraduation()">
+  Save This Calculation 📌
+</button>
   </div>
 </div>
 
@@ -674,6 +676,36 @@ window.onclick = function(e){
 addSemester();
 addSemester();
 
+function saveGraduation() {
+
+  const name = document.getElementById('studentName').value;
+  const cumulative = document.getElementById('cumulativeGWA').innerText;
+  const honor = document.getElementById('honorBadge').innerText;
+
+  // collect semesters
+  const semesters = [];
+
+  document.querySelectorAll('.semester-card').forEach((card) => {
+
+    const gwa = card.querySelector('.gwa').value;
+    const units = card.querySelector('.units').value;
+
+    semesters.push({
+      gwa: gwa,
+      units: units
+    });
+
+  });
+
+  saveCalculation("Graduation Calculator", {
+    name: name,
+    result: cumulative,
+    honor: honor,
+    semesters: semesters
+  });
+
+  alert("Saved successfully!");
+}
 </script>
 <script src="saved.js"></script>
 
