@@ -244,6 +244,26 @@ table input { width:80%; padding:0.3rem; border-radius:6px; border:1px solid #cc
 </div>
 
 <script>
+
+window.addEventListener("load", () => {
+
+  const data = JSON.parse(localStorage.getItem("restoreGWA"));
+
+  if (!data) return;
+
+  // restore name
+  document.getElementById('studentName').value = data.data.name;
+
+  document.getElementById('gwaValue').innerText = data.data.result;
+
+  document.getElementById('gwaName').innerText = data.data.name;
+
+  alert("Restored saved calculation!");
+
+  localStorage.removeItem("restoreGWA");
+
+});
+  
 const modalOverlay = document.getElementById('modalOverlay');
 const gwaOverlay = document.getElementById('gwaOverlay');
 
