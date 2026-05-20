@@ -52,9 +52,26 @@ function renderSaved() {
 
 /* LOAD BACK */
 function loadSaved(item) {
-  alert("Load feature connects to module later");
 
-  // We will connect this per module next step
+  const module = item.module;
+
+  if (module === "GWA Calculator") {
+
+    // go to GWA page if not there
+    window.location.href = "pick.html";
+
+    localStorage.setItem("restoreGWA", JSON.stringify(item));
+
+  }
+
+  else if (module === "Graduation Calculator") {
+
+    window.location.href = "graduation.html";
+
+    localStorage.setItem("restoreGrad", JSON.stringify(item));
+
+  }
+
 }
 
 /* GLOBAL HELPER */
