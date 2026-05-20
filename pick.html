@@ -278,6 +278,12 @@ function calculateGWA() {
   const gwa = (totalPoints/totalUnits).toFixed(4);
   modalOverlay.style.display = 'none';
 
+  saveCalculation("GWA Calculator", {
+  name: document.getElementById('studentName').value,
+  result: gwa,
+  units: totalUnits
+  });
+
   const name = document.getElementById('studentName').value.trim();
   document.getElementById('gwaName').innerText = name;
 
