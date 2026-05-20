@@ -25,6 +25,60 @@ body {
   align-items: center;
 }
 
+#savedWrapper {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 9999;
+  font-family: 'Inter', sans-serif;
+}
+
+#savedToggle {
+  background: #1e3a8a;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#savedDropdown {
+  margin-top: 10px;
+  width: 260px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+#savedDropdown h4 {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #1e3a8a;
+}
+
+#savedList {
+  list-style: none;
+  padding: 0;
+}
+
+#savedList li {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+#savedList li:hover {
+  background: #f1f5f9;
+}
+
+.hidden {
+  display: none;
+}
 .logo {
   font-weight: 700;
   font-size: 1.1rem;
