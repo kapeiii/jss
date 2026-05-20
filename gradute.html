@@ -466,7 +466,38 @@ thead {
 </div>
 
 <script>
+window.addEventListener("load", () => {
 
+  const data = JSON.parse(localStorage.getItem("restoreGrad"));
+
+  if (!data) return;
+
+  document.getElementById('studentName').value = data.data.name;
+
+  // rebuild semesters
+  const sems = data.data.semesters;
+
+  document.getElementById('semesters').innerHTML = "";
+
+  semesterCount = 0;
+
+  sems.forEach(s => {
+
+    addSemester();
+
+    const last = document.querySelectorAll('.semester-card');
+    const card = last[last.length - 1];
+
+    card.querySelector('.gwa').value = s.gwa;
+    card.querySelector('.units').value = s.units;
+
+  });
+
+  calculateGWA();
+
+  localStorage.removeItem("restoreGrad");
+
+});
 let semesterCount = 0;
 
 /* ADD SEMESTER */
