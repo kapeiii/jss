@@ -1,178 +1,273 @@
-<!DOCTYPE html> 
-<html lang="en"> <head> 
-  <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <title>BU GWA Calculator</title> 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"> 
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <style> * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter', sans-serif; 
-                                                                                                 } 
-    
-    body { background:#eaf6ff; color:#1f2937; } /* NAVBAR */ .navbar { background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); } .nav-container { max-width: 1100px; margin: auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; } .logo { font-weight: 700; font-size: 1.1rem; color: #1e3a8a; } .nav-links { list-style: none; display: flex; gap: 1.5rem; } .nav-links a { text-decoration: none; color: #334155; font-weight: 500; } .nav-links a:hover { color: #1e3a8a; } .nav-links a.active, .nav-links a:hover { color: #4bb3f4; } .container { display:flex; justify-content:center; align-items:center; height:calc(100vh - 72px); padding:1rem; } .card { background:#fff; padding:2rem; border-radius:12px; box-shadow:0 10px 30px rgba(255,215,0,0.6); width:100%; max-width:400px; text-align:center; } .card h2 { margin:0; font-size:1.6rem; font-weight:600; color:#1b2a6f; } .card p { margin-top:0.4rem; font-size:0.95rem; color:#444; } .input-group { margin-top:1rem; display:flex; gap:0.5rem; flex-wrap:wrap; } .input-group input { flex:1; padding:0.8rem; font-size:1rem; border-radius:8px; border:1px solid #ccc; } .input-group button { padding:0.8rem 1.2rem; font-size:1rem; font-weight:600; border-radius:8px; border:none; background:#4f6ef7; color:#fff; cursor:pointer; transition: transform 0.15s ease, background 0.2s ease; } .input-group button:hover { transform:translateY(-2px); background:#3e5bbf; } .footnote { margin-top:1rem; font-size:0.85rem; color:#666; } #errorMsg { margin-top:0.8rem; font-size:0.9rem; color:#e02424; } /* Modal Overlay */ .modal-overlay, .gwa-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.35); display:flex; justify-content:center; align-items:center; z-index:10; display:none; } /* Scrollable modal */ .modal { background: linear-gradient(145deg, #f0f9ff, #ffffff); padding: 2rem; border-radius: 20px; width: 90%; max-width: 500px; max-height: 80vh; box-shadow: 0 10px 30px rgba(255,215,0,0.6); text-align: center; position: relative; display: flex; flex-direction: column; border: 2px solid #4bb3f4; } .table-container { overflow-y: auto; flex: 1; margin-top: 1rem; } table { width:100%; border-collapse:collapse; } table th, table td { border:1px solid #ccc; padding:0.5rem; text-align:center; font-size:0.95rem; } table th { background:#4f6ef7; color:#fff; } table input { width:80%; padding:0.3rem; border-radius:6px; border:1px solid #ccc; text-align:center; } .btn { margin-top:1rem; padding:0.8rem 1.5rem; font-size:1rem; font-weight:600; border-radius:8px; border:none; background:#4f6ef7; color:#fff; cursor:pointer; transition: transform 0.15s ease, background 0.2s ease; } .btn:hover { transform:translateY(-2px); background:#3e5bbf; } /* GWA Modal */ .gwa-modal { position: relative; background: linear-gradient(145deg,#f0f9ff,#ffffff); padding:2rem; border-radius:20px; width:90%; max-width:400px; text-align:center; box-shadow:0 10px 30px rgba(255,215,0,0.6); display:flex; flex-direction:column; align-items:center; overflow:hidden; z-index:20; } .gwa-modal h2 { font-size: clamp(1rem, 4vw, 1.6rem); margin:0.2rem 0; font-weight:600; color:#1b2a6f; } .gwa-modal h1 { font-size: clamp(1.5rem, 6vw, 2rem); margin:0.2rem 0; font-weight:700; color:#1b2a6f; } /* Ribbon & Badge */ .ribbon-container { position: relative; width: 100%; height: 3rem; margin-bottom: 0.5rem; display:flex; justify-content:center; align-items:center; } .gwa-ribbon { position: absolute; top:0; left:0; right:0; bottom:0; border-radius: 8px; z-index:1; background: linear-gradient(90deg,#FFD700,#FFEA00,#FFD700); box-shadow: 0 0 8px rgba(0,0,0,0.4); } .gwa-badge { position: relative; z-index:2; padding:0.3rem 1rem; border-radius:12px; font-weight:800; color:#fff; text-shadow: 1px 1px 3px #333; display:inline-block; font-size: clamp(1rem, 5vw, 1.8rem); white-space: nowrap; } .gwa-dean { font-size: clamp(1.2rem,5vw,2rem); text-shadow:2px 2px 6px #000; } .gwa-president { font-size: clamp(1.3rem,5.5vw,2.2rem); text-shadow:2px 2px 6px #000; } .gwa-encourage { font-size: clamp(0.9rem,3.5vw,1rem); background:#6c757d; box-shadow: 1px 1px 6px #000; border-radius:12px; padding:0.3rem 0.8rem; text-shadow:1px 1px 3px #000; display:inline-block; white-space: normal; max-width:90%; line-height:1.2em; } /* Confetti */ .confetti-piece { position:absolute; width:6px; height:6px; top:0; opacity:0.8; z-index:3; pointer-events:none; border-radius:50%; animation: fall 2.5s linear infinite; } @keyframes fall { 0% { transform:translateY(0) rotate(0deg); opacity:1; } 100% { transform:translateY(200px) rotate(360deg); opacity:0; } } /* Media Query for small devices */ @media screen and (max-width: 400px){ .gwa-modal { padding:1rem; } .gwa-modal h1 { font-size:1.5rem; } .gwa-modal h2 { font-size:1rem; } .gwa-badge { font-size:1.2rem; } } </style> </head> <body> <nav class="navbar"> <div class="nav-container"> <span class="logo">BU GWA Calculator</span> <ul class="nav-links"> <li><a href="index.html">Home</a></li> <li><a class="active">Services</a></li> </ul> </div> </nav> <div class="container"> <div class="card"> <h2>Enter Details</h2> <p>Complete grades, no INC/DRP & exclude NSTP.</p> <div class="input-group"> <input type="text" id="studentName" placeholder="Your Name"> </div> <div class="input-group"> <input type="number" id="subjectCount" placeholder="Number of Subjects" min="1" max="50"> <button onclick="proceed()">Proceed</button> </div> <div id="errorMsg"></div> <div class="footnote">Enter your name and number of subjects for this term.</div> </div> </div> <!-- Subjects Modal --> <div class="modal-overlay" id="modalOverlay"> <div class="modal"> <h2>Enter Grades & Units</h2> <div class="table-container"> <table id="subjectTable"> <thead> <tr> <th>Subject #</th> <th>Units</th> <th>Grade</th> </tr> </thead> <tbody></tbody> </table> </div> <button class="btn" onclick="calculateGWA()">Calculate GWA</button> </div> </div> <!-- GWA Modal --> <!-- GWA Modal --> <div class="gwa-overlay" id="gwaOverlay"> <div class="gwa-modal"> <div class="ribbon-container"> <div id="gwaRibbon" class="gwa-ribbon"></div> <div id="gwaBadge" class="gwa-badge"></div> </div> <h2 id="gwaName"></h2> <h1 id="gwaValue">0.0000</h1> <!-- ✅ ADD THIS BUTTON HERE --> <button class="btn" onclick="saveCurrentGWA()"> Save This Result 📌 </button> </div> </div> <script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graduation Calculator | BU GWA Calculator</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<style>
+* { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; } body { background:#eaf6ff; color:#1f2937; } /* NAVBAR */ .navbar { background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); } .nav-container { max-width: 1100px; margin: auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; } .logo { font-weight: 700; font-size: 1.1rem; color: #1e3a8a; } .nav-links { list-style: none; display: flex; gap: 1.5rem; } .nav-links a { text-decoration: none; color: #334155; font-weight: 500; } .nav-links a.active, .nav-links a:hover { color: #4bb3f4; } .save-btn { margin-top: 1rem; width: 100%; padding: 0.8rem 1rem; font-size: 1rem; font-weight: 600; border-radius: 10px; border: none; background: linear-gradient(135deg, #1e3a8a, #4f6ef7); color: white; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 6px 15px rgba(79, 110, 247, 0.3); } .save-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(79, 110, 247, 0.4); background: linear-gradient(135deg, #162a6f, #3e5bbf); } .save-btn i { font-size: 1.2rem; } / HEADER / .header { text-align:center; padding:3rem 1rem 2rem; } .header h1 { font-size:2.2rem; color:#1b2a6f; } .header p { margin-top:0.6rem; color:#4b5563; font-size:1rem; } / WRAPPER / .wrapper { max-width:900px; margin:auto; padding:1rem; display:flex; flex-direction:column; gap:1.5rem; } / CARD / .card { background:#fff; border-radius:16px; padding:2rem; box-shadow:0 10px 25px rgba(0,0,0,0.1); } .card h2 { font-size:1.6rem; font-weight:600; color:#1b2a6f; margin-bottom:1rem; display:flex; align-items:center; gap:0.6rem; } .card h2 i { color:#4bb3f4; } .input-group { display:flex; gap:0.6rem; margin-bottom:1rem; flex-wrap:wrap; } .input-group input { flex:1; padding:0.7rem 1rem; font-size:1rem; border-radius:8px; border:1px solid #ccc; } .input-group button { padding:0.7rem 1.2rem; font-size:1rem; font-weight:600; border-radius:8px; border:none; background:#4f6ef7; color:#fff; cursor:pointer; transition: transform 0.15s ease, background 0.2s ease; } .input-group button:hover { transform:translateY(-2px); background:#3e5bbf; } / SEMESTER CARD / .semester-card { background:#f8fbff; border:2px solid #dbeafe; border-radius:18px; padding:1.5rem; margin-bottom:1rem; position:relative; transition:0.2s ease; } .semester-card:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,0.06); } .semester-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; } .semester-title { font-size:1.5rem; font-weight:700; color:#1e3a8a; display:flex; align-items:center; gap:0.5rem; } .semester-title i { color:#4bb3f4; } / REMOVE BUTTON / .remove-semester { background:#ef4444; color:white; border:none; width:42px; height:42px; border-radius:12px; cursor:pointer; display:flex; justify-content:center; align-items:center; font-size:1.2rem; transition:0.2s ease; } .remove-semester:hover { background:#dc2626; transform:scale(1.08); } / MODAL / .modal { position:fixed; top:0; left:0; width:100%; height:100%; display:none; background:rgba(0,0,0,0.4); justify-content:center; align-items:center; z-index:100; overflow-y:auto; padding:1rem; } .modal-content { background:#fff; padding:2rem; border-radius:16px; max-width:500px; width:100%; text-align:center; box-shadow:0 0 20px rgba(255,215,0,0.5); position:relative; } .modal h2 { font-size:2rem; margin-bottom:0.5rem; color:#1b2a6f; } .modal .student-name { font-size:1.2rem; margin-bottom:0.5rem; color:#4b5563; } .modal .gpa { font-size:2rem; font-weight:700; margin-bottom:0.5rem; } .modal .honor { display:inline-block; font-size:1.3rem; font-weight:700; padding:0.4rem 1rem; border-radius:8px; color:#fff; margin-bottom:0.5rem; position:relative; } .honor-summa { background:gold; color:#1b1b1b; text-shadow:0 0 6px #000; } .honor-magna { background:silver; color:#222; text-shadow:0 0 6px #000; } .honor-cum { background:#cd7f32; color:#fff; text-shadow:0 0 6px #000; } .honor-none { background:#888; color:#fff; } .modal .note { font-size:0.9rem; color:#555; margin-top:0.6rem; } / TABLE / .table-container { overflow-x:auto; max-height:200px; margin-top:1rem; } table { width:100%; border-collapse:collapse; font-size:0.95rem; } th, td { padding:0.5rem; border-bottom:1px solid #e5e7eb; text-align:center; } thead { background:#4bb3f4; color:#fff; } / CONFETTI / .confetti-piece { position:absolute; width:8px; height:8px; background:gold; top:-10px; animation: confettiFall 2s linear infinite; } @keyframes confettiFall { 0% { transform:translateY(0) rotate(0deg); } 100% { transform:translateY(250px) rotate(360deg); } } / RESPONSIVE */ @media(max-width:600px){ .header h1 { font-size:1.8rem; } .semester-title { font-size:1.2rem; } .modal h2 { font-size:1.5rem; } .modal .student-name { font-size:1rem; } .modal .gpa { font-size:1.6rem; } .modal .honor { font-size:1.1rem; padding:0.3rem 0.8rem; } }
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <span class="logo">BU GWA Calculator</span>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a class="active">Services</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="header">
+  <h1>Graduation Calculator</h1>
+  <p>Compute your cumulative GWA and check Latin Honors eligibility</p>
+</section>
+
+<div class="wrapper">
+
+  <div class="card">
+    <h2><i class='bx bx-user'></i> Student Name</h2>
+    <div class="input-group">
+      <input type="text" id="studentName" placeholder="Enter Student Name">
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><i class='bx bx-book'></i> Enter Semesters</h2>
+
+    <div id="semesters"></div>
+
+    <div class="input-group">
+      <button onclick="addSemester()">Add Semester</button>
+      <button onclick="calculateGWA()">Calculate</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- RESULT MODAL -->
+<div class="modal" id="resultModal">
+  <div class="modal-content">
+
+    <h2>Cumulative GWA</h2>
+
+    <div class="student-name" id="displayName"></div>
+
+    <div class="gpa" id="cumulativeGWA">0.0000</div>
+
+    <div class="honor" id="honorBadge"></div>
+
+    <div class="table-container">
+      <table id="semTable">
+        <thead>
+          <tr>
+            <th>GWA per Semester</th>
+            <th>Honor</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      Note: Qualification is subject to College/Registrar verification.
+    </div>
+
+    <button class="save-btn" onclick="saveGraduation()">
+      <i class='bx bx-bookmark'></i> Save This Calculation
+    </button>
+
+  </div>
+</div>
+
+<script>
+
+let semesterCount = 0;
+
+/* RESTORE */
 window.addEventListener("load", () => {
 
-  const data = JSON.parse(localStorage.getItem("restoreGWA"));
-  if (!data) return;
+  const data = JSON.parse(localStorage.getItem("restoreGrad"));
+  if (!data) {
+    addSemester();
+    addSemester();
+    return;
+  }
 
   const saved = data.data;
 
-  // restore name
   document.getElementById('studentName').value = saved.name;
 
-  // open modal FIRST
-  document.getElementById('modalOverlay').style.display = 'flex';
+  document.getElementById('semesters').innerHTML = "";
+  semesterCount = 0;
 
-  // rebuild table
-  const tbody = document.querySelector('#subjectTable tbody');
-  tbody.innerHTML = "";
+  if (saved.semesters && saved.semesters.length > 0) {
 
-  if (saved.subjects) {
-    saved.subjects.forEach((subj, i) => {
-      const row = document.createElement('tr');
+    saved.semesters.forEach(s => {
+      addSemester();
 
-      row.innerHTML = `
-        <td>${i + 1}</td>
-        <td><input type="number" value="${subj.units}"></td>
-        <td><input type="number" value="${subj.grade}" step="0.01"></td>
-      `;
+      const cards = document.querySelectorAll('.semester-card');
+      const last = cards[cards.length - 1];
 
-      tbody.appendChild(row);
+      last.querySelector('.gwa').value = s.gwa;
+      last.querySelector('.units').value = s.units;
     });
+
+  } else {
+    addSemester();
+    addSemester();
   }
 
-  localStorage.removeItem("restoreGWA");
+  localStorage.removeItem("restoreGrad");
 });
 
-const modalOverlay = document.getElementById('modalOverlay');
-const gwaOverlay = document.getElementById('gwaOverlay');
 
-/* -----------------------
-   PROCEED
-------------------------*/
-function proceed() {
-  const count = document.getElementById('subjectCount').value;
+/* ADD SEMESTER */
+function addSemester(){
+
+  semesterCount++;
+
+  const semDiv = document.createElement('div');
+  semDiv.className = 'semester-card';
+
+  semDiv.innerHTML = `
+    <div class="semester-header">
+      <div class="semester-title">
+        <i class='bx bx-calendar'></i>
+        Semester ${semesterCount}
+      </div>
+
+      ${semesterCount > 1 ? `
+        <button class="remove-semester" onclick="removeSemester(this)">
+          <i class='bx bx-trash'></i>
+        </button>` : ``}
+    </div>
+
+    <div class="input-group">
+      <input type="number" class="gwa" placeholder="Enter GWA">
+      <input type="number" class="units" placeholder="Total Units">
+    </div>
+  `;
+
+  document.getElementById('semesters').appendChild(semDiv);
+}
+
+
+/* REMOVE */
+function removeSemester(btn){
+  btn.closest('.semester-card').remove();
+  renumberSemesters();
+}
+
+
+/* RENUMBER */
+function renumberSemesters(){
+
+  const cards = document.querySelectorAll('.semester-card');
+  semesterCount = cards.length;
+
+  cards.forEach((card, i) => {
+    card.querySelector('.semester-title').innerHTML =
+      <i class='bx bx-calendar'></i> Semester ${i + 1};
+  });
+}
+
+
+/* CALCULATE */
+function calculateGWA(){
+
   const name = document.getElementById('studentName').value.trim();
-  const errorMsg = document.getElementById('errorMsg');
 
-  if (!name) { errorMsg.innerText = "Please enter your name."; return; }
-  if (!count || count <= 0) { errorMsg.innerText = "Please enter a valid number of subjects."; return; }
+  if(!name){
+    alert("Enter name");
+    return;
+  }
 
-  errorMsg.innerText = "";
+  const cards = document.querySelectorAll('.semester-card');
 
-  const tbody = document.querySelector('#subjectTable tbody');
+  let totalUnits = 0;
+  let totalPoints = 0;
+
+  const tbody = document.querySelector('#semTable tbody');
   tbody.innerHTML = "";
 
-  for (let i = 1; i <= count; i++) {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${i}</td>
-      <td><input type="number" min="0" placeholder="Units"></td>
-      <td><input type="number" step="0.01" min="1.0" max="5.0" placeholder="Grade"></td>
-    `;
-    tbody.appendChild(row);
-  }
+  cards.forEach(card => {
 
-  modalOverlay.style.display = 'flex';
-}
+    const g = Number(card.querySelector('.gwa').value);
+    const u = Number(card.querySelector('.units').value);
 
-/* -----------------------
-   CALCULATE (NO SAVE HERE)
-------------------------*/
-function calculateGWA() {
+    if(!g || !u) return;
 
-  const rows = document.querySelectorAll('#subjectTable tbody tr');
-  let totalUnits = 0, totalPoints = 0;
-  let hasFailingGrade = false;
+    totalUnits += u;
+    totalPoints += g * u;
 
-  for (let row of rows) {
-    const units = parseFloat(row.cells[1].querySelector('input').value);
-    const grade = parseFloat(row.cells[2].querySelector('input').value);
+    let honor = "-";
+    if(g <= 1.45) honor = "President's Lister";
+    else if(g <= 1.75) honor = "Dean's Lister";
 
-    if (isNaN(units) || isNaN(grade)) {
-      alert("Please fill all fields correctly.");
-      return;
-    }
-
-    if (grade >= 2.5) hasFailingGrade = true;
-
-    totalUnits += units;
-    totalPoints += units * grade;
-  }
-
-  const gwa = (totalPoints / totalUnits).toFixed(4);
-
-  modalOverlay.style.display = 'none';
-
-  const name = document.getElementById('studentName').value.trim();
-  document.getElementById('gwaName').innerText = name;
-  document.getElementById('gwaValue').innerText = gwa;
-
-  const badge = document.getElementById('gwaBadge');
-  const ribbon = document.getElementById('gwaRibbon');
-
-  badge.innerText = "";
-  badge.className = "gwa-badge";
-  ribbon.style.display = 'block';
-
-  if (!hasFailingGrade && gwa >= 1.00 && gwa <= 1.4500) {
-    badge.innerText = "PRESIDENT'S LISTER";
-    badge.classList.add('gwa-president');
-    ribbon.style.background = "linear-gradient(90deg,#FFD700,#FFEA00,#FFD700)";
-  }
-  else if (!hasFailingGrade && gwa > 1.4500 && gwa <= 1.7500) {
-    badge.innerText = "DEAN'S LISTER";
-    badge.classList.add('gwa-dean');
-    ribbon.style.background = "linear-gradient(90deg,#28a745,#00ff7f,#28a745)";
-  }
-  else {
-    badge.innerText = "Keep Improving!";
-    badge.classList.add('gwa-encourage');
-    ribbon.style.display = 'none';
-  }
-
-  gwaOverlay.style.display = 'flex';
-  createConfetti(document.querySelector('.gwa-modal'));
-}
-
-/* -----------------------
-   SAVE ONLY ON BUTTON
-------------------------*/
-function saveCurrentGWA() {
-
-  const name = document.getElementById('studentName').value.trim();
-  const gwa = document.getElementById('gwaValue').innerText;
-
-  const subjects = Array.from(document.querySelectorAll('#subjectTable tbody tr')).map(row => ({
-    units: row.cells[1].querySelector('input').value,
-    grade: row.cells[2].querySelector('input').value
-  }));
-
-  saveCalculation("GWA Calculator", {
-    name,
-    result: gwa,
-    subjects
+    const tr = document.createElement("tr");
+    tr.innerHTML = <td>${g.toFixed(4)}</td><td>${honor}</td>;
+    tbody.appendChild(tr);
   });
 
-  alert("Saved successfully!");
+  const cum = totalPoints / totalUnits;
+
+  document.getElementById('displayName').innerText = name;
+  document.getElementById('cumulativeGWA').innerText = cum.toFixed(4);
+
+  const badge = document.getElementById('honorBadge');
+  badge.className = "honor";
+
+  if(cum <= 1.25) {
+    badge.innerText = "Summa Cum Laude";
+  } else if(cum <= 1.45) {
+    badge.innerText = "Magna Cum Laude";
+  } else if(cum <= 1.75) {
+    badge.innerText = "Cum Laude";
+  } else {
+    badge.innerText = "Keep Improving";
+  }
+
+  document.getElementById('resultModal').style.display = "flex";
 }
 
-/* -----------------------
-   CONFETTI
-------------------------*/
-function createConfetti(container) {
-  for (let i = 0; i < 50; i++) {
-    const confetti = document.createElement('div');
-    confetti.className = 'confetti-piece';
-    confetti.style.background =
-      ['#FFD700','#FFEA00','#FF8C00','#FF4500','#00BFFF'][Math.floor(Math.random()*5)];
-    confetti.style.left = Math.random() * 100 + '%';
-    confetti.style.animationDuration = (Math.random()*1 + 1.5) + 's';
-    confetti.style.width = confetti.style.height = (Math.random()*6 + 4) + 'px';
 
-    container.appendChild(confetti);
+/* SAVE */
+function saveGraduation(){
 
-    setTimeout(() => confetti.remove(), 2500);
-  }
+  const name = document.getElementById('studentName').value;
+  const cumulative = document.getElementById('cumulativeGWA').innerText;
+  const honor = document.getElementById('honorBadge').innerText;
+
+  const semesters = [];
+
+  document.querySelectorAll('.semester-card').forEach(card => {
+    semesters.push({
+      gwa: card.querySelector('.gwa').value,
+      units: card.querySelector('.units').value
+    });
+  });
+
+  saveCalculation("Graduation Calculator", {
+    name,
+    result: cumulative,
+    honor,
+    semesters
+  });
+
+  alert("Saved!");
 }
 
 </script>
-<script src="saved.js"></script> </body> </html>
+
+<script src="saved.js"></script>
+
+</body>
+</html>
