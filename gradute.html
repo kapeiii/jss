@@ -9,59 +9,205 @@
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 <style>
-* { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; } body { background:#eaf6ff; color:#1f2937; } /* NAVBAR */ .navbar { background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); } .nav-container { max-width: 1100px; margin: auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; } .logo { font-weight: 700; font-size: 1.1rem; color: #1e3a8a; } .nav-links { list-style: none; display: flex; gap: 1.5rem; } .nav-links a { text-decoration: none; color: #334155; font-weight: 500; } .nav-links a.active, .nav-links a:hover { color: #4bb3f4; } .save-btn { margin-top: 1rem; width: 100%; padding: 0.8rem 1rem; font-size: 1rem; font-weight: 600; border-radius: 10px; border: none; background: linear-gradient(135deg, #1e3a8a, #4f6ef7); color: white; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 6px 15px rgba(79, 110, 247, 0.3); } .save-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(79, 110, 247, 0.4); background: linear-gradient(135deg, #162a6f, #3e5bbf); } .save-btn i { font-size: 1.2rem; } /* HEADER */ .header { text-align:center; padding:3rem 1rem 2rem; } .header h1 { font-size:2.2rem; color:#1b2a6f; } .header p { margin-top:0.6rem; color:#4b5563; font-size:1rem; } /* WRAPPER */ .wrapper { max-width:900px; margin:auto; padding:1rem; display:flex; flex-direction:column; gap:1.5rem; } /* CARD */ .card { background:#fff; border-radius:16px; padding:2rem; box-shadow:0 10px 25px rgba(0,0,0,0.1); } .card h2 { font-size:1.6rem; font-weight:600; color:#1b2a6f; margin-bottom:1rem; display:flex; align-items:center; gap:0.6rem; } .card h2 i { color:#4bb3f4; } .input-group { display:flex; gap:0.6rem; margin-bottom:1rem; flex-wrap:wrap; } .input-group input { flex:1; padding:0.7rem 1rem; font-size:1rem; border-radius:8px; border:1px solid #ccc; } .input-group button { padding:0.7rem 1.2rem; font-size:1rem; font-weight:600; border-radius:8px; border:none; background:#4f6ef7; color:#fff; cursor:pointer; transition: transform 0.15s ease, background 0.2s ease; } .input-group button:hover { transform:translateY(-2px); background:#3e5bbf; } /* SEMESTER CARD */ .semester-card { background:#f8fbff; border:2px solid #dbeafe; border-radius:18px; padding:1.5rem; margin-bottom:1rem; position:relative; transition:0.2s ease; } .semester-card:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,0.06); } .semester-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; } .semester-title { font-size:1.5rem; font-weight:700; color:#1e3a8a; display:flex; align-items:center; gap:0.5rem; } .semester-title i { color:#4bb3f4; } /* REMOVE BUTTON */ .remove-semester { background:#ef4444; color:white; border:none; width:42px; height:42px; border-radius:12px; cursor:pointer; display:flex; justify-content:center; align-items:center; font-size:1.2rem; transition:0.2s ease; } .remove-semester:hover { background:#dc2626; transform:scale(1.08); } /* MODAL */ .modal { position:fixed; top:0; left:0; width:100%; height:100%; display:none; background:rgba(0,0,0,0.4); justify-content:center; align-items:center; z-index:100; overflow-y:auto; padding:1rem; } .modal-content { background:#fff; padding:2rem; border-radius:16px; max-width:500px; width:100%; text-align:center; box-shadow:0 0 20px rgba(255,215,0,0.5); position:relative; } .modal h2 { font-size:2rem; margin-bottom:0.5rem; color:#1b2a6f; } .modal .student-name { font-size:1.2rem; margin-bottom:0.5rem; color:#4b5563; } .modal .gpa { font-size:2rem; font-weight:700; margin-bottom:0.5rem; } .modal .honor { display:inline-block; font-size:1.3rem; font-weight:700; padding:0.4rem 1rem; border-radius:8px; color:#fff; margin-bottom:0.5rem; position:relative; } .honor-summa { background:gold; color:#1b1b1b; text-shadow:0 0 6px #000; } .honor-magna { background:silver; color:#222; text-shadow:0 0 6px #000; } .honor-cum { background:#cd7f32; color:#fff; text-shadow:0 0 6px #000; } .honor-none { background:#888; color:#fff; } .modal .note { font-size:0.9rem; color:#555; margin-top:0.6rem; } /* TABLE */ .table-container { overflow-x:auto; max-height:200px; margin-top:1rem; } table { width:100%; border-collapse:collapse; font-size:0.95rem; } th, td { padding:0.5rem; border-bottom:1px solid #e5e7eb; text-align:center; } thead { background:#4bb3f4; color:#fff; } /* CONFETTI */ .confetti-piece { position:absolute; width:8px; height:8px; background:gold; top:-10px; animation: confettiFall 2s linear infinite; } @keyframes confettiFall { 0% { transform:translateY(0) rotate(0deg); } 100% { transform:translateY(250px) rotate(360deg); } } /* RESPONSIVE */ @media(max-width:600px){ .header h1 { font-size:1.8rem; } .semester-title { font-size:1.2rem; } .modal h2 { font-size:1.5rem; } .modal .student-name { font-size:1rem; } .modal .gpa { font-size:1.6rem; } .modal .honor { font-size:1.1rem; padding:0.3rem 0.8rem; } }
-* { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; } 
-body { background:#eaf6ff; color:#1f2937; } 
+* { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; }
+body { background:#eaf6ff; color:#1f2937; }
 
-.navbar { background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); } 
-.nav-container { max-width: 1100px; margin: auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; } 
-.logo { font-weight: 700; font-size: 1.1rem; color: #1e3a8a; } 
-.nav-links { list-style: none; display: flex; gap: 1.5rem; } 
-.nav-links a { text-decoration: none; color: #334155; font-weight: 500; } 
-.nav-links a.active, .nav-links a:hover { color: #4bb3f4; } 
+/* NAVBAR */
+.navbar { background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+.nav-container { max-width: 1100px; margin: auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+.logo { font-weight: 700; font-size: 1.1rem; color: #1e3a8a; }
+.nav-links { list-style: none; display: flex; gap: 1.5rem; }
+.nav-links a { text-decoration: none; color: #334155; font-weight: 500; }
+.nav-links a.active,
+.nav-links a:hover { color: #4bb3f4; }
 
-.save-btn { margin-top: 1rem; width: 100%; padding: 0.8rem 1rem; font-size: 1rem; font-weight: 600; border-radius: 10px; border: none; background: linear-gradient(135deg, #1e3a8a, #4f6ef7); color: white; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 6px 15px rgba(79, 110, 247, 0.3); } 
-.save-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(79, 110, 247, 0.4); background: linear-gradient(135deg, #162a6f, #3e5bbf); } 
+.save-btn {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #1e3a8a, #4f6ef7);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 6px 15px rgba(79, 110, 247, 0.3);
+}
+.save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(79, 110, 247, 0.4);
+  background: linear-gradient(135deg, #162a6f, #3e5bbf);
+}
+.save-btn i { font-size: 1.2rem; }
 
-.header { text-align:center; padding:3rem 1rem 2rem; } 
-.header h1 { font-size:2.2rem; color:#1b2a6f; } 
-.header p { margin-top:0.6rem; color:#4b5563; font-size:1rem; } 
+/* HEADER */
+.header { text-align:center; padding:3rem 1rem 2rem; }
+.header h1 { font-size:2.2rem; color:#1b2a6f; }
+.header p { margin-top:0.6rem; color:#4b5563; font-size:1rem; }
 
-.wrapper { max-width:900px; margin:auto; padding:1rem; display:flex; flex-direction:column; gap:1.5rem; } 
+/* WRAPPER */
+.wrapper { max-width:900px; margin:auto; padding:1rem; display:flex; flex-direction:column; gap:1.5rem; }
 
-.card { background:#fff; border-radius:16px; padding:2rem; box-shadow:0 10px 25px rgba(0,0,0,0.1); } 
-.card h2 { font-size:1.6rem; font-weight:600; color:#1b2a6f; margin-bottom:1rem; display:flex; align-items:center; gap:0.6rem; } 
-.card h2 i { color:#4bb3f4; } 
+/* CARD */
+.card { background:#fff; border-radius:16px; padding:2rem; box-shadow:0 10px 25px rgba(0,0,0,0.1); }
+.card h2 { font-size:1.6rem; font-weight:600; color:#1b2a6f; margin-bottom:1rem; display:flex; align-items:center; gap:0.6rem; }
+.card h2 i { color:#4bb3f4; }
 
-.input-group { display:flex; gap:0.6rem; margin-bottom:1rem; flex-wrap:wrap; } 
-.input-group input { flex:1; padding:0.7rem 1rem; font-size:1rem; border-radius:8px; border:1px solid #ccc; } 
-.input-group button { padding:0.7rem 1.2rem; font-size:1rem; font-weight:600; border-radius:8px; border:none; background:#4f6ef7; color:#fff; cursor:pointer; } 
-.input-group button:hover { transform:translateY(-2px); background:#3e5bbf; } 
+.input-group { display:flex; gap:0.6rem; margin-bottom:1rem; flex-wrap:wrap; }
+.input-group input { flex:1; padding:0.7rem 1rem; font-size:1rem; border-radius:8px; border:1px solid #ccc; }
+.input-group button {
+  padding:0.7rem 1.2rem;
+  font-size:1rem;
+  font-weight:600;
+  border-radius:8px;
+  border:none;
+  background:#4f6ef7;
+  color:#fff;
+  cursor:pointer;
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+.input-group button:hover { transform:translateY(-2px); background:#3e5bbf; }
 
-.semester-card { background:#f8fbff; border:2px solid #dbeafe; border-radius:18px; padding:1.5rem; margin-bottom:1rem; } 
+/* SEMESTER CARD */
+.semester-card {
+  background:#f8fbff;
+  border:2px solid #dbeafe;
+  border-radius:18px;
+  padding:1.5rem;
+  margin-bottom:1rem;
+  position:relative;
+  transition:0.2s ease;
+}
+.semester-card:hover {
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.06);
+}
 
-.semester-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; } 
+.semester-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:1rem;
+}
 
-.semester-title { font-size:1.5rem; font-weight:700; color:#1e3a8a; display:flex; align-items:center; gap:0.5rem; } 
+.semester-title {
+  font-size:1.5rem;
+  font-weight:700;
+  color:#1e3a8a;
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.semester-title i { color:#4bb3f4; }
 
-.remove-semester { background:#ef4444; color:white; border:none; width:42px; height:42px; border-radius:12px; cursor:pointer; } 
+/* REMOVE BUTTON */
+.remove-semester {
+  background:#ef4444;
+  color:white;
+  border:none;
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  cursor:pointer;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:1.2rem;
+  transition:0.2s ease;
+}
+.remove-semester:hover {
+  background:#dc2626;
+  transform:scale(1.08);
+}
 
-.modal { position:fixed; top:0; left:0; width:100%; height:100%; display:none; background:rgba(0,0,0,0.4); justify-content:center; align-items:center; z-index:100; overflow-y:auto; padding:1rem; } 
+/* MODAL */
+.modal {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  display:none;
+  background:rgba(0,0,0,0.4);
+  justify-content:center;
+  align-items:center;
+  z-index:100;
+  overflow-y:auto;
+  padding:1rem;
+}
 
-.modal-content { background:#fff; padding:2rem; border-radius:16px; max-width:500px; width:100%; text-align:center; } 
+.modal-content {
+  background:#fff;
+  padding:2rem;
+  border-radius:16px;
+  max-width:500px;
+  width:100%;
+  text-align:center;
+  box-shadow:0 0 20px rgba(255,215,0,0.5);
+  position:relative;
+}
 
-.table-container { overflow-x:auto; max-height:200px; margin-top:1rem; } 
+.modal h2 { font-size:2rem; margin-bottom:0.5rem; color:#1b2a6f; }
+.modal .student-name { font-size:1.2rem; margin-bottom:0.5rem; color:#4b5563; }
+.modal .gpa { font-size:2rem; font-weight:700; margin-bottom:0.5rem; }
 
-table { width:100%; border-collapse:collapse; } 
+.modal .honor {
+  display:inline-block;
+  font-size:1.3rem;
+  font-weight:700;
+  padding:0.4rem 1rem;
+  border-radius:8px;
+  color:#fff;
+  margin-bottom:0.5rem;
+}
 
-th, td { padding:0.5rem; border-bottom:1px solid #e5e7eb; text-align:center; } 
+.honor-summa { background:gold; color:#1b1b1b; }
+.honor-magna { background:silver; color:#222; }
+.honor-cum { background:#cd7f32; color:#fff; }
+.honor-none { background:#888; color:#fff; }
 
+.modal .note { font-size:0.9rem; color:#555; margin-top:0.6rem; }
+
+/* TABLE */
+.table-container { overflow-x:auto; max-height:200px; margin-top:1rem; }
+
+table { width:100%; border-collapse:collapse; font-size:0.95rem; }
+th, td { padding:0.5rem; border-bottom:1px solid #e5e7eb; text-align:center; }
 thead { background:#4bb3f4; color:#fff; }
 
+/* CONFETTI */
+.confetti-piece {
+  position:absolute;
+  width:8px;
+  height:8px;
+  background:gold;
+  top:-10px;
+  animation: confettiFall 2s linear infinite;
+}
+
+@keyframes confettiFall {
+  0% { transform:translateY(0) rotate(0deg); }
+  100% { transform:translateY(250px) rotate(360deg); }
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .header h1 { font-size:1.8rem; }
+  .semester-title { font-size:1.2rem; }
+  .modal h2 { font-size:1.5rem; }
+  .modal .gpa { font-size:1.6rem; }
+}
 </style>
 </head>
 
-@@ -18,71 +65,49 @@
+<body>
+
 <nav class="navbar">
   <div class="nav-container">
     <span class="logo">BU GWA Calculator</span>
@@ -75,7 +221,6 @@ thead { background:#4bb3f4; color:#fff; }
 <section class="header">
   <h1>Graduation Calculator</h1>
   <p>Compute your cumulative GWA and check Latin Honors eligibility</p>
-  <p>Compute your cumulative GWA</p>
 </section>
 
 <div class="wrapper">
@@ -85,13 +230,10 @@ thead { background:#4bb3f4; color:#fff; }
     <div class="input-group">
       <input type="text" id="studentName" placeholder="Enter Student Name">
     </div>
-    <h2>Student Name</h2>
-    <input type="text" id="studentName">
   </div>
 
   <div class="card">
     <h2><i class='bx bx-book'></i> Enter Semesters</h2>
-    <h2>Semesters</h2>
 
     <div id="semesters"></div>
 
@@ -99,112 +241,51 @@ thead { background:#4bb3f4; color:#fff; }
       <button onclick="addSemester()">Add Semester</button>
       <button onclick="calculateGWA()">Calculate</button>
     </div>
-    <button onclick="addSemester()">Add Semester</button>
-    <button onclick="calculateGWA()">Calculate</button>
   </div>
 
 </div>
 
-<!-- RESULT MODAL -->
-<!-- RESULT -->
 <div class="modal" id="resultModal">
   <div class="modal-content">
 
     <h2>Cumulative GWA</h2>
-
     <div class="student-name" id="displayName"></div>
-
     <div class="gpa" id="cumulativeGWA">0.0000</div>
-    <h2>Result</h2>
-    <div id="displayName"></div>
-    <div id="cumulativeGWA"></div>
-
     <div class="honor" id="honorBadge"></div>
 
     <div class="table-container">
-      <table id="semTable">
+      <table>
         <thead>
           <tr>
             <th>GWA per Semester</th>
             <th>Honor</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody id="semTable"></tbody>
       </table>
     </div>
 
-    <div class="note">
-      Note: Qualification is subject to College/Registrar verification.
-    </div>
+    <div class="note">Note: Subject to verification.</div>
 
     <button class="save-btn" onclick="saveGraduation()">
       <i class='bx bx-bookmark'></i> Save This Calculation
     </button>
-    <table>
-      <thead>
-        <tr>
-          <th>GWA</th>
-          <th>Honor</th>
-        </tr>
-      </thead>
-      <tbody id="semTable"></tbody>
-    </table>
 
   </div>
 </div>
-@@ -91,183 +116,119 @@
+
+<script>
 
 let semesterCount = 0;
-
-/* RESTORE */
-window.addEventListener("load", () => {
-
-  const data = JSON.parse(localStorage.getItem("restoreGrad"));
-  if (!data) {
-    addSemester();
-    addSemester();
-    return;
-  }
-
-  const saved = data.data;
-
-  document.getElementById('studentName').value = saved.name;
-
-  document.getElementById('semesters').innerHTML = "";
-  semesterCount = 0;
-
-  if (saved.semesters && saved.semesters.length > 0) {
-
-    saved.semesters.forEach(s => {
-      addSemester();
-
-      const cards = document.querySelectorAll('.semester-card');
-      const last = cards[cards.length - 1];
-
-      last.querySelector('.gwa').value = s.gwa;
-      last.querySelector('.units').value = s.units;
-    });
-
-  } else {
-    addSemester();
-    addSemester();
-  }
-
-  localStorage.removeItem("restoreGrad");
-});
-
 
 /* ADD SEMESTER */
 function addSemester(){
 
   semesterCount++;
 
-  const semDiv = document.createElement('div');
-  semDiv.className = 'semester-card';
   const div = document.createElement("div");
   div.className = "semester-card";
 
-  semDiv.innerHTML = `
   div.innerHTML = `
     <div class="semester-header">
       <div class="semester-title">
@@ -213,178 +294,141 @@ function addSemester(){
       </div>
 
       ${semesterCount > 1 ? `
-        <button class="remove-semester" onclick="removeSemester(this)">
-          <i class='bx bx-trash'></i>
-        </button>` : ``}
-      <button class="remove-semester" onclick="removeSemester(this)">X</button>
-      ` : ``}
+      <button class="remove-semester" onclick="removeSemester(this)">
+        <i class='bx bx-trash'></i>
+      </button>` : ``}
     </div>
 
     <div class="input-group">
-      <input type="number" class="gwa" placeholder="Enter GWA">
-      <input type="number" class="units" placeholder="Total Units">
-    </div>
-    <input type="number" class="gwa" placeholder="GWA">
-    <input type="number" class="units" placeholder="Units">
+      <input type="number" class="gwa" placeholder="GWA">
+      <input type="number" class="units" placeholder="Units">
 
-    <!-- APPLY SAVED BUTTON -->
-    <button type="button" onclick="openSavedForSemester(this)">
-      Apply Saved GWA
-    </button>
+      <!-- APPLY SAVED BUTTON -->
+      <button type="button" onclick="applySavedToSemester(this)">
+        Apply Saved
+      </button>
+    </div>
   `;
 
-  document.getElementById('semesters').appendChild(semDiv);
   document.getElementById("semesters").appendChild(div);
 }
 
+/* APPLY SAVED CALCULATION */
+function applySavedToSemester(btn){
+
+  const saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
+
+  const gwaList = saved.filter(x => x.module === "GWA Calculator");
+
+  if(gwaList.length === 0){
+    alert("No saved GWA calculations found.");
+    return;
+  }
+
+  let msg = "Select saved calculation:\n\n";
+
+  gwaList.forEach((x, i) => {
+    msg += `${i+1}. ${x.data.name || "Unnamed"} - ${x.data.result}\n`;
+  });
+
+  const choice = prompt(msg + "\nEnter number:");
+
+  const index = Number(choice) - 1;
+
+  if(index < 0 || index >= gwaList.length){
+    alert("Invalid choice");
+    return;
+  }
+
+  const selected = gwaList[index];
+
+  const card = btn.closest(".semester-card");
+
+  card.querySelector(".gwa").value = selected.data.result;
+
+  // if units exist in saved GWA calculator
+  if(selected.data.totalUnits){
+    card.querySelector(".units").value = selected.data.totalUnits;
+  }
+}
 
 /* REMOVE */
 function removeSemester(btn){
-  btn.closest('.semester-card').remove();
-  renumberSemesters();
   btn.closest(".semester-card").remove();
 }
-
-
-/* RENUMBER */
-function renumberSemesters(){
-
-  const cards = document.querySelectorAll('.semester-card');
-  semesterCount = cards.length;
-
-  cards.forEach((card, i) => {
-    card.querySelector('.semester-title').innerHTML =
-      `<i class='bx bx-calendar'></i> Semester ${i + 1}`;
-  });
-}
-
 
 /* CALCULATE */
 function calculateGWA(){
 
-  const name = document.getElementById('studentName').value.trim();
+  const name = document.getElementById("studentName").value;
 
-  if(!name){
-    alert("Enter name");
-    return;
-  }
-
-  const cards = document.querySelectorAll('.semester-card');
-  const cards = document.querySelectorAll(".semester-card");
-
-  let totalUnits = 0;
   let totalPoints = 0;
+  let totalUnits = 0;
 
-  const tbody = document.querySelector('#semTable tbody');
   const tbody = document.getElementById("semTable");
   tbody.innerHTML = "";
 
-  cards.forEach(card => {
+  document.querySelectorAll(".semester-card").forEach(card => {
 
-    const g = Number(card.querySelector('.gwa').value);
-    const u = Number(card.querySelector('.units').value);
     const g = Number(card.querySelector(".gwa").value);
     const u = Number(card.querySelector(".units").value);
 
     if(!g || !u) return;
 
-    totalUnits += u;
     totalPoints += g * u;
+    totalUnits += u;
 
     let honor = "-";
-    if(g <= 1.45) honor = "President's Lister";
-    else if(g <= 1.75) honor = "Dean's Lister";
     if(g <= 1.45) honor = "Dean's Lister";
 
     const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${g.toFixed(4)}</td><td>${honor}</td>`;
     tr.innerHTML = `<td>${g}</td><td>${honor}</td>`;
     tbody.appendChild(tr);
   });
 
   const cum = totalPoints / totalUnits;
 
-  document.getElementById('displayName').innerText = name;
-  document.getElementById('cumulativeGWA').innerText = cum.toFixed(4);
-  document.getElementById("displayName").innerText =
-    document.getElementById("studentName").value;
+  document.getElementById("displayName").innerText = name;
+  document.getElementById("cumulativeGWA").innerText = cum.toFixed(4);
 
-  const badge = document.getElementById('honorBadge');
-  badge.className = "honor";
-
-  if(cum <= 1.25) {
-    badge.innerText = "Summa Cum Laude";
-  } else if(cum <= 1.45) {
-    badge.innerText = "Magna Cum Laude";
-  } else if(cum <= 1.75) {
-    badge.innerText = "Cum Laude";
-  } else {
-    badge.innerText = "Keep Improving";
-  }
-  document.getElementById("cumulativeGWA").innerText =
-    cum.toFixed(4);
-
-  document.getElementById('resultModal').style.display = "flex";
   document.getElementById("resultModal").style.display = "flex";
 }
 
-/* APPLY SAVED GWA */
-function openSavedForSemester(button){
-
 /* SAVE */
 function saveGraduation(){
-  const saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
 
-  const name = document.getElementById('studentName').value;
-  const cumulative = document.getElementById('cumulativeGWA').innerText;
-  const honor = document.getElementById('honorBadge').innerText;
-  const gwaSaved = saved.filter(s => s.module === "GWA Calculator");
+  const name = document.getElementById("studentName").value;
 
   const semesters = [];
-  if(gwaSaved.length === 0){
-    alert("No saved GWA found");
-    return;
-  }
 
-  document.querySelectorAll('.semester-card').forEach(card => {
+  document.querySelectorAll(".semester-card").forEach(card => {
     semesters.push({
-      gwa: card.querySelector('.gwa').value,
-      units: card.querySelector('.units').value
+      gwa: card.querySelector(".gwa").value,
+      units: card.querySelector(".units").value
     });
   });
-  let msg = "Choose:\n\n";
 
-  saveCalculation("Graduation Calculator", {
-    name,
-    result: cumulative,
-    honor,
-    semesters
-  gwaSaved.forEach((s,i)=>{
-    msg += `${i+1}. ${s.data.name} - ${s.data.result}\n`;
+  const saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
+
+  saved.unshift({
+    id: Date.now(),
+    module: "Graduation Calculator",
+    data: {
+      name,
+      semesters
+    }
   });
 
-  alert("Saved!");
-  const choice = prompt(msg);
+  localStorage.setItem("saved_calculations", JSON.stringify(saved));
 
-  const index = Number(choice)-1;
-
-  if(index < 0 || index >= gwaSaved.length){
-    alert("Invalid");
-    return;
-  }
-
-  const selected = gwaSaved[index].data;
-
-  const card = button.closest(".semester-card");
-
-  card.querySelector(".gwa").value = selected.result;
-  card.querySelector(".units").value = selected.units || "";
-
+  alert("Saved successfully!");
 }
 
-</script>
+/* DEFAULT */
+addSemester();
+addSemester();
 
-<script src="saved.js"></script>
+</script>
 
 </body>
 </html>
