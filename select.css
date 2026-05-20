@@ -25,7 +25,7 @@ body {
   align-items: center;
 }
 
-.savedWrapper {
+#savedWrapper {
   position: fixed;
   top: 80px;
   right: 20px;
@@ -33,7 +33,7 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-.savedToggle {
+#savedToggle {
   background: #1e3a8a;
   color: white;
   border: none;
@@ -43,7 +43,7 @@ body {
   font-weight: 600;
 }
 
-.savedDropdown {
+#savedDropdown {
   margin-top: 10px;
   width: 260px;
   background: white;
@@ -54,25 +54,25 @@ body {
   overflow-y: auto;
 }
 
-.savedDropdown h4 {
+#savedDropdown h4 {
   margin-bottom: 8px;
   font-size: 14px;
   color: #1e3a8a;
 }
 
-.savedList {
+#savedList {
   list-style: none;
   padding: 0;
 }
 
-.savedList li {
+#savedList li {
   padding: 8px;
   border-bottom: 1px solid #eee;
   cursor: pointer;
   font-size: 13px;
 }
 
-.savedList li:hover {
+#savedList li:hover {
   background: #f1f5f9;
 }
 
