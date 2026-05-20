@@ -9,9 +9,7 @@
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 <style>
-* { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; } 
-body { background:#eaf6ff; color:#1f2937; } 
-
+* { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif; } body { background:#eaf6ff; color:#1f2937; } 
 .navbar { background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); } 
 .nav-container { max-width: 1100px; margin: auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; } 
 .logo { font-weight: 700; font-size: 1.1rem; color: #1e3a8a; } 
@@ -21,6 +19,7 @@ body { background:#eaf6ff; color:#1f2937; }
 
 .save-btn { margin-top: 1rem; width: 100%; padding: 0.8rem 1rem; font-size: 1rem; font-weight: 600; border-radius: 10px; border: none; background: linear-gradient(135deg, #1e3a8a, #4f6ef7); color: white; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 0.5rem; transition: all 0.2s ease; box-shadow: 0 6px 15px rgba(79, 110, 247, 0.3); } 
 .save-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(79, 110, 247, 0.4); background: linear-gradient(135deg, #162a6f, #3e5bbf); } 
+.save-btn i { font-size: 1.2rem; } 
 
 .header { text-align:center; padding:3rem 1rem 2rem; } 
 .header h1 { font-size:2.2rem; color:#1b2a6f; } 
@@ -35,7 +34,6 @@ body { background:#eaf6ff; color:#1f2937; }
 .input-group { display:flex; gap:0.6rem; margin-bottom:1rem; flex-wrap:wrap; } 
 .input-group input { flex:1; padding:0.7rem 1rem; font-size:1rem; border-radius:8px; border:1px solid #ccc; } 
 .input-group button { padding:0.7rem 1.2rem; font-size:1rem; font-weight:600; border-radius:8px; border:none; background:#4f6ef7; color:#fff; cursor:pointer; } 
-.input-group button:hover { transform:translateY(-2px); background:#3e5bbf; } 
 
 .semester-card { background:#f8fbff; border:2px solid #dbeafe; border-radius:18px; padding:1.5rem; margin-bottom:1rem; } 
 
@@ -70,7 +68,6 @@ thead { background:#4bb3f4; color:#fff; }
 
 <section class="header">
   <h1>Graduation Calculator</h1>
-  <p>Compute your cumulative GWA</p>
 </section>
 
 <div class="wrapper">
@@ -91,11 +88,12 @@ thead { background:#4bb3f4; color:#fff; }
 
 </div>
 
-<!-- RESULT -->
+<!-- RESULT MODAL -->
 <div class="modal" id="resultModal">
   <div class="modal-content">
 
-    <h2>Result</h2>
+    <h2>Cumulative GWA</h2>
+
     <div id="displayName"></div>
     <div id="cumulativeGWA"></div>
 
@@ -131,17 +129,20 @@ function addSemester(){
       </div>
 
       ${semesterCount > 1 ? `
-      <button class="remove-semester" onclick="removeSemester(this)">X</button>
+        <button class="remove-semester" onclick="removeSemester(this)">X</button>
       ` : ``}
     </div>
 
-    <input type="number" class="gwa" placeholder="GWA">
-    <input type="number" class="units" placeholder="Units">
+    <div class="input-group">
+      <input type="number" class="gwa" placeholder="GWA">
+      <input type="number" class="units" placeholder="Units">
 
-    <!-- APPLY SAVED BUTTON -->
-    <button type="button" onclick="openSavedForSemester(this)">
-      Apply Saved GWA
-    </button>
+      <!-- ✅ APPLY SAVED BUTTON -->
+      <button type="button" onclick="openSavedForSemester(this)">
+        Apply Saved GWA
+      </button>
+
+    </div>
   `;
 
   document.getElementById("semesters").appendChild(div);
@@ -192,7 +193,7 @@ function calculateGWA(){
   document.getElementById("resultModal").style.display = "flex";
 }
 
-/* APPLY SAVED GWA */
+/* 🔥 APPLY SAVED GWA (NEW FEATURE) */
 function openSavedForSemester(button){
 
   const saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
@@ -200,22 +201,22 @@ function openSavedForSemester(button){
   const gwaSaved = saved.filter(s => s.module === "GWA Calculator");
 
   if(gwaSaved.length === 0){
-    alert("No saved GWA found");
+    alert("No saved GWA found.");
     return;
   }
 
-  let msg = "Choose:\n\n";
+  let msg = "Select Saved GWA:\n\n";
 
-  gwaSaved.forEach((s,i)=>{
-    msg += `${i+1}. ${s.data.name} - ${s.data.result}\n`;
+  gwaSaved.forEach((item, i) => {
+    msg += `${i+1}. ${item.data.name} - ${item.data.result}\n`;
   });
 
   const choice = prompt(msg);
 
-  const index = Number(choice)-1;
+  const index = Number(choice) - 1;
 
   if(index < 0 || index >= gwaSaved.length){
-    alert("Invalid");
+    alert("Invalid selection");
     return;
   }
 
@@ -229,6 +230,8 @@ function openSavedForSemester(button){
 }
 
 </script>
+
+<script src="saved.js"></script>
 
 </body>
 </html>
