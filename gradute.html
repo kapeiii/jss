@@ -360,18 +360,27 @@ function calculateGWA(){
 /* SAVE (FIXED - includes correct module + full data) */
 function saveGraduation(){
 
-  const name = document.getElementById("studentName").value;
+  const name = document.getElementById("studentName").value.trim();
 
   const semesters = [];
 
   document.querySelectorAll(".semester-card").forEach(card => {
 
-    semesters.push({
-      gwa: card.querySelector(".gwa").value,
-      units: card.querySelector(".units").value
-    });
+    const gwa = card.querySelector(".gwa").value.trim();
+    const units = card.querySelector(".units").value.trim();
 
+    if(gwa === "" || units === "") return;
+
+    semesters.push({
+      gwa: Number(gwa),
+      units: Number(units)
+    });
   });
+
+  if(semesters.length === 0){
+    alert("No valid semester data to save.");
+    return;
+  }
 
   const saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
 
@@ -389,58 +398,98 @@ function saveGraduation(){
   alert("Saved successfully!");
 }
 
+function applySelectedRecord(selected){
+
+  const allCards = [...document.querySelectorAll(".semester-card")];
+  const index = allCards.indexOf(activeSemesterCard);
+
+  if(index === -1){
+    alert("Invalid semester selection.");
+    return;
+  }
+
+  const sem = selected.data.semesters[index];
+
+  if(!sem){
+    alert("This record does not have data for this semester.");
+    return;
+  }
+
+  activeSemesterCard.querySelector(".gwa").value = sem.gwa ?? "";
+  activeSemesterCard.querySelector(".units").value = sem.units ?? "";
+
+  closeApplyModal();
+}
+function closeApplyModal(){
+  document.getElementById("applyModal").style.display = "none";
+}
 
 /* APPLY SAVED (FIXED FULL UI VERSION) */
+let activeSemesterCard = null;
+
 function applySavedToSemester(btn){
+
+  activeSemesterCard = btn.closest(".semester-card");
 
   const saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
 
-  const list = saved.filter(x => x.module === "Graduation Calculator");
+  const list = saved.filter(x =>
+    x.module === "Graduation Calculator" &&
+    x.data &&
+    Array.isArray(x.data.semesters)
+  );
 
   if(list.length === 0){
-    alert("No saved graduation calculations found.");
+    alert("No saved graduation records found.");
     return;
   }
 
-  // build simple selection UI
-  let options = "Select Saved Record:\n\n";
+  const container = document.getElementById("savedList");
+  container.innerHTML = "";
 
-  list.forEach((item, i) => {
-    options += `${i+1}. ${item.data.name || "Unnamed"}\n`;
+  list.forEach((item, index) => {
+
+    const div = document.createElement("div");
+
+    div.style.padding = "10px";
+    div.style.marginBottom = "10px";
+    div.style.border = "1px solid #ccc";
+    div.style.borderRadius = "8px";
+    div.style.cursor = "pointer";
+    div.style.background = "#f9f9f9";
+
+    div.innerHTML = `
+      <strong>${item.data.name || "Unnamed"}</strong><br>
+      <small>${item.data.semesters.length} semesters</small>
+    `;
+
+    div.onclick = () => applySelectedRecord(item);
+
+    container.appendChild(div);
   });
 
-  const pick = prompt(options + "\nEnter number:");
-
-  const index = Number(pick) - 1;
-
-  if(index < 0 || index >= list.length){
-    alert("Invalid selection");
-    return;
-  }
-
-  const selected = list[index];
-
-  const card = btn.closest(".semester-card");
-
-  // find current semester index
-  const allCards = [...document.querySelectorAll(".semester-card")];
-  const currentIndex = allCards.indexOf(card);
-
-  const semesterData = selected.data.semesters[currentIndex];
-
-  if(!semesterData){
-    alert("No matching semester data in saved record.");
-    return;
-  }
-
-  card.querySelector(".gwa").value = semesterData.gwa;
-  card.querySelector(".units").value = semesterData.units;
+  document.getElementById("applyModal").style.display = "flex";
 }
 
 addSemester();
 addSemester();
 
 </script>
+
+<!-- APPLY SAVED MODAL -->
+<div id="applyModal" class="modal" style="display:none;">
+  <div class="modal-content">
+
+    <h2>Select Saved Record</h2>
+
+    <div id="savedList" style="text-align:left; max-height:300px; overflow:auto;"></div>
+
+    <button class="save-btn" onclick="closeApplyModal()" style="margin-top:10px;">
+      Close
+    </button>
+
+  </div>
+</div>
 
 </body>
 </html>
