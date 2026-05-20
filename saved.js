@@ -66,7 +66,7 @@ function loadSaved(item) {
 
   else if (module === "Graduation Calculator") {
 
-    window.location.href = "graduate.html";
+    window.location.href = "gradute.html";
 
     localStorage.setItem("restoreGrad", JSON.stringify(item));
 
