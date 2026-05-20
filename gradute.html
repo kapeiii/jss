@@ -402,6 +402,7 @@ function applySavedToSemester(btn){
     return;
   }
 
+  // build simple selection UI
   let options = "Select Saved Record:\n\n";
 
   list.forEach((item, i) => {
@@ -420,23 +421,20 @@ function applySavedToSemester(btn){
   const selected = list[index];
 
   const card = btn.closest(".semester-card");
+
+  // find current semester index
   const allCards = [...document.querySelectorAll(".semester-card")];
   const currentIndex = allCards.indexOf(card);
 
-  const sem = selected.data.semesters[currentIndex];
+  const semesterData = selected.data.semesters[currentIndex];
 
-  if(!sem){
-    alert("No data for this semester in saved record.");
+  if(!semesterData){
+    alert("No matching semester data in saved record.");
     return;
   }
 
-  // FORCE proper numeric assignment
-  const gwaInput = card.querySelector(".gwa");
-  const unitsInput = card.querySelector(".units");
-
-  gwaInput.value = sem.gwa !== undefined ? Number(sem.gwa) : "";
-  unitsInput.value = sem.units !== undefined ? Number(sem.units) : "";
-
+  card.querySelector(".gwa").value = semesterData.gwa;
+  card.querySelector(".units").value = semesterData.units;
 }
 
 addSemester();
