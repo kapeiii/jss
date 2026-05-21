@@ -142,19 +142,22 @@ function saveCurrentGWA() {
   const gwa = document.getElementById('gwaValue').innerText;
 
   const subjects = Array.from(document.querySelectorAll('#subjectTable tbody tr')).map(row => ({
-    units: row.cells[1].querySelector('input').value,
-    grade: row.cells[2].querySelector('input').value
+    units: Number(row.cells[1].querySelector('input').value),
+    grade: Number(row.cells[2].querySelector('input').value)
   }));
+
+  // 🔥 COMPUTE TOTAL UNITS (IMPORTANT FIX)
+  const totalUnits = subjects.reduce((sum, s) => sum + s.units, 0);
 
   saveCalculation("GWA Calculator", {
     name,
-    result: gwa,
+    result: Number(gwa),
+    totalUnits,   // ✅ THIS IS WHAT GRADUATION NEEDS
     subjects
   });
 
   alert("Saved successfully!");
 }
-
 /* -----------------------
    CONFETTI
 ------------------------*/
