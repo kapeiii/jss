@@ -12,10 +12,13 @@
   <!-- CSS -->
   <link rel="stylesheet" href="select.css">
   <link rel="icon" type="image/png" href="logo.png">
+
+  <!-- SAVED SYSTEM -->
   <script src="saved.js"></script>
-</head>
 
 <style>
+
+/* GREEN ICON */
 .icon.green {
   width: 60px;
   height: 60px;
@@ -26,11 +29,184 @@
   border-radius: 50%;
   margin-bottom: 1rem;
 }
+
 .icon.green i {
   font-size: 2rem;
-  color: #22c55e; /* green color for the bullseye icon */
+  color: #22c55e;
 }
+
+/* SAVED BUTTON */
+#savedWrapper{
+  position:fixed;
+  top:20px;
+  right:20px;
+  z-index:999;
+}
+
+#savedToggle{
+  background:linear-gradient(135deg,#4f6ef7,#6f86ff);
+  color:white;
+  border:none;
+  padding:0.9rem 1.2rem;
+  border-radius:14px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(79,110,247,0.3);
+  transition:0.2s ease;
+  font-size:0.95rem;
+}
+
+#savedToggle:hover{
+  transform:translateY(-2px);
+}
+
+/* DROPDOWN */
+#savedDropdown{
+  position:absolute;
+  right:0;
+  margin-top:12px;
+  width:360px;
+  max-height:500px;
+  overflow-y:auto;
+  background:white;
+  border-radius:20px;
+  padding:1rem;
+  box-shadow:0 15px 40px rgba(0,0,0,0.15);
+  border:1px solid #e5e7eb;
+}
+
+.hidden{
+  display:none;
+}
+
+#savedDropdown h4{
+  font-size:1.1rem;
+  color:#1b2a6f;
+  margin-bottom:0.3rem;
+}
+
+.saved-subtitle{
+  font-size:0.85rem;
+  color:#6b7280;
+  margin-bottom:1rem;
+}
+
+/* SAVED LIST */
+#savedList{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:0.9rem;
+}
+
+/* SAVED CARD */
+.saved-card{
+  background:#f8fbff;
+  border:2px solid #dbeafe;
+  border-radius:16px;
+  padding:1rem;
+  cursor:pointer;
+  transition:0.2s ease;
+  position:relative;
+}
+
+.saved-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+.saved-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:0.7rem;
+}
+
+.saved-module{
+  font-size:0.85rem;
+  font-weight:700;
+  color:#4f6ef7;
+  background:#eef2ff;
+  padding:0.3rem 0.7rem;
+  border-radius:999px;
+}
+
+.saved-date{
+  font-size:0.75rem;
+  color:#9ca3af;
+}
+
+.saved-name{
+  font-size:1.1rem;
+  font-weight:700;
+  color:#111827;
+  margin-bottom:0.3rem;
+}
+
+.saved-result{
+  font-size:1rem;
+  color:#374151;
+  margin-bottom:0.6rem;
+}
+
+.saved-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.saved-edit{
+  font-size:0.8rem;
+  color:#6b7280;
+}
+
+.delete-btn{
+  background:#fee2e2;
+  border:none;
+  color:#dc2626;
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.2s ease;
+  font-size:1rem;
+}
+
+.delete-btn:hover{
+  background:#fecaca;
+  transform:scale(1.05);
+}
+
+/* EMPTY */
+.empty-state{
+  text-align:center;
+  padding:2rem 1rem;
+  color:#6b7280;
+}
+
+.empty-state i{
+  font-size:3rem;
+  color:#cbd5e1;
+  margin-bottom:0.7rem;
+}
+
+/* MOBILE */
+@media(max-width:500px){
+
+  #savedWrapper{
+    right:12px;
+    top:12px;
+  }
+
+  #savedDropdown{
+    width:320px;
+    max-width:90vw;
+  }
+
+}
+
 </style>
+</head>
 
 <body>
 
@@ -38,6 +214,7 @@
   <nav class="navbar">
     <div class="nav-container">
       <span class="logo">BU GWA Calculator</span>
+
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a class="active">Services</a></li>
@@ -45,69 +222,228 @@
     </div>
   </nav>
 
-  <!-- SAVED CALCULATIONS (TOP RIGHT) -->
-<div id="savedWrapper">
-  <button id="savedToggle">Saved 📌</button>
+  <!-- SAVED CALCULATIONS -->
+  <div id="savedWrapper">
 
-  <div id="savedDropdown" class="hidden">
-    <h4>Saved Calculations</h4>
-    <ul id="savedList"></ul>
+    <button id="savedToggle">
+      <i class='bx bxs-bookmark'></i>
+      Saved
+    </button>
+
+    <div id="savedDropdown" class="hidden">
+
+      <h4>Saved Calculations</h4>
+
+      <div class="saved-subtitle">
+        Tap a saved calculation to continue editing.
+      </div>
+
+      <ul id="savedList"></ul>
+
+    </div>
+
   </div>
-</div>
 
   <!-- MAIN -->
   <main class="container">
+
     <h1>Select <span>Module</span></h1>
-    <p class="subtitle">Choose the calculator that fits your academic goal.</p>
+
+    <p class="subtitle">
+      Choose the calculator that fits your academic goal.
+    </p>
 
     <div class="card-grid">
 
       <!-- CARD 1 -->
       <div class="card">
+
         <div class="icon blue">
           <i class='bx bxs-award'></i>
         </div>
+
         <h3>Academic Distinction</h3>
+
         <p>
-          For non-graduating students with no grade lower than <strong>2.4</strong>
-          and qualified general ratings.
+          For non-graduating students with no grade lower than
+          <strong>2.4</strong> and qualified general ratings.
         </p>
+
         <a href="pick.html" class="btn">Proceed</a>
+
       </div>
 
       <!-- CARD 2 -->
       <div class="card highlight">
+
         <div class="icon orange">
           <i class='bx bxs-medal'></i>
         </div>
+
         <h3>Graduation with Honors</h3>
+
         <p>
           Determine eligibility for graduating with academic honors
           based on your weighted average.
         </p>
-        <a href="gradute.html" class="btn btn-orange">Proceed</a>
+
+        <a href="gradute.html" class="btn btn-orange">
+          Proceed
+        </a>
+
       </div>
 
-      <!-- CARD 3: GWA Goal Planner -->
+      <!-- CARD 3 -->
       <div class="card highlight">
-  <div class="icon green">
-    <i class='bx bxs-bullseye'></i>
-  </div>
-  <h3>GWA Goal Planner</h3>
-  <p>
-    Calculate the required GWA to reach your target
-    academic goal, including Latin honors and PL/DL eligibility.
-  </p>
-  <a href="goal.html" class="btn btn-green">Proceed</a>
-</div>
+
+        <div class="icon green">
+          <i class='bx bxs-bullseye'></i>
+        </div>
+
+        <h3>GWA Goal Planner</h3>
+
+        <p>
+          Calculate the required GWA to reach your target
+          academic goal, including Latin honors and PL/DL eligibility.
+        </p>
+
+        <a href="goal.html" class="btn btn-green">
+          Proceed
+        </a>
+
+      </div>
 
     </div>
+
   </main>
 
   <!-- FOOTER -->
   <footer>
     <p>Built for Bicol University students</p>
   </footer>
+
+<script>
+
+/* TOGGLE */
+document.addEventListener("DOMContentLoaded", () => {
+
+  const toggle = document.getElementById("savedToggle");
+  const dropdown = document.getElementById("savedDropdown");
+
+  toggle.onclick = () => {
+
+    dropdown.classList.toggle("hidden");
+
+    renderSavedCards();
+  };
+
+});
+
+/* RENDER SAVED */
+function renderSavedCards(){
+
+  const saved =
+  JSON.parse(localStorage.getItem("saved_calculations")) || [];
+
+  const list =
+  document.getElementById("savedList");
+
+  list.innerHTML = "";
+
+  /* EMPTY */
+  if(saved.length === 0){
+
+    list.innerHTML = `
+      <div class="empty-state">
+        <i class='bx bx-folder-open'></i>
+        <p>No saved calculations yet.</p>
+      </div>
+    `;
+
+    return;
+  }
+
+  saved.forEach(item => {
+
+    const li = document.createElement("li");
+
+    li.className = "saved-card";
+
+    const date =
+    new Date(item.id).toLocaleDateString();
+
+    li.innerHTML = `
+
+      <div class="saved-top">
+
+        <div class="saved-module">
+          ${item.module}
+        </div>
+
+        <div class="saved-date">
+          ${date}
+        </div>
+
+      </div>
+
+      <div class="saved-name">
+        ${item.data.name || "Unnamed"}
+      </div>
+
+      <div class="saved-result">
+        🎓 Result:
+        <strong>${item.data.result || "N/A"}</strong>
+      </div>
+
+      <div class="saved-footer">
+
+        <div class="saved-edit">
+          Tap to continue editing
+        </div>
+
+        <button class="delete-btn"
+        onclick="deleteSaved(event, ${item.id})">
+
+          <i class='bx bx-trash'></i>
+
+        </button>
+
+      </div>
+
+    `;
+
+    li.onclick = () => {
+
+      loadSaved(item);
+
+    };
+
+    list.appendChild(li);
+
+  });
+
+}
+
+/* DELETE */
+function deleteSaved(event, id){
+
+  event.stopPropagation();
+
+  let saved =
+  JSON.parse(localStorage.getItem("saved_calculations")) || [];
+
+  saved =
+  saved.filter(item => item.id !== id);
+
+  localStorage.setItem(
+    "saved_calculations",
+    JSON.stringify(saved)
+  );
+
+  renderSavedCards();
+}
+
+</script>
 
 </body>
 </html>
