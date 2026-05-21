@@ -43,8 +43,7 @@ function renderSaved() {
 
     li.innerHTML = `
       <b>${item.module}</b><br>
-      ${item.name} → ${item.result}
-      <br>
+      ${item.name} → ${item.result}<br>
       Units: ${item.totalUnits ?? "N/A"}
     `;
 
@@ -60,7 +59,5 @@ function loadSaved(item) {
   window.location.href = "pick.html";
 }
 
-/* INIT AUTO */
-document.addEventListener("DOMContentLoaded", () => {
-  renderSaved();
-});
+/* AUTO LOAD ON PAGE OPEN */
+document.addEventListener("DOMContentLoaded", renderSaved);
