@@ -277,8 +277,9 @@ thead { background:#4bb3f4; color:#fff; }
 <script>
 
 let semesterCount = 0;
+let activeSemesterCard = null;
 
-/* ADD SEMESTER */
+/* ADD SEMESTER (UNCHANGED UI) */
 function addSemester(){
 
   semesterCount++;
@@ -312,14 +313,12 @@ function addSemester(){
   document.getElementById("semesters").appendChild(div);
 }
 
-
 /* REMOVE */
 function removeSemester(btn){
   btn.closest(".semester-card").remove();
 }
 
-
-/* CALCULATE */
+/* CALCULATE (UNCHANGED LOGIC) */
 function calculateGWA(){
 
   const name = document.getElementById("studentName").value;
@@ -356,15 +355,14 @@ function calculateGWA(){
   document.getElementById("resultModal").style.display = "flex";
 }
 
-
-/* SAVE (FIXED - includes correct module + full data) */
+/* SAVE (SMART FIXED VERSION) */
 function saveGraduation(){
 
   const name = document.getElementById("studentName").value.trim();
 
   const semesters = [];
 
-  document.querySelectorAll(".semester-card").forEach(card => {
+  document.querySelectorAll(".semester-card").forEach((card, index) => {
 
     const gwa = card.querySelector(".gwa").value.trim();
     const units = card.querySelector(".units").value.trim();
@@ -372,6 +370,7 @@ function saveGraduation(){
     if(gwa === "" || units === "") return;
 
     semesters.push({
+      semesterIndex: index,   // IMPORTANT FIX
       gwa: Number(gwa),
       units: Number(units)
     });
@@ -398,35 +397,7 @@ function saveGraduation(){
   alert("Saved successfully!");
 }
 
-function applySelectedRecord(selected){
-
-  const allCards = [...document.querySelectorAll(".semester-card")];
-  const index = allCards.indexOf(activeSemesterCard);
-
-  if(index === -1){
-    alert("Invalid semester selection.");
-    return;
-  }
-
-  const sem = selected.data.semesters[index];
-
-  if(!sem){
-    alert("This record does not have data for this semester.");
-    return;
-  }
-
-  activeSemesterCard.querySelector(".gwa").value = sem.gwa ?? "";
-  activeSemesterCard.querySelector(".units").value = sem.units ?? "";
-
-  closeApplyModal();
-}
-function closeApplyModal(){
-  document.getElementById("applyModal").style.display = "none";
-}
-
-/* APPLY SAVED (FIXED FULL UI VERSION) */
-let activeSemesterCard = null;
-
+/* APPLY BUTTON (SMART PREVIEW) */
 function applySavedToSemester(btn){
 
   activeSemesterCard = btn.closest(".semester-card");
@@ -447,7 +418,12 @@ function applySavedToSemester(btn){
   const container = document.getElementById("savedList");
   container.innerHTML = "";
 
-  list.forEach((item, index) => {
+  const cards = document.querySelectorAll(".semester-card");
+  const currentIndex = [...cards].indexOf(activeSemesterCard);
+
+  list.forEach(item => {
+
+    const match = item.data.semesters.find(s => s.semesterIndex === currentIndex);
 
     const div = document.createElement("div");
 
@@ -456,11 +432,16 @@ function applySavedToSemester(btn){
     div.style.border = "1px solid #ccc";
     div.style.borderRadius = "8px";
     div.style.cursor = "pointer";
-    div.style.background = "#f9f9f9";
+    div.style.background = match ? "#f0f8ff" : "#f9f9f9";
 
     div.innerHTML = `
       <strong>${item.data.name || "Unnamed"}</strong><br>
-      <small>${item.data.semesters.length} semesters</small>
+      <small>
+        ${match 
+          ? `✔ Match found (GWA: ${match.gwa}, Units: ${match.units})`
+          : `⚠ No data for this semester`
+        }
+      </small>
     `;
 
     div.onclick = () => applySelectedRecord(item);
@@ -471,6 +452,35 @@ function applySavedToSemester(btn){
   document.getElementById("applyModal").style.display = "flex";
 }
 
+/* APPLY SELECTED */
+function applySelectedRecord(selected){
+
+  const cards = document.querySelectorAll(".semester-card");
+  const index = [...cards].indexOf(activeSemesterCard);
+
+  let sem = selected.data.semesters.find(s => s.semesterIndex === index);
+
+  if(!sem){
+    sem = selected.data.semesters[index];
+  }
+
+  if(!sem){
+    alert("No matching semester data found.");
+    return;
+  }
+
+  activeSemesterCard.querySelector(".gwa").value = sem.gwa ?? "";
+  activeSemesterCard.querySelector(".units").value = sem.units ?? "";
+
+  closeApplyModal();
+}
+
+/* CLOSE MODAL */
+function closeApplyModal(){
+  document.getElementById("applyModal").style.display = "none";
+}
+
+/* INIT */
 addSemester();
 addSemester();
 
