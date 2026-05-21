@@ -23,10 +23,13 @@ function saveCalculation(moduleName, data) {
     name: data.name || "Unnamed",
     result: data.result ?? null,
     totalUnits: data.totalUnits ?? null,
+    subjects: data.subjects ?? null,
     semesters: data.semesters ?? null
   });
 
   localStorage.setItem("saved_calculations", JSON.stringify(saved));
+
+  console.log("Saved:", saved);
 
   renderSaved();
 }
@@ -43,21 +46,34 @@ function renderSaved() {
 
   list.innerHTML = "";
 
-  const gwaOnly = saved.filter(item => item.module === "GWA Calculator");
-
-  if (gwaOnly.length === 0) {
-    list.innerHTML = "<li>No saved GWA calculations yet.</li>";
+  if (saved.length === 0) {
+    list.innerHTML = `
+      <li>No saved calculations yet.</li>
+    `;
     return;
   }
 
-  gwaOnly.forEach(item => {
+  saved.forEach(item => {
+
     const li = document.createElement("li");
 
+    li.className = "saved-card";
+
     li.innerHTML = `
-      <b>${item.module}</b><br>
-      ${item.name} → ${item.result}
-      <br>
-      Units: ${item.totalUnits ?? "N/A"}
+      <div class="saved-top">
+        <div class="saved-module">${item.module}</div>
+        <div class="saved-date">${new Date(item.id).toLocaleDateString()}</div>
+      </div>
+
+      <div class="saved-name">${item.name}</div>
+
+      <div class="saved-result">
+        🎓 Result: <strong>${item.result ?? "N/A"}</strong>
+      </div>
+
+      <div class="saved-footer">
+        <div class="saved-edit">Tap to continue editing</div>
+      </div>
     `;
 
     li.onclick = () => loadSaved(item);
@@ -67,35 +83,22 @@ function renderSaved() {
 }
 
 /* =========================
-   LOAD SAVED → GRADUATION
+   LOAD SAVED
 ========================= */
 function loadSaved(item) {
 
+  localStorage.setItem("restoreGWA", JSON.stringify(item));
+
   if (item.module === "GWA Calculator") {
-
-    // store full object correctly
-    localStorage.setItem("restoreGWA", JSON.stringify(item));
-
     window.location.href = "pick.html";
-    return;
+  } else {
+    window.location.href = "gradute.html";
   }
-
-  alert("Only GWA saved calculations are supported.");
 }
 
 /* =========================
-   GET ALL SAVED
+   AUTO INIT (IMPORTANT FIX)
 ========================= */
-function getSavedData() {
-  syncSaved();
-  return saved;
-}
-
-/* =========================
-   CLEAR DATA (OPTIONAL)
-========================= */
-function clearCorruptedData() {
-  localStorage.removeItem("saved_calculations");
-  saved = [];
+document.addEventListener("DOMContentLoaded", () => {
   renderSaved();
-}
+});
