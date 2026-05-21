@@ -275,7 +275,7 @@ thead { background:#4bb3f4; color:#fff; }
 let semesterCount = 0;
 let activeSemesterCard = null;
 
-/* ADD SEMESTER (UNCHANGED UI) */
+/* ADD SEMESTER */
 function addSemester(){
 
   semesterCount++;
@@ -299,137 +299,173 @@ function addSemester(){
     <div class="input-group">
       <input type="number" class="gwa" placeholder="GWA">
       <input type="number" class="units" placeholder="Units">
-
-      <button type="button" onclick="applySavedToSemester(this)">
-        Apply Saved
-      </button>
     </div>
   `;
 
   document.getElementById("semesters").appendChild(div);
 }
 
-/* REMOVE */
+/* REMOVE SEMESTER */
 function removeSemester(btn){
   btn.closest(".semester-card").remove();
 }
 
-/* CALCULATE (UNCHANGED LOGIC) */
+/* CALCULATE */
 function calculateGWA(){
 
-  const name = document.getElementById("studentName").value;
+  const name =
+  document.getElementById("studentName").value;
 
   let totalPoints = 0;
   let totalUnits = 0;
 
-  const tbody = document.getElementById("semTable");
+  const tbody =
+  document.getElementById("semTable");
+
   tbody.innerHTML = "";
 
-  document.querySelectorAll(".semester-card").forEach(card => {
+  document.querySelectorAll(".semester-card")
+  .forEach(card => {
 
-    const g = Number(card.querySelector(".gwa").value);
-    const u = Number(card.querySelector(".units").value);
+    const g =
+    Number(card.querySelector(".gwa").value);
+
+    const u =
+    Number(card.querySelector(".units").value);
 
     if(!g || !u) return;
 
     totalPoints += g * u;
     totalUnits += u;
 
+    /* TABLE HONOR */
     let honor = "-";
-    if(g <= 1.45) honor = "Dean's Lister";
 
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${g}</td><td>${honor}</td>`;
-    tbody.appendChild(tr);
-  });
+    if(g <= 1.45){
+      honor = "Dean's Lister";
+    }
 
-  const cum = totalPoints / totalUnits;
+    const tr =
+    document.createElement("tr");
 
-  document.getElementById("displayName").innerText = name;
-  document.getElementById("cumulativeGWA").innerText = cum.toFixed(4);
-
-  document.getElementById("resultModal").style.display = "flex";
-}
-
-/* APPLY BUTTON (SMART PREVIEW) */
-function applySavedToSemester(btn){
-
-  activeSemesterCard = btn.closest(".semester-card");
-
-  const saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
-
-  const list = saved.filter(x =>
-  x.data && Array.isArray(x.data.semesters)
-);
-
-  if(list.length === 0){
-    alert("No saved graduation records found.");
-    return;
-  }
-
-  const container = document.getElementById("savedList");
-  container.innerHTML = "";
-
-  const cards = document.querySelectorAll(".semester-card");
-  const currentIndex = [...cards].indexOf(activeSemesterCard);
-
-  list.forEach(item => {
-
-    const match = item.data.semesters.find(s => s.semesterIndex === currentIndex);
-
-    const div = document.createElement("div");
-
-    div.style.padding = "10px";
-    div.style.marginBottom = "10px";
-    div.style.border = "1px solid #ccc";
-    div.style.borderRadius = "8px";
-    div.style.cursor = "pointer";
-    div.style.background = match ? "#f0f8ff" : "#f9f9f9";
-
-    div.innerHTML = `
-      <strong>${item.data.name || "Unnamed"}</strong><br>
-      <small>
-        ${match 
-          ? `✔ Match found (GWA: ${match.gwa}, Units: ${match.units})`
-          : `⚠ No data for this semester`
-        }
-      </small>
+    tr.innerHTML = `
+      <td>${g.toFixed(2)}</td>
+      <td>${honor}</td>
     `;
 
-    div.onclick = () => applySelectedRecord(item);
+    tbody.appendChild(tr);
 
-    container.appendChild(div);
   });
 
-  document.getElementById("applyModal").style.display = "flex";
-}
-
-/* APPLY SELECTED */
-function applySelectedRecord(selected){
-
-  const cards = document.querySelectorAll(".semester-card");
-  const index = [...cards].indexOf(activeSemesterCard);
-
-  let sem = selected.data.semesters.find(s => s.semesterIndex === index);
-
-  if(!sem){
-    sem = selected.data.semesters[index];
-  }
-
-  if(!sem){
-    alert("No matching semester data found.");
+  /* VALIDATION */
+  if(totalUnits === 0){
+    alert("Please enter valid semester data.");
     return;
   }
 
-  activeSemesterCard.querySelector(".gwa").value = sem.gwa ?? "";
-  activeSemesterCard.querySelector(".units").value = sem.units ?? "";
+  const cum =
+  totalPoints / totalUnits;
 
-  closeApplyModal();
+  /* DISPLAY */
+  document.getElementById("displayName")
+  .innerText = name || "Unnamed Student";
+
+  document.getElementById("cumulativeGWA")
+  .innerText = cum.toFixed(4);
+
+  /* LATIN HONORS */
+  const badge =
+  document.getElementById("honorBadge");
+
+  badge.className = "honor";
+
+  if(cum <= 1.20){
+
+    badge.classList.add("honor-summa");
+    badge.innerText = "SUMMA CUM LAUDE";
+
+  }
+  else if(cum <= 1.45){
+
+    badge.classList.add("honor-magna");
+    badge.innerText = "MAGNA CUM LAUDE";
+
+  }
+  else if(cum <= 1.75){
+
+    badge.classList.add("honor-cum");
+    badge.innerText = "CUM LAUDE";
+
+  }
+  else{
+
+    badge.classList.add("honor-none");
+    badge.innerText = "No Latin Honor";
+
+  }
+
+  /* SHOW MODAL */
+  document.getElementById("resultModal")
+  .style.display = "flex";
+
+  /* CONFETTI */
+  createConfetti();
 }
 
-/* CLOSE MODAL */
-function closeApplyModal(){
-  document.getElementById("applyModal").style.display = "none";
+/* CONFETTI EFFECT */
+function createConfetti(){
+
+  const modal =
+  document.querySelector(".modal-content");
+
+  /* REMOVE OLD */
+  document.querySelectorAll(".confetti-piece")
+  .forEach(e => e.remove());
+
+  for(let i = 0; i < 40; i++){
+
+    const confetti =
+    document.createElement("div");
+
+    confetti.className =
+    "confetti-piece";
+
+    confetti.style.left =
+    Math.random() * 100 + "%";
+
+    confetti.style.background =
+    [
+      "#FFD700",
+      "#4f6ef7",
+      "#ff6b6b",
+      "#22c55e",
+      "#a855f7"
+    ][Math.floor(Math.random() * 5)];
+
+    confetti.style.animationDuration =
+    (Math.random() * 2 + 2) + "s";
+
+    confetti.style.opacity =
+    Math.random();
+
+    confetti.style.transform =
+    `rotate(${Math.random()*360}deg)`;
+
+    modal.appendChild(confetti);
+  }
+}
+
+/* CLOSE MODAL WHEN CLICK OUTSIDE */
+window.onclick = function(event){
+
+  const modal =
+  document.getElementById("resultModal");
+
+  if(event.target === modal){
+
+    modal.style.display = "none";
+
+  }
 }
 
 /* INIT */
