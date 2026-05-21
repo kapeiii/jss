@@ -1,44 +1,31 @@
 let saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
 
-/* =========================
-   SYNC STORAGE
-========================= */
+/* SYNC */
 function syncSaved() {
   saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
 }
 
-/* =========================
-   SAVE FUNCTION
-========================= */
+/* SAVE */
 function saveCalculation(moduleName, data) {
+  syncSaved();
 
-  const saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
-
-  const isGraduation = Array.isArray(data.semesters);
-
-  saved.unshift({
+  const entry = {
     id: Date.now(),
     module: moduleName,
-    type: isGraduation ? "graduation" : "gwa",
     name: data.name || "Unnamed",
     result: data.result ?? null,
     totalUnits: data.totalUnits ?? null,
-    subjects: data.subjects ?? null,
-    semesters: data.semesters ?? null
-  });
+    subjects: data.subjects ?? null
+  };
 
+  saved.unshift(entry);
   localStorage.setItem("saved_calculations", JSON.stringify(saved));
-
-  console.log("Saved:", saved);
 
   renderSaved();
 }
 
-/* =========================
-   RENDER SAVED LIST
-========================= */
+/* RENDER */
 function renderSaved() {
-
   syncSaved();
 
   const list = document.getElementById("savedList");
@@ -47,33 +34,18 @@ function renderSaved() {
   list.innerHTML = "";
 
   if (saved.length === 0) {
-    list.innerHTML = `
-      <li>No saved calculations yet.</li>
-    `;
+    list.innerHTML = `<li>No saved calculations yet.</li>`;
     return;
   }
 
   saved.forEach(item => {
-
     const li = document.createElement("li");
 
-    li.className = "saved-card";
-
     li.innerHTML = `
-      <div class="saved-top">
-        <div class="saved-module">${item.module}</div>
-        <div class="saved-date">${new Date(item.id).toLocaleDateString()}</div>
-      </div>
-
-      <div class="saved-name">${item.name}</div>
-
-      <div class="saved-result">
-        🎓 Result: <strong>${item.result ?? "N/A"}</strong>
-      </div>
-
-      <div class="saved-footer">
-        <div class="saved-edit">Tap to continue editing</div>
-      </div>
+      <b>${item.module}</b><br>
+      ${item.name} → ${item.result}
+      <br>
+      Units: ${item.totalUnits ?? "N/A"}
     `;
 
     li.onclick = () => loadSaved(item);
@@ -82,23 +54,13 @@ function renderSaved() {
   });
 }
 
-/* =========================
-   LOAD SAVED
-========================= */
+/* LOAD */
 function loadSaved(item) {
-
   localStorage.setItem("restoreGWA", JSON.stringify(item));
-
-  if (item.module === "GWA Calculator") {
-    window.location.href = "pick.html";
-  } else {
-    window.location.href = "gradute.html";
-  }
+  window.location.href = "pick.html";
 }
 
-/* =========================
-   AUTO INIT (IMPORTANT FIX)
-========================= */
+/* INIT AUTO */
 document.addEventListener("DOMContentLoaded", () => {
   renderSaved();
 });
