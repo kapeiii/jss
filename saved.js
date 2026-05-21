@@ -1,50 +1,47 @@
 let saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
 
-/* SYNC */
-function syncSaved() {
-  saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
-}
+/* TOGGLE UI */
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("savedToggle");
+  const dropdown = document.getElementById("savedDropdown");
 
-/* SAVE */
+  if (toggle) {
+    toggle.onclick = () => {
+      dropdown.classList.toggle("hidden");
+      renderSaved();
+    };
+  }
+});
+
+/* SAVE FUNCTION (GLOBAL) */
 function saveCalculation(moduleName, data) {
-  syncSaved();
+  if (!data) return;
 
-  const entry = {
+  saved.unshift({
     id: Date.now(),
     module: moduleName,
-    name: data.name || "Unnamed",
-    result: data.result ?? null,
-    totalUnits: data.totalUnits ?? null,
-    subjects: data.subjects ?? null
-  };
+    data: data
+  });
 
-  saved.unshift(entry);
+  if (saved.length > 10) saved.pop();
+
   localStorage.setItem("saved_calculations", JSON.stringify(saved));
-
   renderSaved();
 }
 
-/* RENDER */
+/* RENDER LIST */
 function renderSaved() {
-  syncSaved();
-
   const list = document.getElementById("savedList");
   if (!list) return;
 
   list.innerHTML = "";
-
-  if (saved.length === 0) {
-    list.innerHTML = `<li>No saved calculations yet.</li>`;
-    return;
-  }
 
   saved.forEach(item => {
     const li = document.createElement("li");
 
     li.innerHTML = `
       <b>${item.module}</b><br>
-      ${item.name} → ${item.result}<br>
-      Units: ${item.totalUnits ?? "N/A"}
+      ${item.data.name || "Calc"} → ${item.data.result || ""}
     `;
 
     li.onclick = () => loadSaved(item);
@@ -53,11 +50,32 @@ function renderSaved() {
   });
 }
 
-/* LOAD */
+/* LOAD BACK */
 function loadSaved(item) {
-  localStorage.setItem("restoreGWA", JSON.stringify(item));
-  window.location.href = "pick.html";
+
+  const module = item.module;
+
+  if (module === "GWA Calculator") {
+
+    // go to GWA page if not there
+    window.location.href = "pick.html";
+
+    localStorage.setItem("restoreGWA", JSON.stringify(item));
+
+  }
+
+  else if (module === "Graduation Calculator") {
+
+    window.location.href = "graduate.html";
+    window.location.href = "gradute.html";
+
+    localStorage.setItem("restoreGrad", JSON.stringify(item));
+
+  }
+
 }
 
-/* AUTO LOAD ON PAGE OPEN */
-document.addEventListener("DOMContentLoaded", renderSaved);
+/* GLOBAL HELPER */
+function getSavedData() {
+  return saved;
+}
