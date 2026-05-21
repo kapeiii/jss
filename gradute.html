@@ -299,15 +299,78 @@ function addSemester(){
     <div class="input-group">
       <input type="number" class="gwa" placeholder="GWA">
       <input type="number" class="units" placeholder="Units">
+
+      <button type="button"
+      onclick="applySavedSemester(this)">
+        Apply Saved
+      </button>
     </div>
   `;
 
-  document.getElementById("semesters").appendChild(div);
+  document.getElementById("semesters")
+  .appendChild(div);
 }
 
 /* REMOVE SEMESTER */
 function removeSemester(btn){
   btn.closest(".semester-card").remove();
+}
+
+function applySavedSemester(btn){
+
+  const card =
+  btn.closest(".semester-card");
+
+  const gwaInput =
+  card.querySelector(".gwa");
+
+  const unitsInput =
+  card.querySelector(".units");
+
+  const saved =
+  JSON.parse(
+    localStorage.getItem("saved_calculations")
+  ) || [];
+
+  /* ONLY GWA CALCULATOR SAVES */
+  const gwaSaves =
+  saved.filter(item =>
+    item.module === "GWA Calculator"
+  );
+
+  if(gwaSaves.length === 0){
+
+    alert("No saved GWA calculations found.");
+
+    return;
+  }
+
+  /* GET LATEST SAVE */
+  const latest =
+  gwaSaves[0];
+
+  /*
+    SUPPORTS:
+    data.result
+    data.gwa
+    data.totalUnits
+    data.units
+  */
+
+  const gwa =
+    latest.data.result ??
+    latest.data.gwa ??
+    "";
+
+  const units =
+    latest.data.totalUnits ??
+    latest.data.units ??
+    "";
+
+  gwaInput.value = gwa;
+  unitsInput.value = units;
+
+  alert("Latest saved GWA applied.");
 }
 
 /* CALCULATE */
