@@ -56,26 +56,21 @@ function renderSaved() {
 
   list.innerHTML = "";
 
-  if (saved.length === 0) {
-    list.innerHTML = `<li>No saved calculations yet.</li>`;
+  const gwaOnly = saved.filter(item =>
+    item.module === "GWA Calculator"
+  );
+
+  if (gwaOnly.length === 0) {
+    list.innerHTML = `<li>No saved GWA calculations yet.</li>`;
     return;
   }
 
-  saved.forEach(item => {
+  gwaOnly.forEach(item => {
     const li = document.createElement("li");
 
-    const name =
-      item.data?.name ||
-      item.data?.title ||
-      "Unnamed";
-
-    const result =
-  item.result ??
-  (item.type === "graduation" ? "Graduation Data" : item.data?.result ?? "");
-
     li.innerHTML = `
-      <b>${item.module || "Unknown Module"}</b><br>
-      ${name} → ${result}
+      <b>${item.module}</b><br>
+      ${item.data?.name || "Unnamed"} → ${item.data?.result || ""}
     `;
 
     li.onclick = () => loadSaved(item);
@@ -91,32 +86,19 @@ function loadSaved(item) {
 
   const module = item.module;
 
-  /* GWA CALCULATOR */
   if (module === "GWA Calculator") {
-
     localStorage.setItem("restoreGWA", JSON.stringify(item));
     window.location.href = "pick.html";
     return;
   }
 
-  /* GRADUATION CALCULATOR */
-  if (module === "Graduation Calculator") {
-
-    localStorage.setItem("restoreGrad", JSON.stringify(item));
-    window.location.href = "gradute.html";
-    return;
-  }
+  alert("Only GWA saved calculations are supported.");
+}
 
   /* FALLBACK (OLD DATA SUPPORT) */
   if (item.data?.gwa && item.data?.units) {
     localStorage.setItem("restoreGWA", JSON.stringify(item));
     window.location.href = "pick.html";
-    return;
-  }
-
-  if (item.data?.semesters) {
-    localStorage.setItem("restoreGrad", JSON.stringify(item));
-    window.location.href = "gradute.html";
     return;
   }
 
