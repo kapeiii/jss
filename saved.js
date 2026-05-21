@@ -26,19 +26,22 @@ document.addEventListener("DOMContentLoaded", () => {
    SAVE FUNCTION (FIXED + SMART)
 ========================= */
 function saveCalculation(moduleName, data) {
-  if (!data) return;
 
-  syncSaved();
+  const saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
+
+  const isGraduation = Array.isArray(data.semesters);
 
   saved.unshift({
     id: Date.now(),
     module: moduleName,
-    data: data
+    type: isGraduation ? "graduation" : "gwa",
+    name: data.name || "Unnamed",
+    result: data.result || null,
+    semesters: data.semesters || null
   });
 
-  if (saved.length > 50) saved.pop();
-
   localStorage.setItem("saved_calculations", JSON.stringify(saved));
+
   renderSaved();
 }
 
@@ -67,9 +70,8 @@ function renderSaved() {
       "Unnamed";
 
     const result =
-      item.data?.result ??
-      item.data?.gwa ??
-      "";
+  item.result ??
+  (item.type === "graduation" ? "Graduation Data" : item.data?.result ?? "");
 
     li.innerHTML = `
       <b>${item.module || "Unknown Module"}</b><br>
