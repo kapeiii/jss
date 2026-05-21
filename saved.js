@@ -1,29 +1,14 @@
 let saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
 
 /* =========================
-   SAFE STORAGE ACCESS
+   SYNC STORAGE
 ========================= */
 function syncSaved() {
   saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
 }
 
 /* =========================
-   TOGGLE UI
-========================= */
-document.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.getElementById("savedToggle");
-  const dropdown = document.getElementById("savedDropdown");
-
-  if (toggle && dropdown) {
-    toggle.onclick = () => {
-      dropdown.classList.toggle("hidden");
-      renderSaved();
-    };
-  }
-});
-
-/* =========================
-   SAVE FUNCTION (FIXED + SMART)
+   SAVE FUNCTION
 ========================= */
 function saveCalculation(moduleName, data) {
 
@@ -36,8 +21,9 @@ function saveCalculation(moduleName, data) {
     module: moduleName,
     type: isGraduation ? "graduation" : "gwa",
     name: data.name || "Unnamed",
-    result: data.result || null,
-    semesters: data.semesters || null
+    result: data.result ?? null,
+    totalUnits: data.totalUnits ?? null,
+    semesters: data.semesters ?? null
   });
 
   localStorage.setItem("saved_calculations", JSON.stringify(saved));
@@ -46,9 +32,10 @@ function saveCalculation(moduleName, data) {
 }
 
 /* =========================
-   RENDER SAVED LIST (SAFE)
+   RENDER SAVED LIST
 ========================= */
 function renderSaved() {
+
   syncSaved();
 
   const list = document.getElementById("savedList");
@@ -56,12 +43,10 @@ function renderSaved() {
 
   list.innerHTML = "";
 
-  const gwaOnly = saved.filter(item =>
-    item.module === "GWA Calculator"
-  );
+  const gwaOnly = saved.filter(item => item.module === "GWA Calculator");
 
   if (gwaOnly.length === 0) {
-    list.innerHTML = `<li>No saved GWA calculations yet.</li>`;
+    list.innerHTML = "<li>No saved GWA calculations yet.</li>";
     return;
   }
 
@@ -70,7 +55,9 @@ function renderSaved() {
 
     li.innerHTML = `
       <b>${item.module}</b><br>
-      ${item.data?.name || "Unnamed"} → ${item.data?.result || ""}
+      ${item.name} → ${item.result}
+      <br>
+      Units: ${item.totalUnits ?? "N/A"}
     `;
 
     li.onclick = () => loadSaved(item);
@@ -80,29 +67,20 @@ function renderSaved() {
 }
 
 /* =========================
-   LOAD SAVED (FIXED ROUTING)
+   LOAD SAVED → GRADUATION
 ========================= */
 function loadSaved(item) {
 
-  const module = item.module;
+  if (item.module === "GWA Calculator") {
 
-  if (module === "GWA Calculator") {
+    // store full object correctly
     localStorage.setItem("restoreGWA", JSON.stringify(item));
+
     window.location.href = "pick.html";
     return;
   }
 
   alert("Only GWA saved calculations are supported.");
-}
-
-  /* FALLBACK (OLD DATA SUPPORT) */
-  if (item.data?.gwa && item.data?.units) {
-    localStorage.setItem("restoreGWA", JSON.stringify(item));
-    window.location.href = "pick.html";
-    return;
-  }
-
-  alert("Unknown saved format.");
 }
 
 /* =========================
@@ -114,8 +92,7 @@ function getSavedData() {
 }
 
 /* =========================
-   CLEAN UP (OPTIONAL HELPER)
-   - run once if needed
+   CLEAR DATA (OPTIONAL)
 ========================= */
 function clearCorruptedData() {
   localStorage.removeItem("saved_calculations");
