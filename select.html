@@ -323,130 +323,82 @@
   </footer>
 
 <script>
-
-/* TOGGLE */
 document.addEventListener("DOMContentLoaded", () => {
 
   const toggle = document.getElementById("savedToggle");
   const dropdown = document.getElementById("savedDropdown");
 
   toggle.onclick = () => {
-
     dropdown.classList.toggle("hidden");
-
     renderSavedCards();
   };
 
+  renderSavedCards(); // 🔥 IMPORTANT FIX (AUTO LOAD)
 });
 
-  document.addEventListener("DOMContentLoaded", () => {
-  renderSavedCards(); // 🔥 ADD THIS
-});
-  
-/* RENDER SAVED */
+/* =========================
+   RENDER SAVED CARDS
+========================= */
 function renderSavedCards(){
 
   const saved =
-  JSON.parse(localStorage.getItem("saved_calculations")) || [];
+    JSON.parse(localStorage.getItem("saved_calculations")) || [];
 
-  const list =
-  document.getElementById("savedList");
+  const list = document.getElementById("savedList");
 
   list.innerHTML = "";
 
-  /* EMPTY */
-  if(saved.length === 0){
-
+  if (saved.length === 0) {
     list.innerHTML = `
       <div class="empty-state">
         <i class='bx bx-folder-open'></i>
         <p>No saved calculations yet.</p>
       </div>
     `;
-
     return;
   }
 
   saved.forEach(item => {
 
     const li = document.createElement("li");
-
     li.className = "saved-card";
 
-    const date =
-    new Date(item.id).toLocaleDateString();
-
     li.innerHTML = `
-
       <div class="saved-top">
-
-        <div class="saved-module">
-          ${item.module}
-        </div>
-
-        <div class="saved-date">
-          ${date}
-        </div>
-
+        <div class="saved-module">${item.module}</div>
+        <div class="saved-date">${new Date(item.id).toLocaleDateString()}</div>
       </div>
 
-      <div class="saved-name">
-        ${item.data.name || "Unnamed"}
-      </div>
+      <div class="saved-name">${item.name}</div>
 
       <div class="saved-result">
-        🎓 Result:
-        <strong>${item.data.result || "N/A"}</strong>
+        🎓 Result: <strong>${item.result ?? "N/A"}</strong>
       </div>
 
       <div class="saved-footer">
-
-        <div class="saved-edit">
-          Tap to continue editing
-        </div>
-
-        <button class="delete-btn"
-        onclick="deleteSaved(event, ${item.id})">
-
-          <i class='bx bx-trash'></i>
-
-        </button>
-
+        <div class="saved-edit">Tap to continue editing</div>
       </div>
-
     `;
 
-    li.onclick = () => {
-
-      loadSaved(item);
-
-    };
+    li.onclick = () => loadSaved(item);
 
     list.appendChild(li);
-
   });
-
 }
 
-/* DELETE */
-function deleteSaved(event, id){
+/* =========================
+   LOAD SAVED
+========================= */
+function loadSaved(item) {
 
-  event.stopPropagation();
+  localStorage.setItem("restoreGWA", JSON.stringify(item));
 
-  let saved =
-  JSON.parse(localStorage.getItem("saved_calculations")) || [];
-
-  saved =
-  saved.filter(item => item.id !== id);
-
-  localStorage.setItem(
-    "saved_calculations",
-    JSON.stringify(saved)
-  );
-
-  renderSavedCards();
+  if (item.module === "GWA Calculator") {
+    window.location.href = "pick.html";
+  } else {
+    window.location.href = "gradute.html";
+  }
 }
-
 </script>
 
 </body>
