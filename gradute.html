@@ -405,10 +405,8 @@ function applySavedToSemester(btn){
   const saved = JSON.parse(localStorage.getItem("saved_calculations")) || [];
 
   const list = saved.filter(x =>
-    x.module === "Graduation Calculator" &&
-    x.data &&
-    Array.isArray(x.data.semesters)
-  );
+  x.data && Array.isArray(x.data.semesters)
+);
 
   if(list.length === 0){
     alert("No saved graduation records found.");
