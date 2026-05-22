@@ -299,6 +299,8 @@ function saveCurrentGWA() {
 
 let totalUnits = subjects.reduce((sum, s) => sum + Number(s.units || 0), 0);
 
+console.log("FINAL TOTAL UNITS:", totalUnits);
+
 saveCalculation("GWA Calculator", {
   name,
   result: gwa,
