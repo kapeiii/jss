@@ -330,9 +330,17 @@ function applySavedSemester(btn){
   }
 
   const list = document.getElementById("savedList");
+
+  if(!list){
+    console.error("savedList missing in DOM");
+    return;
+  }
+
   list.innerHTML = "";
 
-  gwaSaves.forEach((item, index) => {
+  const card = btn.closest(".semester-card");
+
+  gwaSaves.forEach((item) => {
 
     const gwa =
       item.data.result ??
@@ -343,9 +351,6 @@ function applySavedSemester(btn){
       item.data.totalUnits ??
       item.data.units ??
       0;
-
-    const date =
-      item.date ?? "No date";
 
     const div = document.createElement("div");
 
@@ -360,21 +365,17 @@ function applySavedSemester(btn){
 
     div.innerHTML = `
       <strong>GWA:</strong> ${gwa} <br>
-      <strong>Units:</strong> ${units} <br>
-      <small>${date}</small>
+      <strong>Units:</strong> ${units}
     `;
 
     div.onclick = () => {
 
-      const card =
-        btn.closest(".semester-card");
-
       card.querySelector(".gwa").value = gwa;
       card.querySelector(".units").value = units;
 
-      closeApplyModal();
+      document.getElementById("applyModal").style.display = "none";
 
-      alert("Selected saved record applied.");
+      alert("Applied successfully.");
     };
 
     list.appendChild(div);
