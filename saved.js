@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
    SAVE FUNCTION
 ========================= */
 function saveCalculation(moduleName, data) {
-
   if (!data) return;
 
   let saved = getSaved();
@@ -39,7 +38,7 @@ function saveCalculation(moduleName, data) {
     data: {
       name: data.name || "Unnamed",
       gwa: data.gwa || data.result || "N/A",
-      totalUnits: data.totalUnits || data.units || 0,
+      totalUnits: data.totalUnits ?? data.units ?? 0,
       pldl: data.pldl || "",
       ...data
     }
