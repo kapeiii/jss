@@ -100,35 +100,145 @@
 }
 
 /* SAVED CARD */
+/* NEW SAVED CARD DESIGN */
+
 .saved-card{
-  background:#f8fbff;
-  border:2px solid #dbeafe;
-  border-radius:16px;
+  background:white;
+  border-radius:20px;
   padding:1rem;
-  cursor:pointer;
-  transition:0.2s ease;
+  border:1px solid #e5e7eb;
+  box-shadow:0 8px 25px rgba(0,0,0,0.06);
+  transition:0.25s ease;
   position:relative;
+  overflow:hidden;
+}
+
+.saved-card::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:5px;
+  height:100%;
+  background:linear-gradient(
+    180deg,
+    #4f6ef7,
+    #7c3aed
+  );
 }
 
 .saved-card:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  transform:translateY(-4px);
+  box-shadow:0 15px 35px rgba(0,0,0,0.08);
 }
 
-.saved-top{
+/* HEADER */
+
+.saved-header{
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  margin-bottom:0.7rem;
+  align-items:flex-start;
+  margin-bottom:1rem;
+}
+
+.saved-left{
+  display:flex;
+  flex-direction:column;
+  gap:0.45rem;
 }
 
 .saved-module{
+  display:inline-flex;
+  width:fit-content;
+  background:#eef2ff;
+  color:#4f46e5;
+  font-size:0.78rem;
+  font-weight:700;
+  padding:0.35rem 0.7rem;
+  border-radius:999px;
+}
+
+.saved-name{
+  font-size:1.15rem;
+  font-weight:700;
+  color:#111827;
+}
+
+/* GWA BOX */
+
+.saved-gwa-box{
+  background:linear-gradient(
+    135deg,
+    #f8fbff,
+    #eef2ff
+  );
+  border-radius:18px;
+  padding:1rem;
+  margin-bottom:1rem;
+}
+
+.gwa-label{
+  font-size:0.8rem;
+  color:#6b7280;
+  margin-bottom:0.3rem;
+}
+
+.gwa-value{
+  font-size:2rem;
+  font-weight:800;
+  color:#1e3a8a;
+}
+
+/* DETAILS */
+
+.saved-details{
+  display:flex;
+  gap:0.7rem;
+  flex-wrap:wrap;
+  margin-bottom:1rem;
+}
+
+.detail-card{
+  flex:1;
+  min-width:120px;
+  background:#f9fafb;
+  border-radius:14px;
+  padding:0.8rem;
+  display:flex;
+  flex-direction:column;
+}
+
+.detail-card span{
+  font-size:0.75rem;
+  color:#6b7280;
+  margin-bottom:0.25rem;
+}
+
+.detail-card strong{
+  font-size:1rem;
+  color:#111827;
+}
+
+/* BADGE */
+
+.saved-badge{
+  display:flex;
+  align-items:center;
+  gap:0.4rem;
+  padding:0.8rem 1rem;
+  border-radius:14px;
   font-size:0.85rem;
   font-weight:700;
-  color:#4f6ef7;
-  background:#eef2ff;
-  padding:0.3rem 0.7rem;
-  border-radius:999px;
+}
+
+/* FOOTER */
+
+.saved-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-top:0.8rem;
+  border-top:1px solid #f1f5f9;
 }
 
 .saved-date{
@@ -136,44 +246,28 @@
   color:#9ca3af;
 }
 
-.saved-name{
-  font-size:1.1rem;
-  font-weight:700;
-  color:#111827;
-  margin-bottom:0.3rem;
-}
-
-.saved-result{
-  font-size:1rem;
-  color:#374151;
-  margin-bottom:0.6rem;
-}
-
-.saved-footer{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
 .saved-edit{
-  font-size:0.8rem;
-  color:#6b7280;
+  font-size:0.78rem;
+  color:#4f46e5;
+  font-weight:600;
 }
+
+/* DELETE BUTTON */
 
 .delete-btn{
-  background:#fee2e2;
+  width:38px;
+  height:38px;
   border:none;
+  border-radius:12px;
+  background:#fef2f2;
   color:#dc2626;
-  width:36px;
-  height:36px;
-  border-radius:10px;
   cursor:pointer;
   transition:0.2s ease;
   font-size:1rem;
 }
 
 .delete-btn:hover{
-  background:#fecaca;
+  background:#fee2e2;
   transform:scale(1.05);
 }
 
@@ -339,7 +433,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* =========================
    RENDER SAVED CARDS
 ========================= */
-function renderSavedCards(){
+function renderSavedCards() {
 
   const saved =
     JSON.parse(localStorage.getItem("saved_calculations")) || [];
@@ -358,28 +452,114 @@ function renderSavedCards(){
     return;
   }
 
-  saved.forEach(item => {
+  saved.reverse().forEach((item, index) => {
 
     const li = document.createElement("li");
     li.className = "saved-card";
 
+    /* ===== PL / DL ===== */
+    let distinctionHTML = "";
+
+    if(item.pldl){
+
+      let color = "#2563eb";
+      let bg = "#dbeafe";
+
+      if(item.pldl.toLowerCase().includes("president")){
+        color = "#7c3aed";
+        bg = "#ede9fe";
+      }
+
+      distinctionHTML = `
+        <div class="saved-badge"
+          style="
+            background:${bg};
+            color:${color};
+          ">
+          <i class='bx bxs-star'></i>
+          ${item.pldl}
+        </div>
+      `;
+    }
+
     li.innerHTML = `
-      <div class="saved-top">
-        <div class="saved-module">${item.module}</div>
-        <div class="saved-date">${new Date(item.id).toLocaleDateString()}</div>
+
+      <!-- TOP -->
+      <div class="saved-header">
+
+        <div class="saved-left">
+
+          <div class="saved-module">
+            ${item.module || "GWA Calculator"}
+          </div>
+
+          <div class="saved-name">
+            ${item.name || "Unnamed"}
+          </div>
+
+        </div>
+
+        <button class="delete-btn">
+          <i class='bx bx-trash'></i>
+        </button>
+
       </div>
 
-      <div class="saved-name">${item.name}</div>
+      <!-- MAIN RESULT -->
+      <div class="saved-gwa-box">
 
-      <div class="saved-result">
-        🎓 Result: <strong>${item.result ?? "N/A"}</strong>
+        <div class="gwa-label">
+          Current GWA
+        </div>
+
+        <div class="gwa-value">
+          ${item.result || item.gwa || "N/A"}
+        </div>
+
       </div>
 
+      <!-- DETAILS -->
+      <div class="saved-details">
+
+        <div class="detail-card">
+          <span>Total Units</span>
+          <strong>${item.units || item.totalUnits || "0"}</strong>
+        </div>
+
+        ${distinctionHTML}
+
+      </div>
+
+      <!-- FOOTER -->
       <div class="saved-footer">
-        <div class="saved-edit">Tap to continue editing</div>
+
+        <div class="saved-date">
+          ${new Date(item.id).toLocaleDateString()}
+        </div>
+
+        <div class="saved-edit">
+          Tap to continue editing
+        </div>
+
       </div>
     `;
 
+    /* DELETE */
+    li.querySelector(".delete-btn").onclick = (e) => {
+
+      e.stopPropagation();
+
+      saved.splice(saved.length - 1 - index, 1);
+
+      localStorage.setItem(
+        "saved_calculations",
+        JSON.stringify(saved.reverse())
+      );
+
+      renderSavedCards();
+    };
+
+    /* LOAD */
     li.onclick = () => loadSaved(item);
 
     list.appendChild(li);
