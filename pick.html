@@ -297,12 +297,14 @@ function saveCurrentGWA() {
   }));
 
 
-  saveCalculation("GWA Calculator", {
-    name,
-    result: gwa,
-    subjects
+let totalUnits = subjects.reduce((sum, s) => sum + Number(s.units || 0), 0);
 
-  });
+saveCalculation("GWA Calculator", {
+  name,
+  result: gwa,
+  subjects,
+  totalUnits
+});
 
   alert("Saved successfully!");
 }
