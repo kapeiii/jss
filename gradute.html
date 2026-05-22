@@ -417,11 +417,14 @@ function calculateGWA(){
     totalUnits += u;
 
     /* TABLE HONOR */
-    let honor = "-";
+let honor = "-";
 
-    if(g <= 1.45){
-      honor = "Dean's Lister";
-    }
+if (g <= 1.4500) {
+  honor = "President's Lister";
+} 
+else if (g <= 1.7500) {
+  honor = "Dean's Lister";
+}
 
     const tr =
     document.createElement("tr");
