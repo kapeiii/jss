@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
   renderSaved();
 });
 
-console.log("FINAL TOTAL UNITS:", totalUnits); // 👈 ADD THIS HERE
 /* =========================
    SAVE FUNCTION
 ========================= */
