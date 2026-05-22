@@ -297,13 +297,14 @@ function saveCurrentGWA() {
   }));
 
 
+console.log("FINAL TOTAL UNITS:", totalUnits);
 
-  saveCalculation("GWA Calculator", {
-    name,
-    result: gwa,
-    subjects
-
-  });
+saveCalculation("GWA Calculator", {
+  name: studentName,
+  gwa: gwaResult,
+  totalUnits: totalUnits,
+  pldl: pldlStatus
+});
 
   alert("Saved successfully!");
 }
