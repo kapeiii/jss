@@ -318,59 +318,73 @@ function removeSemester(btn){
 
 function applySavedSemester(btn){
 
-  const card =
-  btn.closest(".semester-card");
-
-  const gwaInput =
-  card.querySelector(".gwa");
-
-  const unitsInput =
-  card.querySelector(".units");
-
   const saved =
-  JSON.parse(
-    localStorage.getItem("saved_calculations")
-  ) || [];
+    JSON.parse(localStorage.getItem("saved_calculations")) || [];
 
-  /* ONLY GWA CALCULATOR SAVES */
   const gwaSaves =
-  saved.filter(item =>
-    item.module === "GWA Calculator"
-  );
+    saved.filter(item => item.module === "GWA Calculator");
 
   if(gwaSaves.length === 0){
-
     alert("No saved GWA calculations found.");
-
     return;
   }
 
-  /* GET LATEST SAVE */
-  const latest =
-  gwaSaves[0];
+  const list = document.getElementById("savedList");
+  list.innerHTML = "";
 
-  /*
-    SUPPORTS:
-    data.result
-    data.gwa
-    data.totalUnits
-    data.units
-  */
+  gwaSaves.forEach((item, index) => {
 
-  const gwa =
-    latest.data.result ??
-    latest.data.gwa ??
-    "";
+    const gwa =
+      item.data.result ??
+      item.data.gwa ??
+      0;
 
-  const units =
-    latest.data.totalUnits ??
-    latest.data.units ??
-    "";
+    const units =
+      item.data.totalUnits ??
+      item.data.units ??
+      0;
 
-  gwaInput.value = gwa;
-  unitsInput.value = units;
+    const date =
+      item.date ?? "No date";
 
-  alert("Latest saved GWA applied.");
+    const div = document.createElement("div");
+
+    div.style = `
+      padding:10px;
+      margin-bottom:10px;
+      border:1px solid #ddd;
+      border-radius:10px;
+      cursor:pointer;
+      background:#f9fafb;
+    `;
+
+    div.innerHTML = `
+      <strong>GWA:</strong> ${gwa} <br>
+      <strong>Units:</strong> ${units} <br>
+      <small>${date}</small>
+    `;
+
+    div.onclick = () => {
+
+      const card =
+        btn.closest(".semester-card");
+
+      card.querySelector(".gwa").value = gwa;
+      card.querySelector(".units").value = units;
+
+      closeApplyModal();
+
+      alert("Selected saved record applied.");
+    };
+
+    list.appendChild(div);
+  });
+
+  document.getElementById("applyModal").style.display = "flex";
+}
+
+function closeApplyModal(){
+  document.getElementById("applyModal").style.display = "none";
 }
 
 /* CALCULATE */
