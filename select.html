@@ -523,7 +523,7 @@ function renderSavedCards() {
 
         <div class="detail-card">
           <span>Total Units</span>
-          <strong>${item.units || item.totalUnits || "0"}</strong>
+          <strong>${item.totalUnits ?? 0}</strong>
         </div>
 
         ${distinctionHTML}
